@@ -1,10 +1,9 @@
 import { motion } from 'framer-motion';
-import { site } from '@/data/site';
+import { content } from '@/data/content';
+import { assetUrl } from '@/lib/assets';
 
-// Resolves to the logo URL once src/assets/logo.svg is in place (see `npm run brand`).
-const logoUrl = Object.values(
-  import.meta.glob<string>('./assets/logo.svg', { eager: true, query: '?url', import: 'default' }),
-)[0];
+const { brand, ui } = content;
+const logoUrl = assetUrl(brand.logoPath);
 
 export default function App() {
   return (
@@ -18,16 +17,16 @@ export default function App() {
         {logoUrl ? (
           <img
             src={logoUrl}
-            alt={site.logoAlt}
+            alt={brand.logoAlt}
             width={240}
             height={240}
             className="h-auto w-48 drop-shadow-[0_0_32px_rgb(var(--color-tertiary)/0.35)] sm:w-60"
           />
         ) : (
-          <span className="font-heading text-5xl font-bold text-text">{site.brand}</span>
+          <span className="font-heading text-5xl font-bold text-text">{brand.name}</span>
         )}
-        <h1 className="text-brand-gradient">{site.comingSoon}</h1>
-        <p className="section-label">{site.domain}</p>
+        <h1 className="text-brand-gradient">{ui.comingSoon}</h1>
+        <p className="section-label">{brand.domain}</p>
       </motion.div>
     </main>
   );
