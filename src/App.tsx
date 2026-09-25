@@ -1,33 +1,43 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { Background } from '@/components/Background';
+import { CommandPalette } from '@/components/CommandPalette';
+import { CursorGlow } from '@/components/CursorGlow';
+import { Footer } from '@/components/Footer';
+import { Navbar } from '@/components/Navbar';
+import { ScrollProgress } from '@/components/ScrollProgress';
 import { content } from '@/data/content';
-import { assetUrl } from '@/lib/assets';
+import { Hero } from '@/sections/Hero';
+import { PlaceholderSection } from '@/sections/PlaceholderSection';
 
-const { brand, ui } = content;
-const logoUrl = assetUrl(brand.logoPath);
+const { sections, ui } = content;
 
 export default function App() {
+  const [paletteOpen, setPaletteOpen] = useState(false);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-8 bg-bg px-6 text-center">
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="flex flex-col items-center gap-8"
+    <div className="relative isolate min-h-screen">
+      <a
+        href="#main"
+        className="sr-only no-underline focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-secondary focus:px-4 focus:py-2 focus:text-on-accent"
       >
-        {logoUrl ? (
-          <img
-            src={logoUrl}
-            alt={brand.logoAlt}
-            width={240}
-            height={240}
-            className="h-auto w-48 drop-shadow-[0_0_32px_rgb(var(--color-tertiary)/0.35)] sm:w-60"
-          />
-        ) : (
-          <span className="font-heading text-5xl font-bold text-text">{brand.name}</span>
-        )}
-        <h1 className="text-brand-gradient">{ui.comingSoon}</h1>
-        <p className="section-label">{brand.domain}</p>
-      </motion.div>
-    </main>
+        {ui.skipToContent}
+      </a>
+      <ScrollProgress />
+      <Background />
+      <CursorGlow />
+      <Navbar onOpenPalette={() => setPaletteOpen(true)} />
+
+      <main id="main" tabIndex={-1} className="focus:outline-none">
+        <Hero />
+        {sections
+          .filter((section) => section.id !== 'hero')
+          .map((section) => (
+            <PlaceholderSection key={section.id} id={section.id} />
+          ))}
+      </main>
+
+      <Footer />
+      <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
+    </div>
   );
 }

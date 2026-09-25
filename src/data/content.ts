@@ -8,6 +8,7 @@ import type { Content } from './types';
 export const content: Content = {
   brand: {
     name: 'SaraCodes',
+    wordmark: { first: 'Sara', second: 'Codes' },
     owner: 'Sara Ali Mahran',
     domain: 'saramahran.com',
     url: 'https://saramahran.com',
@@ -25,30 +26,52 @@ export const content: Content = {
     cvPath: '/Sara_Ali_Mahran_CV.pdf',
   },
 
+  // eyebrow renders as a numbered mono label, e.g. "// 02. services". inNav controls the navbar links.
   sections: [
-    { id: 'hero', label: 'Home', eyebrow: '// hello', heading: 'Sara Ali Mahran' },
-    { id: 'about', label: 'About', eyebrow: '// about', heading: 'About me' },
+    { id: 'hero', label: 'Home', eyebrow: 'hello', heading: 'Sara Ali Mahran', inNav: false },
+    { id: 'about', label: 'About', eyebrow: 'about', heading: 'About me', inNav: true },
     {
       id: 'services',
       label: 'Services',
-      eyebrow: '// services',
+      eyebrow: 'services',
       heading: 'What I can build for you',
+      inNav: true,
     },
-    { id: 'projects', label: 'Projects', eyebrow: '// projects', heading: 'Selected work' },
-    { id: 'experience', label: 'Experience', eyebrow: '// experience', heading: 'Experience' },
+    {
+      id: 'projects',
+      label: 'Projects',
+      eyebrow: 'projects',
+      heading: 'Selected work',
+      inNav: true,
+    },
+    {
+      id: 'experience',
+      label: 'Experience',
+      eyebrow: 'experience',
+      heading: 'Experience',
+      inNav: true,
+    },
     {
       id: 'mentoring',
       label: 'Mentoring',
-      eyebrow: '// mentoring',
+      eyebrow: 'mentoring',
       heading: 'Mentoring & teaching',
+      inNav: true,
     },
     {
       id: 'certifications',
       label: 'Certifications',
-      eyebrow: '// certifications',
+      eyebrow: 'certifications',
       heading: 'Certifications',
+      inNav: true,
     },
-    { id: 'contact', label: 'Contact', eyebrow: '// contact', heading: "Let's work together" },
+    {
+      id: 'contact',
+      label: 'Contact',
+      eyebrow: 'contact',
+      heading: "Let's work together",
+      inNav: false,
+    },
   ],
 
   hero: {
@@ -390,10 +413,26 @@ export const content: Content = {
 
   ui: {
     comingSoon: 'Coming soon',
+    sectionPlaceholder: 'This section is being built. Check back soon.',
     confidentialBadge: 'Confidential client work',
     hireMe: 'Hire me',
     downloadCv: 'Download CV',
     copyEmail: 'Copy email',
     emailCopied: 'Email copied',
+    skipToContent: 'Skip to content',
+    mainNavLabel: 'Main',
+    mobileNavLabel: 'Mobile',
+    homeLinkLabel: 'SaraCodes, back to top',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu',
+    openCommandPalette: 'Open command palette',
+    switchToLight: 'Switch to light theme',
+    switchToDark: 'Switch to dark theme',
+    backToTop: 'Back to top',
+    emailLabel: 'Email',
+    socialsLabel: 'Social profiles',
+    // {year} is replaced with the current year.
+    copyright: '© {year} SaraCodes · Sara Ali Mahran',
+    social: { github: 'GitHub', linkedin: 'LinkedIn', upwork: 'Upwork' },
   },
 };

@@ -32,7 +32,8 @@ export const commandPaletteText = {
   placeholder: 'Type a command or search…',
   empty: 'No results found.',
   label: 'Command palette',
-  shortcutHint: 'Ctrl K',
+  shortcutHint: { mac: '⌘K', other: 'Ctrl K' },
+  closeHint: 'Esc',
 } as const;
 
 const sectionIcons: Record<SectionId, IconName> = {

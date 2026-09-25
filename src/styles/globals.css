@@ -8,6 +8,11 @@
  * WCAG AA verified: every text and accent token is >= 4.5:1 against both bg and surface.
  */
 @layer base {
+  :root {
+    /* Sticky navbar height; keep in sync with NAV_HEIGHT in src/lib/scroll.ts. */
+    --nav-height: 4rem;
+  }
+
   :root,
   [data-theme='dark'] {
     color-scheme: dark;
@@ -49,6 +54,8 @@
     @apply bg-bg font-sans text-text antialiased;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
+    /* Offsets native anchor jumps for the sticky navbar. */
+    scroll-padding-top: var(--nav-height);
     scrollbar-color: rgb(var(--color-border)) rgb(var(--color-bg));
     scrollbar-width: thin;
   }
@@ -127,6 +134,24 @@
   /* Code-style section label, e.g. "// services" */
   .section-label {
     @apply font-mono text-xs uppercase tracking-[0.2em] text-muted;
+  }
+
+  /* Page background: subtle dot grid that fades out toward the edges. */
+  .dot-grid {
+    background-image: radial-gradient(rgb(var(--color-muted) / 0.16) 1px, transparent 1px);
+    background-size: 24px 24px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, #000 25%, transparent 100%);
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, #000 25%, transparent 100%);
+  }
+
+  /* Pointer-following glow: tertiary fading into primary at low opacity. */
+  .cursor-glow {
+    background: radial-gradient(
+      circle,
+      rgb(var(--color-tertiary) / 0.1) 0%,
+      rgb(var(--color-primary) / 0.05) 35%,
+      transparent 70%
+    );
   }
 }
 

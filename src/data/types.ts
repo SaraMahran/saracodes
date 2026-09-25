@@ -1,7 +1,7 @@
-import type { icons } from 'lucide-react';
+import type { IconName } from '@/lib/icons';
 
-/** Any lucide-react icon name, e.g. "Server" or "GraduationCap". */
-export type IconName = keyof typeof icons;
+/** A registered lucide-react icon name (see src/lib/icons.ts). */
+export type { IconName };
 
 /** Placeholder values start with "TODO:" so they are easy to find and are hidden by the UI. */
 export type Todo = `TODO:${string}`;
@@ -20,9 +20,11 @@ export interface Section {
   id: SectionId;
   /** Navigation label, e.g. "Services". */
   label: string;
-  /** Code-style eyebrow shown above the section heading, e.g. "// services". */
+  /** Short lowercase name rendered as a numbered mono label, e.g. "// 02. services". */
   eyebrow: string;
   heading: string;
+  /** Whether the section gets a link in the navbar. */
+  inNav: boolean;
 }
 
 export interface Socials {
@@ -33,6 +35,8 @@ export interface Socials {
 
 export interface Brand {
   name: string;
+  /** The wordmark split into its two colored halves, e.g. Sara (secondary) + Codes (primary). */
+  wordmark: { first: string; second: string };
   owner: string;
   domain: string;
   url: string;
@@ -143,11 +147,26 @@ export interface Contact {
 /** Small UI strings that are not tied to one section. */
 export interface Ui {
   comingSoon: string;
+  sectionPlaceholder: string;
   confidentialBadge: string;
   hireMe: string;
   downloadCv: string;
   copyEmail: string;
   emailCopied: string;
+  skipToContent: string;
+  mainNavLabel: string;
+  mobileNavLabel: string;
+  homeLinkLabel: string;
+  openMenu: string;
+  closeMenu: string;
+  openCommandPalette: string;
+  switchToLight: string;
+  switchToDark: string;
+  backToTop: string;
+  emailLabel: string;
+  socialsLabel: string;
+  copyright: string;
+  social: Record<keyof Socials, string>;
 }
 
 export interface Content {
