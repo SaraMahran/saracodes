@@ -47,10 +47,19 @@ export const content: Content = {
     homeLink: 'Back to home',
   },
 
-  // eyebrow renders as a numbered mono label, e.g. "// 02. services". inNav controls the navbar links.
+  // Single source of truth for section order: rendering, navbar, mobile menu, command palette,
+  // numbered labels ("// 02. mentoring") and print all follow this array.
+  // eyebrow renders as the numbered mono label. inNav controls the navbar links.
   sections: [
     { id: 'hero', label: 'Home', eyebrow: 'hello', heading: 'Sara Ali Mahran', inNav: false },
     { id: 'about', label: 'About', eyebrow: 'about', heading: 'About me', inNav: true },
+    {
+      id: 'mentoring',
+      label: 'Mentoring',
+      eyebrow: 'mentoring',
+      heading: 'Mentoring & teaching',
+      inNav: true,
+    },
     {
       id: 'services',
       label: 'Services',
@@ -72,13 +81,6 @@ export const content: Content = {
       label: 'Experience',
       eyebrow: 'experience',
       heading: 'Experience',
-      inNav: true,
-    },
-    {
-      id: 'mentoring',
-      label: 'Mentoring',
-      eyebrow: 'mentoring',
-      heading: 'Mentoring & teaching',
       inNav: true,
     },
     {
@@ -137,17 +139,18 @@ export const content: Content = {
 
   about: {
     paragraphs: [
-      "I'm a senior software engineer with 3+ years of experience building production Python systems. My recent work is cross-platform desktop software in Python and PySide6, backed by a multi-service FastAPI and PostgreSQL platform that I deploy with Docker on DigitalOcean and keep running at 99.4%+ uptime.",
-      "I'm comfortable with the parts of a system that are easy to get wrong: multi-tenant architecture, session and token security, and real-time delivery. Through SaraCodes I work as an independent freelancer for clients and build my own products.",
-      "Teaching is the other half of my work. As a technical instructor and mentor I've guided learners from their first lines of code to finished, real-world projects. I'm currently deepening my work in LLM engineering, focusing on RAG and agentic AI.",
+      "I'm a senior software engineer with 3+ years of experience building production Python systems: cross-platform desktop software in PySide6, backed by a multi-service FastAPI and PostgreSQL platform that I deploy with Docker on DigitalOcean.",
+      'I specialize in the parts of a system that are easy to get wrong: multi-tenant architecture, session and token security, and real-time delivery. Through SaraCodes, I build software for clients and ship my own products.',
+      "Teaching is the other half of my work. I've guided learners from their first lines of code to finished, real-world projects, and I'm now deepening my work in LLM engineering, with a focus on RAG and agentic AI.",
     ],
-    stats: [
-      { label: 'Years of experience', value: '3+' },
-      { label: 'System uptime', value: '99.4%+' },
-      { label: 'Learners mentored on real projects', value: '130+' },
-      { label: 'Technical sessions delivered', value: '40+' },
+    focusAreasHeading: 'Focus areas',
+    focusAreas: [
+      { icon: 'Layers', text: 'Multi-tenant SaaS architecture' },
+      { icon: 'ShieldCheck', text: 'Session and token security' },
+      { icon: 'Radio', text: 'Real-time systems (SSE)' },
+      { icon: 'Monitor', text: 'Desktop apps with PySide6' },
+      { icon: 'GraduationCap', text: 'Teaching and mentoring' },
     ],
-    // Any "(TODO: ...)" inside an item's text is left out when rendering.
     beyondCode: {
       heading: 'Beyond code',
       intro: 'The same curiosity that drives my engineering drives everything else I do.',
@@ -175,12 +178,11 @@ export const content: Content = {
         {
           icon: 'HeartHandshake',
           title: 'Volunteer',
-          text: 'Volunteering with PwA (TODO: full organization name).',
+          text: 'Volunteering with PwA.',
         },
       ],
     },
-    statsLabel: 'At a glance',
-    techStackHeading: 'Tools I work with',
+    techStackHeading: 'Tech stack',
     techStack: [
       'Python',
       'PySide6',
@@ -475,15 +477,6 @@ export const content: Content = {
       org: 'iSchool',
       period: 'TODO: iSchool period',
       highlights: ['TODO: iSchool highlights'],
-    },
-    {
-      role: 'Independent Software Engineer & Founder',
-      org: 'SaraCodes',
-      period: 'TODO: SaraCodes start date – Present',
-      highlights: [
-        'Deliver freelance software projects for clients through Upwork and direct engagements.',
-        'Build and ship my own products: Wanas, Baed Connect, Rouya and UpNow.',
-      ],
     },
   ],
 

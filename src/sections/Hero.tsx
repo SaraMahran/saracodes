@@ -8,12 +8,10 @@ import { Reveal, RevealItem } from '@/components/Reveal';
 import { Section } from '@/components/Section';
 import { content } from '@/data/content';
 import { useTypewriter } from '@/hooks/useTypewriter';
-import { logoMark } from '@/lib/brandAssets';
 import { buttonClasses } from '@/lib/button';
 import { handleAnchorClick } from '@/lib/scroll';
 
 const { hero } = content;
-const HERO_ACCENT_SIZE = 480;
 
 function splitName(name: string, highlight: string) {
   const index = name.lastIndexOf(highlight);
@@ -112,14 +110,15 @@ export function Hero() {
             </a>
           </RevealItem>
 
-          <RevealItem>
+          {/* Full width: the stat containers below have no intrinsic width of their own. */}
+          <RevealItem className="w-full">
             <ul aria-label={hero.proofLabel} className="grid w-full max-w-xl grid-cols-3">
               {/* One row of three: number over label, separated by subtle dividers. Labels wrap
                   inside their column on narrow screens. */}
               {hero.proof.map((item) => (
                 <li
                   key={item.label}
-                  className="flex flex-col gap-0.5 border-l border-border px-3 first:border-l-0 first:pl-0 sm:px-5"
+                  className="stat-fit flex min-w-0 flex-col gap-0.5 border-l border-border px-3 first:border-l-0 first:pl-0 sm:px-5"
                 >
                   <AnimatedStat
                     value={item.value}
@@ -141,18 +140,6 @@ export function Hero() {
           <div
             aria-hidden="true"
             className="absolute -inset-6 rounded-[2rem] bg-brand-gradient opacity-20 blur-3xl"
-          />
-          {/* Faint brand accent behind the card: decorative, out of layout, desktop and screen only. */}
-          <img
-            src={logoMark.src}
-            alt=""
-            aria-hidden="true"
-            width={HERO_ACCENT_SIZE}
-            height={HERO_ACCENT_SIZE}
-            loading="lazy"
-            decoding="async"
-            className="no-print pointer-events-none absolute left-1/2 top-1/2 max-w-none -translate-x-1/2 -translate-y-1/2 select-none opacity-[0.07] blur-[2px]"
-            style={{ width: HERO_ACCENT_SIZE, height: HERO_ACCENT_SIZE }}
           />
           <CodeWindow snippet={hero.code} />
         </Reveal>
