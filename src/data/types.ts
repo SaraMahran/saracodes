@@ -102,8 +102,9 @@ export interface Service {
 }
 
 export interface ProjectLinks {
-  live?: string | Todo;
-  repo?: string | Todo;
+  live?: string;
+  repo?: string;
+  release?: string;
 }
 
 export interface Project {
@@ -135,8 +136,17 @@ export interface ProjectsUi {
   outcomeHeading: string;
   stackHeading: string;
   confidentialNote: string;
-  liveLink: string;
-  repoLink: string;
+  links: {
+    live: { label: string; ariaLabel: string };
+    repo: { label: string; ariaLabel: string };
+    release: {
+      label: string;
+      ariaLabel: string;
+      fallbackLabel: string;
+      fallbackAriaLabel: string;
+    };
+  };
+  linksLabel: string;
   previous: string;
   next: string;
   position: string;

@@ -320,7 +320,8 @@ export const content: Content = {
       stack: ['Django', 'PostgreSQL', 'pgvector', 'React', 'Vercel', 'Railway'],
       tags: ['Bilingual', 'Semantic search', 'Accessibility'],
       image: '/projects/wanas.webp',
-      links: { live: 'TODO: Wanas live URL', repo: 'TODO: Wanas repo URL' },
+      // Add live link once hosting is set up.
+      links: { repo: 'WANAS_REPO_URL' },
       confidential: false,
     },
     {
@@ -336,7 +337,7 @@ export const content: Content = {
       stack: ['React 18', 'TypeScript', 'Vite', 'Tailwind', 'Vercel serverless', 'LLM APIs'],
       tags: ['AI', 'Careers', 'Serverless'],
       image: '/projects/baed-connect.webp',
-      links: { live: 'TODO: Baed Connect live URL' },
+      links: { live: 'https://www.baedcontent.com/' },
       confidential: false,
     },
     {
@@ -352,7 +353,7 @@ export const content: Content = {
       stack: ['Flutter', 'Supabase'],
       tags: ['Mobile', 'Productivity'],
       image: '/projects/rouya.webp',
-      links: { live: 'TODO: Rouya live URL', repo: 'TODO: Rouya repo URL' },
+      links: { release: 'https://github.com/SaraMahran/rouya/releases/tag/v1.0.0' },
       confidential: false,
     },
     {
@@ -369,7 +370,7 @@ export const content: Content = {
       stack: ['React', 'TypeScript'],
       tags: ['Marketplace', 'Dashboards', 'Prototype'],
       image: '/projects/upnow.webp',
-      links: { live: 'TODO: UpNow live URL', repo: 'TODO: UpNow repo URL' },
+      links: { repo: 'https://github.com/SaraMahran/upnow-uae-hub' },
       confidential: false,
     },
   ],
@@ -389,8 +390,19 @@ export const content: Content = {
     stackHeading: 'Full stack',
     confidentialNote:
       'This is confidential client work, so details are limited and no links or screenshots of the real product are shared.',
-    liveLink: 'Visit live site',
-    repoLink: 'View source',
+    // Link buttons. {project} and {version} are replaced at runtime; the release version
+    // comes from the URL tag (e.g. .../releases/tag/v1.0.0), otherwise releaseFallback is used.
+    links: {
+      live: { label: 'Visit site', ariaLabel: 'Visit {project} site' },
+      repo: { label: 'View code', ariaLabel: 'View {project} code on GitHub' },
+      release: {
+        label: 'Download {version}',
+        ariaLabel: 'Download {project} {version}',
+        fallbackLabel: 'Download',
+        fallbackAriaLabel: 'Download {project}',
+      },
+    },
+    linksLabel: '{project} links',
     previous: 'Previous project',
     next: 'Next project',
     // {index} and {total} are replaced at runtime.
