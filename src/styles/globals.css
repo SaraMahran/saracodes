@@ -138,6 +138,14 @@
 }
 
 @layer components {
+  /*
+   * Size container for AnimatedStat: values shrink to fit this element's width instead of
+   * wrapping. Only use on elements whose width comes from their layout (grid cells, fixed columns).
+   */
+  .stat-fit {
+    container-type: inline-size;
+  }
+
   /* Code-style section label, e.g. "// services" */
   .section-label {
     @apply font-mono text-xs uppercase tracking-[0.2em] text-muted;

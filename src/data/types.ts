@@ -96,11 +96,16 @@ export interface BeyondCode {
   items: BeyondCodeItem[];
 }
 
+export interface FocusArea {
+  icon: IconName;
+  text: string;
+}
+
 export interface About {
   paragraphs: string[];
-  stats: Stat[];
+  focusAreasHeading: string;
+  focusAreas: FocusArea[];
   beyondCode?: BeyondCode;
-  statsLabel: string;
   techStackHeading: string;
   techStack: string[];
 }

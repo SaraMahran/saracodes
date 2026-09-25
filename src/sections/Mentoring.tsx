@@ -37,7 +37,7 @@ export function Mentoring() {
                 className="flex flex-col-reverse justify-end gap-2 bg-surface p-5 sm:p-7"
               >
                 <dt className="text-sm text-muted">{stat.label}</dt>
-                <dd className="font-heading text-3xl font-bold sm:text-4xl">
+                <dd className="stat-fit font-heading text-3xl font-bold sm:text-4xl">
                   <AnimatedStat value={stat.value} className="text-brand-gradient" />
                 </dd>
               </div>

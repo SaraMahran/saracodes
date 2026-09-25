@@ -2,6 +2,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { animate, useInView, useReducedMotion } from 'framer-motion';
 import { formatStatNumber, parseStatValue } from '@/lib/stat';
 
+/** Approximate rendered width of a value in em (bold digits and symbols average ~0.66em). */
+const fitWidthEm = (value: string) => Math.max(1, value.length) * 0.66;
+
 interface AnimatedStatProps {
   value: string;
   className?: string;
@@ -41,7 +44,13 @@ export function AnimatedStat({ value, className = '', duration = 1.6 }: Animated
   );
 
   return (
-    <span ref={ref} className={className}>
+    <span
+      ref={ref}
+      className={`whitespace-nowrap ${className}`}
+      // Never wrap ("99.4%+" stays on one line): inside a `.stat-fit` container the size scales
+      // down to fit its width, and is never larger than the inherited size.
+      style={{ fontSize: `min(1em, calc(100cqi / ${fitWidthEm(value)}))` }}
+    >
       <span aria-hidden="true" className="no-print tabular-nums">
         {parsed.prefix}
         {first}

@@ -1,4 +1,3 @@
-import { AnimatedStat } from '@/components/AnimatedStat';
 import { ChipList } from '@/components/Chip';
 import { Icon } from '@/components/Icon';
 import { Reveal, RevealItem } from '@/components/Reveal';
@@ -7,7 +6,6 @@ import { content } from '@/data/content';
 import { isFilled, withoutTodo } from '@/lib/todo';
 
 const { about } = content;
-const stats = about.stats.filter((stat) => isFilled(stat.value));
 
 // Items render even while their text has an inline "(TODO: ...)" note; only the note is dropped.
 const beyondCodeItems = (about.beyondCode?.items ?? [])
@@ -17,41 +15,48 @@ const beyondCodeItems = (about.beyondCode?.items ?? [])
 export function About() {
   return (
     <Section id="about">
-      <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
-        <Reveal stagger className="flex flex-col gap-5">
+      {/* Desktop: paragraphs (7/12) beside the Focus areas card (5/12), top-aligned.
+          Tablet and mobile: stacked, paragraphs first. */}
+      <div className="grid items-start gap-10 lg:grid-cols-12 lg:gap-12">
+        <Reveal stagger className="flex flex-col gap-6 lg:col-span-7">
           {about.paragraphs.map((paragraph) => (
-            <RevealItem key={paragraph} as="p" className="text-lg leading-relaxed text-muted">
+            <RevealItem
+              key={paragraph}
+              as="p"
+              className="max-w-[62ch] text-[1.125rem] leading-[1.75] text-muted"
+            >
               {paragraph}
             </RevealItem>
           ))}
         </Reveal>
 
-        {stats.length > 0 && (
-          <Reveal delay={0.15}>
-            <dl aria-label={about.statsLabel} className="grid grid-cols-2 gap-3 sm:gap-4">
-              {stats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="flex flex-col-reverse justify-end gap-2 rounded-2xl border border-border bg-surface/70 p-4 sm:p-6"
-                >
-                  <dt className="text-sm text-muted">{stat.label}</dt>
-                  <dd className="font-heading text-3xl font-bold sm:text-4xl">
-                    <AnimatedStat value={stat.value} className="text-brand-gradient" />
-                  </dd>
-                </div>
+        <Reveal delay={0.1} className="lg:col-span-5">
+          <aside
+            aria-labelledby="about-focus-heading"
+            className="rounded-2xl border border-border bg-surface/70 p-6 sm:p-7"
+          >
+            <h3 id="about-focus-heading" className="section-label mb-4">
+              {about.focusAreasHeading}
+            </h3>
+            <ul className="flex flex-col gap-3">
+              {about.focusAreas.map((area) => (
+                <li key={area.text} className="flex items-center gap-3 text-text">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary">
+                    <Icon name={area.icon} size={18} />
+                  </span>
+                  {area.text}
+                </li>
               ))}
-            </dl>
-          </Reveal>
-        )}
+            </ul>
+
+            <h3 className="section-label mb-3 mt-7">{about.techStackHeading}</h3>
+            <ChipList items={about.techStack} />
+          </aside>
+        </Reveal>
       </div>
 
-      <Reveal className="mt-14 md:mt-16">
-        <h3 className="section-label mb-4">{about.techStackHeading}</h3>
-        <ChipList items={about.techStack} />
-      </Reveal>
-
       {about.beyondCode && beyondCodeItems.length > 0 && (
-        <div className="mt-14 md:mt-16">
+        <div className="mt-16 md:mt-20">
           <Reveal>
             <h3 className="font-mono text-sm uppercase tracking-[0.2em] text-primary">
               {about.beyondCode.heading}
