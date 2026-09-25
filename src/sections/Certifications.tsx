@@ -12,7 +12,7 @@ import { isFilled } from '@/lib/todo';
 import { isHttpUrl, isUsableHref } from '@/lib/url';
 
 const { certificationsUi } = content;
-// Entries with a TODO title, issuer or date (e.g. the LLM Engineering slot) stay hidden.
+// Entries with a TODO title, issuer or date stay hidden.
 const certificates = visibleCertifications;
 
 // Thumbnails are 660 x 510; the frame is 4:3 with object-cover, so nothing shifts while loading.

@@ -1,5 +1,6 @@
 import { useReducedMotion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { AnimatedStat } from '@/components/AnimatedStat';
 import { AvailabilityBadge } from '@/components/AvailabilityBadge';
 import { CodeWindow } from '@/components/CodeWindow';
 import { DownloadCvLink } from '@/components/DownloadCvLink';
@@ -26,6 +27,16 @@ function splitName(name: string, highlight: string) {
 
 const name = splitName(hero.name, hero.nameHighlight);
 
+/** Splits the tagline so its last two words can take the brand gradient. */
+function splitTagline(text: string) {
+  const words = text.trim().split(/\s+/);
+  const highlight = words.slice(-2).join(' ');
+  const lead = words.slice(0, -2).join(' ');
+  return { lead: lead ? `${lead} ` : '', highlight };
+}
+
+const tagline = splitTagline(hero.tagline);
+
 const BlinkingCursor = ({ className = '' }: { className?: string }) => (
   <span
     aria-hidden="true"
@@ -41,11 +52,11 @@ export function Hero() {
     <Section
       id="hero"
       hideHeader
-      spacing="pt-12 pb-28 sm:pt-16 lg:py-24"
+      spacing="pt-10 pb-24 sm:pt-14 lg:pb-14 lg:pt-8"
       className="relative flex items-center lg:min-h-[calc(100svh-4rem)]"
     >
       <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
-        <Reveal stagger className="flex min-w-0 flex-col items-start gap-6">
+        <Reveal stagger className="flex min-w-0 flex-col items-start gap-4 xl:gap-5">
           <RevealItem as="p" className="font-mono text-sm text-primary">
             {hero.greeting}
             <BlinkingCursor className="ml-1 h-[1.1em]" />
@@ -72,7 +83,15 @@ export function Hero() {
             </span>
           </RevealItem>
 
-          <RevealItem as="p" className="max-w-xl text-lg text-muted">
+          <RevealItem
+            as="p"
+            className="max-w-xl text-balance font-heading text-2xl font-semibold leading-snug text-text"
+          >
+            {tagline.lead}
+            <span className="text-brand-gradient">{tagline.highlight}</span>
+          </RevealItem>
+
+          <RevealItem as="p" className="-mt-2 max-w-xl text-lg text-muted">
             {hero.intro}
           </RevealItem>
 
@@ -91,6 +110,25 @@ export function Hero() {
             >
               {hero.secondaryCta}
             </a>
+          </RevealItem>
+
+          <RevealItem>
+            <ul aria-label={hero.proofLabel} className="grid w-full max-w-xl grid-cols-3">
+              {/* One row of three: number over label, separated by subtle dividers. Labels wrap
+                  inside their column on narrow screens. */}
+              {hero.proof.map((item) => (
+                <li
+                  key={item.label}
+                  className="flex flex-col gap-0.5 border-l border-border px-3 first:border-l-0 first:pl-0 sm:px-5"
+                >
+                  <AnimatedStat
+                    value={item.value}
+                    className="font-mono text-lg font-semibold text-text"
+                  />
+                  <span className="text-xs leading-snug text-muted sm:text-sm">{item.label}</span>
+                </li>
+              ))}
+            </ul>
           </RevealItem>
 
           <RevealItem className="flex flex-wrap items-center gap-x-4 gap-y-3">
@@ -124,7 +162,7 @@ export function Hero() {
         href="#about"
         onClick={(event) => handleAnchorClick(event, 'about')}
         aria-label={hero.scrollHintLabel}
-        className="no-print absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 rounded-md font-mono text-xs text-muted no-underline hover:text-tertiary"
+        className="no-print absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 rounded-md font-mono text-xs text-muted no-underline hover:text-tertiary lg:[@media(max-height:940px)]:hidden"
       >
         <span aria-hidden="true">{hero.scrollHint}</span>
         <ChevronDown size={18} aria-hidden className="motion-safe:animate-bounce" />

@@ -64,7 +64,10 @@ export interface CodeSnippet {
 export interface Hero {
   name: string;
   roles: string[];
+  tagline: string;
   intro: string;
+  proofLabel: string;
+  proof: Stat[];
   primaryCta: string;
   secondaryCta: string;
   availability: string;
@@ -81,10 +84,22 @@ export interface Stat {
   value: string;
 }
 
+export interface BeyondCodeItem {
+  icon: IconName;
+  title: string;
+  text: string;
+}
+
+export interface BeyondCode {
+  heading: string;
+  intro: string;
+  items: BeyondCodeItem[];
+}
+
 export interface About {
   paragraphs: string[];
   stats: Stat[];
-  beyondCode?: string;
+  beyondCode?: BeyondCode;
   statsLabel: string;
   techStackHeading: string;
   techStack: string[];
