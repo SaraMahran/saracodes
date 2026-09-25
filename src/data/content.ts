@@ -100,8 +100,17 @@ export const content: Content = {
   hero: {
     name: 'Sara Ali Mahran',
     roles: ['Senior Software Engineer', 'Technical Mentor & Instructor', 'Product Builder'],
+    // Shown above the intro; the last two words get the brand gradient.
+    tagline: 'Software built to run. Systems built to last.',
     intro:
-      'I design and build desktop applications, backend systems and web and mobile products end to end. I also mentor developers to ship real-world projects with confidence.',
+      "I build reliable, production-grade software, from secure multi-tenant SaaS backends to desktop, web and mobile apps. I've shipped systems running at 99.4%+ uptime and mentored 130+ developers through real-world projects.",
+    // Compact proof strip under the CTAs.
+    proofLabel: 'Highlights',
+    proof: [
+      { value: '3+', label: 'years building production systems' },
+      { value: '99.4%+', label: 'uptime in production' },
+      { value: '130+', label: 'developers mentored' },
+    ],
     primaryCta: 'Start a Project',
     secondaryCta: 'View Services',
     availability: 'Open to new projects',
@@ -138,9 +147,38 @@ export const content: Content = {
       { label: 'Learners mentored on real projects', value: '130+' },
       { label: 'Technical sessions delivered', value: '40+' },
     ],
-    // optional: delete if not wanted
-    beyondCode:
-      "Beyond code, I'm an avid reader (roughly 900 books over 12 years). I'm building a books podcast in Egyptian dialect and writing my first book.",
+    // Any "(TODO: ...)" inside an item's text is left out when rendering.
+    beyondCode: {
+      heading: 'Beyond code',
+      intro: 'The same curiosity that drives my engineering drives everything else I do.',
+      items: [
+        {
+          icon: 'BookOpen',
+          title: 'Lifelong reader',
+          text: 'Roughly 900 books over the past 12 years.',
+        },
+        {
+          icon: 'Trophy',
+          title: 'Short story writer',
+          text: 'Winner of local short story writing competitions.',
+        },
+        {
+          icon: 'PenLine',
+          title: 'Author in progress',
+          text: 'Writing my first book, on the cultural struggles women face.',
+        },
+        {
+          icon: 'Mic',
+          title: 'Podcast creator',
+          text: 'Building a books podcast in Egyptian dialect.',
+        },
+        {
+          icon: 'HeartHandshake',
+          title: 'Volunteer',
+          text: 'Volunteering with PwA (TODO: full organization name).',
+        },
+      ],
+    },
     statsLabel: 'At a glance',
     techStackHeading: 'Tools I work with',
     techStack: [
@@ -518,7 +556,7 @@ export const content: Content = {
     verifyPrintLabel: 'Verify at',
   },
 
-  // Newest first. Entries with a TODO title are hidden; TODO dates are hidden.
+  // Newest first. Only add finished certifications (entries with a TODO title, issuer or date are hidden).
   certifications: [
     {
       title: 'Forward Program',
@@ -549,11 +587,6 @@ export const content: Content = {
       fileUrl: '/certificates/ibm-microservices.pdf',
       image: '/certificates/ibm-microservices.png',
       credentialUrl: 'https://www.credly.com/badges/2ff96385-b8d7-49f7-8df4-c5b554591721',
-    },
-    {
-      title: 'LLM Engineering: RAG & Agentic AI',
-      issuer: 'Udemy',
-      date: 'TODO: completion date',
     },
   ],
 
