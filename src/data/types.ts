@@ -122,6 +122,27 @@ export interface Project {
   confidential: boolean;
 }
 
+export interface ProjectsUi {
+  filterLabel: string;
+  filterAll: string;
+  filterProfessional: string;
+  filterOwn: string;
+  resultsCount: string;
+  empty: string;
+  viewCaseStudy: string;
+  problemHeading: string;
+  solutionHeading: string;
+  outcomeHeading: string;
+  stackHeading: string;
+  confidentialNote: string;
+  liveLink: string;
+  repoLink: string;
+  previous: string;
+  next: string;
+  position: string;
+  imageAlt: string;
+}
+
 export interface Experience {
   role: string;
   org: string;
@@ -203,6 +224,7 @@ export interface Content {
   about: About;
   services: Service[];
   projects: Project[];
+  projectsUi: ProjectsUi;
   experience: Experience[];
   education: Education;
   mentoring: Mentoring;

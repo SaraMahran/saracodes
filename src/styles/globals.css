@@ -169,6 +169,23 @@
     opacity: 1;
   }
 
+  /* Generated project image placeholder: soft brand-gradient mesh. Positions vary per project. */
+  .mesh-placeholder {
+    background:
+      radial-gradient(
+        circle at var(--mesh-x1, 20%) var(--mesh-y1, 25%),
+        rgb(var(--color-secondary) / 0.28),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle at var(--mesh-x2, 75%) var(--mesh-y2, 70%),
+        rgb(var(--color-primary) / 0.28),
+        transparent 55%
+      ),
+      radial-gradient(circle at 50% 50%, rgb(var(--color-tertiary) / 0.22), transparent 70%),
+      rgb(var(--color-surface));
+  }
+
   /* Pointer-following glow: tertiary fading into primary at low opacity. */
   .cursor-glow {
     background: radial-gradient(

@@ -1,4 +1,4 @@
-import { useRef, type ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import { content } from '@/data/content';
@@ -12,16 +12,33 @@ interface ModalProps {
   labelledBy: string;
   /** Runs after the close animation, e.g. to scroll once focus has been restored. */
   onExitComplete?: () => void;
+  size?: 'md' | 'lg';
+  /** When this changes (e.g. next/previous item), the panel scrolls back to the top. */
+  scrollKey?: string;
   children: ReactNode;
 }
 
+const sizes = { md: 'max-w-lg', lg: 'max-w-3xl' };
+
 /**
- * Accessible modal dialog: traps focus, closes on Escape or backdrop click, and restores focus
- * to the element that opened it.
+ * Accessible modal dialog: traps focus, closes on Escape or backdrop click, locks page scroll
+ * and restores focus to the element that opened it.
  */
-export function Modal({ open, onClose, labelledBy, onExitComplete, children }: ModalProps) {
+export function Modal({
+  open,
+  onClose,
+  labelledBy,
+  onExitComplete,
+  size = 'md',
+  scrollKey,
+  children,
+}: ModalProps) {
   const panelRef = useRef<HTMLDivElement>(null);
   useFocusTrap(panelRef, open, onClose);
+
+  useEffect(() => {
+    panelRef.current?.scrollTo({ top: 0 });
+  }, [scrollKey]);
 
   return (
     <AnimatePresence onExitComplete={onExitComplete}>
@@ -41,7 +58,7 @@ export function Modal({ open, onClose, labelledBy, onExitComplete, children }: M
             role="dialog"
             aria-modal="true"
             aria-labelledby={labelledBy}
-            className="relative max-h-[90svh] w-full max-w-lg overflow-y-auto rounded-t-3xl border border-border bg-surface p-6 shadow-glow sm:rounded-3xl sm:p-8"
+            className={`relative max-h-[90svh] w-full ${sizes[size]} overflow-y-auto rounded-t-3xl border border-border bg-surface p-6 shadow-glow sm:rounded-3xl sm:p-8`}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 24 }}
@@ -51,7 +68,7 @@ export function Modal({ open, onClose, labelledBy, onExitComplete, children }: M
               type="button"
               onClick={onClose}
               aria-label={content.ui.closeDialog}
-              className={`${iconButtonClasses} absolute right-4 top-4`}
+              className={`${iconButtonClasses} absolute right-4 top-4 z-10 bg-surface/80 backdrop-blur`}
             >
               <X size={16} aria-hidden />
             </button>

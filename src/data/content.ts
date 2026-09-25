@@ -351,6 +351,30 @@ export const content: Content = {
     },
   ],
 
+  projectsUi: {
+    filterLabel: 'Filter projects',
+    filterAll: 'All',
+    filterProfessional: 'Professional work',
+    filterOwn: 'Own products',
+    // {count} and {total} are replaced at runtime.
+    resultsCount: 'Showing {count} of {total} projects',
+    empty: 'No projects match this filter yet.',
+    viewCaseStudy: 'View case study',
+    problemHeading: 'Problem',
+    solutionHeading: 'Solution',
+    outcomeHeading: 'Outcome',
+    stackHeading: 'Full stack',
+    confidentialNote:
+      'This is confidential client work, so details are limited and no links or screenshots of the real product are shared.',
+    liveLink: 'Visit live site',
+    repoLink: 'View source',
+    previous: 'Previous project',
+    next: 'Next project',
+    // {index} and {total} are replaced at runtime.
+    position: '{index} / {total}',
+    imageAlt: 'Screenshot of {title}',
+  },
+
   experience: [
     {
       role: 'Senior Software Engineer',

@@ -11,6 +11,7 @@ import type { SectionId } from '@/data/types';
 import { About } from '@/sections/About';
 import { Hero } from '@/sections/Hero';
 import { PlaceholderSection } from '@/sections/PlaceholderSection';
+import { Projects } from '@/sections/Projects';
 import { Services } from '@/sections/Services';
 
 const { sections, ui } = content;
@@ -20,6 +21,7 @@ const sectionComponents: Partial<Record<SectionId, ComponentType>> = {
   hero: Hero,
   about: About,
   services: Services,
+  projects: Projects,
 };
 
 export default function App() {
