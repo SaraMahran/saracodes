@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Midnight Bloom design tokens.
+ * Colors are stored as RGB channels so Tailwind opacity modifiers work (e.g. bg-primary/20).
+ * WCAG AA verified: every text and accent token is >= 4.5:1 against both bg and surface.
+ */
+@layer base {
+  :root,
+  [data-theme='dark'] {
+    color-scheme: dark;
+
+    --color-bg: 11 15 20; /* #0B0F14 */
+    --color-surface: 19 26 35; /* #131A23 */
+    --color-border: 31 42 55; /* #1F2A37 */
+    --color-text: 230 237 243; /* #E6EDF3  16.3:1 on bg, 14.8:1 on surface */
+    --color-muted: 139 152 165; /* #8B98A5  6.5:1 on bg, 6.0:1 on surface */
+    --color-primary: 139 187 255; /* #8BBBFF  9.8:1 on bg, 8.9:1 on surface */
+    --color-secondary: 255 137 202; /* #FF89CA  8.9:1 on bg, 8.1:1 on surface */
+    --color-tertiary: 200 165 253; /* #C8A5FD  9.4:1 on bg, 8.6:1 on surface */
+    --color-on-accent: 11 15 20; /* #0B0F14 text on filled primary/secondary buttons */
+
+    --brand-gradient: linear-gradient(
+      90deg,
+      rgb(var(--color-secondary)),
+      rgb(var(--color-tertiary)),
+      rgb(var(--color-primary))
+    );
+  }
+
+  /* Light theme: darker accent variants for contrast on white. */
+  [data-theme='light'] {
+    color-scheme: light;
+
+    --color-bg: 255 255 255; /* #FFFFFF */
+    --color-surface: 244 246 249; /* #F4F6F9 */
+    --color-border: 216 222 230; /* #D8DEE6 */
+    --color-text: 11 15 20; /* #0B0F14  19.2:1 on bg, 17.8:1 on surface */
+    --color-muted: 75 88 102; /* #4B5866  7.3:1 on bg, 6.7:1 on surface */
+    --color-primary: 31 95 194; /* #1F5FC2  6.0:1 on bg, 5.6:1 on surface */
+    --color-secondary: 184 38 111; /* #B8266F  5.9:1 on bg, 5.5:1 on surface */
+    --color-tertiary: 109 63 196; /* #6D3FC4  6.7:1 on bg, 6.1:1 on surface */
+    --color-on-accent: 255 255 255; /* white on the darker filled accents (>= 5.9:1) */
+  }
+
+  html {
+    @apply bg-bg font-sans text-text antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    scrollbar-color: rgb(var(--color-border)) rgb(var(--color-bg));
+    scrollbar-width: thin;
+  }
+
+  body {
+    @apply min-h-screen bg-bg text-base text-text;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading font-semibold tracking-tight text-text;
+  }
+
+  h1 {
+    @apply text-5xl font-bold;
+  }
+  h2 {
+    @apply text-4xl;
+  }
+  h3 {
+    @apply text-2xl;
+  }
+  h4 {
+    @apply text-xl;
+  }
+
+  a {
+    @apply text-primary underline-offset-4 transition-colors hover:text-tertiary;
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    @apply font-mono;
+  }
+
+  ::selection {
+    background-color: rgb(var(--color-tertiary) / 0.35);
+    color: rgb(var(--color-text));
+  }
+
+  :focus {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-primary));
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Custom scrollbar (WebKit / Blink) */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--color-bg));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--color-border));
+    border: 2px solid rgb(var(--color-bg));
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--color-tertiary) / 0.6);
+  }
+}
+
+@layer components {
+  /* Code-style section label, e.g. "// services" */
+  .section-label {
+    @apply font-mono text-xs uppercase tracking-[0.2em] text-muted;
+  }
+}
+
+/* Disable non-essential motion for users who ask for it. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
