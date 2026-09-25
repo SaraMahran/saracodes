@@ -75,10 +75,5 @@ export function hashString(value: string) {
   return hash;
 }
 
-export const fillTemplate = (template: string, values: Record<string, string | number>) =>
-  template.replace(/\{(\w+)\}/g, (match, key: string) =>
-    key in values ? String(values[key]) : match,
-  );
-
 /** id of a project card's open button, used to return focus after the case study closes. */
 export const projectCardButtonId = (id: string) => `project-${id}-button`;

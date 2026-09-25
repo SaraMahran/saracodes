@@ -1,7 +1,8 @@
 import { useState, type CSSProperties } from 'react';
 import { content } from '@/data/content';
 import type { Project } from '@/data/types';
-import { fillTemplate, getInitials, hashString } from '@/lib/projects';
+import { getInitials, hashString } from '@/lib/projects';
+import { fillTemplate } from '@/lib/template';
 
 const WIDTH = 1200;
 const HEIGHT = 750;

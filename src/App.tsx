@@ -9,7 +9,10 @@ import { ScrollProgress } from '@/components/ScrollProgress';
 import { content } from '@/data/content';
 import type { SectionId } from '@/data/types';
 import { About } from '@/sections/About';
+import { Certifications } from '@/sections/Certifications';
+import { Experience } from '@/sections/Experience';
 import { Hero } from '@/sections/Hero';
+import { Mentoring } from '@/sections/Mentoring';
 import { PlaceholderSection } from '@/sections/PlaceholderSection';
 import { Projects } from '@/sections/Projects';
 import { Services } from '@/sections/Services';
@@ -22,6 +25,9 @@ const sectionComponents: Partial<Record<SectionId, ComponentType>> = {
   about: About,
   services: Services,
   projects: Projects,
+  experience: Experience,
+  mentoring: Mentoring,
+  certifications: Certifications,
 };
 
 export default function App() {

@@ -33,6 +33,13 @@
       rgb(var(--color-tertiary)),
       rgb(var(--color-primary))
     );
+    /* Same brand gradient running top to bottom, for vertical lines such as the timeline. */
+    --brand-gradient-vertical: linear-gradient(
+      180deg,
+      rgb(var(--color-secondary)),
+      rgb(var(--color-tertiary)),
+      rgb(var(--color-primary))
+    );
   }
 
   /* Light theme: darker accent variants for contrast on white. */

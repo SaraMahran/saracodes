@@ -46,6 +46,7 @@ export default {
       },
       backgroundImage: {
         'brand-gradient': 'var(--brand-gradient)',
+        'brand-gradient-vertical': 'var(--brand-gradient-vertical)',
       },
       keyframes: {
         // Ends visible, so the reduced-motion rule (which stops animations) leaves the cursor shown.

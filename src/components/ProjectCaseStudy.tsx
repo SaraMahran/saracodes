@@ -2,7 +2,7 @@ import { ArrowLeft, ArrowRight, ExternalLink, Lock } from 'lucide-react';
 import { content } from '@/data/content';
 import type { Project } from '@/data/types';
 import { buttonClasses, iconButtonClasses } from '@/lib/button';
-import { fillTemplate } from '@/lib/projects';
+import { fillTemplate } from '@/lib/template';
 import { isFilled } from '@/lib/todo';
 import { GitHubIcon } from './BrandIcons';
 import { ChipList } from './Chip';

@@ -450,6 +450,34 @@ export const content: Content = {
     ],
     // TODO: add testimonials. The UI hides the carousel while this list is empty.
     testimonials: [],
+    statsLabel: 'Teaching in numbers',
+    topicsHeading: 'What I teach',
+    formatsHeading: 'Ways to work together',
+    testimonialsHeading: 'What learners say',
+    cta: 'Book a mentoring session',
+    // Prefilled into the contact form subject.
+    ctaSubject: 'Mentoring session',
+    carousel: {
+      label: 'Testimonials',
+      previous: 'Previous testimonial',
+      next: 'Next testimonial',
+      // {index} and {total} are replaced at runtime.
+      slideLabel: '{index} of {total}',
+      goTo: 'Show testimonial {index}',
+    },
+  },
+
+  experienceUi: {
+    timelineLabel: 'Work experience',
+    educationHeading: 'Education',
+  },
+
+  certificationsUi: {
+    viewCertificate: 'View certificate',
+    verifyCredential: 'Verify credential',
+    enlarge: 'Enlarge {title} certificate',
+    // {title} is replaced at runtime.
+    imageAlt: '{title} certificate',
   },
 
   certifications: [

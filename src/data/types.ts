@@ -168,6 +168,31 @@ export interface Mentoring {
   topics: string[];
   formats: string[];
   testimonials: Testimonial[];
+  statsLabel: string;
+  topicsHeading: string;
+  formatsHeading: string;
+  testimonialsHeading: string;
+  cta: string;
+  ctaSubject: string;
+  carousel: {
+    label: string;
+    previous: string;
+    next: string;
+    slideLabel: string;
+    goTo: string;
+  };
+}
+
+export interface ExperienceUi {
+  timelineLabel: string;
+  educationHeading: string;
+}
+
+export interface CertificationsUi {
+  viewCertificate: string;
+  verifyCredential: string;
+  enlarge: string;
+  imageAlt: string;
 }
 
 export interface Certification {
@@ -228,6 +253,8 @@ export interface Content {
   experience: Experience[];
   education: Education;
   mentoring: Mentoring;
+  experienceUi: ExperienceUi;
+  certificationsUi: CertificationsUi;
   certifications: Certification[];
   contact: Contact;
   ui: Ui;

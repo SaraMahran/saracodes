@@ -10,12 +10,12 @@ import type { Project } from '@/data/types';
 import { useQueryParam } from '@/hooks/useQueryParam';
 import {
   ALL_FILTER,
-  fillTemplate,
   findProjectFilter,
   isProjectFilter,
   projectCardButtonId,
   projectFilters,
 } from '@/lib/projects';
+import { fillTemplate } from '@/lib/template';
 
 const { projects, projectsUi } = content;
 const MODAL_TITLE_ID = 'project-modal-title';
