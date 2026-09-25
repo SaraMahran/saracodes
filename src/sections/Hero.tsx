@@ -1,6 +1,8 @@
 import { useReducedMotion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { AvailabilityBadge } from '@/components/AvailabilityBadge';
 import { CodeWindow } from '@/components/CodeWindow';
+import { DownloadCvLink } from '@/components/DownloadCvLink';
 import { Reveal, RevealItem } from '@/components/Reveal';
 import { Section } from '@/components/Section';
 import { content } from '@/data/content';
@@ -86,15 +88,9 @@ export function Hero() {
             </a>
           </RevealItem>
 
-          <RevealItem
-            as="p"
-            className="inline-flex items-center gap-2.5 rounded-full border border-secondary/30 bg-secondary/10 px-3.5 py-1.5 text-sm text-text"
-          >
-            <span className="relative flex h-2.5 w-2.5" aria-hidden="true">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75 motion-safe:animate-ping" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-secondary" />
-            </span>
-            {hero.availability}
+          <RevealItem className="flex flex-wrap items-center gap-x-4 gap-y-3">
+            <AvailabilityBadge label={hero.availability} />
+            <DownloadCvLink variant="ghost" size="sm" className="-ml-1" />
           </RevealItem>
         </Reveal>
 

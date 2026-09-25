@@ -7,10 +7,12 @@ import { isFilled } from '@/lib/todo';
  * Actions are plain data; the palette component decides how to execute them.
  */
 export type CommandAction =
-  | { type: 'navigate'; sectionId: SectionId; anchorId?: string }
-  | { type: 'open'; href: string; external: boolean }
-  | { type: 'copy'; value: string; successMessage: string }
-  | { type: 'toggle-theme' };
+  | { type: 'navigate'; sectionId: SectionId }
+  | { type: 'open'; href: string }
+  | { type: 'download'; href: string }
+  | { type: 'copy-email' }
+  | { type: 'toggle-theme' }
+  | { type: 'open-project'; projectId: string };
 
 export interface Command {
   id: string;
@@ -22,7 +24,7 @@ export interface Command {
 }
 
 export const commandGroups = {
-  navigation: 'Navigation',
+  navigate: 'Navigate',
   actions: 'Actions',
   links: 'Links',
   projects: 'Projects',
@@ -34,6 +36,12 @@ export const commandPaletteText = {
   label: 'Command palette',
   shortcutHint: { mac: '⌘K', other: 'Ctrl K' },
   closeHint: 'Esc',
+  // Keyboard hints shown in the palette footer.
+  footer: [
+    { keys: ['↑', '↓'], label: 'navigate' },
+    { keys: ['↵'], label: 'select' },
+    { keys: ['Esc'], label: 'close' },
+  ],
 } as const;
 
 const sectionIcons: Record<SectionId, IconName> = {
@@ -47,11 +55,11 @@ const sectionIcons: Record<SectionId, IconName> = {
   contact: 'Mail',
 };
 
-const { brand, sections, projects, ui } = content;
+const { brand, hero, sections, projects, ui } = content;
 
-const navigationCommands: Command[] = sections.map((section) => ({
+const navigateCommands: Command[] = sections.map((section) => ({
   id: `nav-${section.id}`,
-  group: commandGroups.navigation,
+  group: commandGroups.navigate,
   label: `Go to ${section.label}`,
   icon: sectionIcons[section.id],
   keywords: [section.label, section.heading, section.id],
@@ -60,20 +68,20 @@ const navigationCommands: Command[] = sections.map((section) => ({
 
 const actionCommands: Command[] = [
   {
-    id: 'hire-me',
+    id: 'start-project',
     group: commandGroups.actions,
-    label: ui.hireMe,
+    label: hero.primaryCta,
     icon: 'Handshake',
-    keywords: ['hire', 'project', 'contact', 'freelance', 'quote'],
+    keywords: ['hire', 'hire me', 'project', 'contact', 'freelance', 'quote'],
     action: { type: 'navigate', sectionId: 'contact' },
   },
   {
-    id: 'open-cv',
+    id: 'download-cv',
     group: commandGroups.actions,
     label: ui.downloadCv,
     icon: 'FileText',
     keywords: ['cv', 'resume', 'pdf'],
-    action: { type: 'open', href: brand.cvPath, external: false },
+    action: { type: 'download', href: brand.cvPath },
   },
   {
     id: 'copy-email',
@@ -81,7 +89,7 @@ const actionCommands: Command[] = [
     label: `${ui.copyEmail} (${brand.email})`,
     icon: 'Copy',
     keywords: ['email', 'mail', 'contact'],
-    action: { type: 'copy', value: brand.email, successMessage: ui.emailCopied },
+    action: { type: 'copy-email' },
   },
   {
     id: 'toggle-theme',
@@ -99,6 +107,7 @@ const socialLinks = [
   { id: 'upwork', label: 'Open Upwork', href: brand.socials.upwork, icon: 'BriefcaseBusiness' },
 ] satisfies { id: string; label: string; href: string; icon: IconName }[];
 
+// Links still marked TODO are left out.
 const linkCommands: Command[] = socialLinks
   .filter((link) => isFilled(link.href))
   .map((link) => ({
@@ -107,27 +116,20 @@ const linkCommands: Command[] = socialLinks
     label: link.label,
     icon: link.icon,
     keywords: [link.id, 'social', 'profile'],
-    action: { type: 'open', href: link.href, external: true },
+    action: { type: 'open', href: link.href },
   }));
 
-// Projects with a real live or repo link open it; everything else scrolls to the project card.
-const projectCommands: Command[] = projects.map((project) => {
-  const href = [project.links?.live, project.links?.repo].find(isFilled);
-  return {
-    id: `project-${project.id}`,
-    group: commandGroups.projects,
-    label: project.title,
-    icon: project.confidential ? 'Lock' : 'FolderOpen',
-    keywords: [project.category, ...project.tags, ...project.stack],
-    action:
-      !project.confidential && href
-        ? { type: 'open', href, external: true }
-        : { type: 'navigate', sectionId: 'projects', anchorId: `project-${project.id}` },
-  };
-});
+const projectCommands: Command[] = projects.map((project) => ({
+  id: `project-${project.id}`,
+  group: commandGroups.projects,
+  label: project.title,
+  icon: project.confidential ? 'Lock' : 'FolderOpen',
+  keywords: ['case study', project.category, ...project.tags, ...project.stack],
+  action: { type: 'open-project', projectId: project.id },
+}));
 
 export const commands: Command[] = [
-  ...navigationCommands,
+  ...navigateCommands,
   ...actionCommands,
   ...linkCommands,
   ...projectCommands,

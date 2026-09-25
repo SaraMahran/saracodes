@@ -15,6 +15,7 @@ import {
   projectCardButtonId,
   projectFilters,
 } from '@/lib/projects';
+import { onOpenProjectRequest } from '@/lib/projectEvents';
 import { fillTemplate } from '@/lib/template';
 
 const { projects, projectsUi } = content;
@@ -47,9 +48,29 @@ export function Projects() {
   };
 
   const stepRef = useRef(step);
+  const visibleRef = useRef(visible);
   useEffect(() => {
     stepRef.current = step;
+    visibleRef.current = visible;
   });
+
+  // The command palette can ask for any case study: clear a filter that hides it, bring its
+  // card into view behind the modal (so focus returns there on close), then open it.
+  useEffect(
+    () =>
+      onOpenProjectRequest((projectId) => {
+        if (!projects.some((project) => project.id === projectId)) return;
+        if (!visibleRef.current.some((project) => project.id === projectId)) {
+          setFilterId(ALL_FILTER);
+        }
+        setSelectedId(projectId);
+        setOpen(true);
+        requestAnimationFrame(() =>
+          document.getElementById(`project-${projectId}`)?.scrollIntoView({ block: 'center' }),
+        );
+      }),
+    [setFilterId],
+  );
 
   // Arrow keys move between projects while the case study is open.
   useEffect(() => {

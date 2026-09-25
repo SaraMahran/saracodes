@@ -69,7 +69,7 @@ export function Mentoring() {
           <a
             href="#contact"
             onClick={(event) => {
-              setSubject(mentoring.ctaSubject);
+              setSubject(mentoring.ctaSubject, mentoring.ctaProjectType);
               handleAnchorClick(event, 'contact');
             }}
             className={buttonClasses('secondary', 'lg', 'mt-8 w-full sm:w-auto')}

@@ -457,6 +457,8 @@ export const content: Content = {
     cta: 'Book a mentoring session',
     // Prefilled into the contact form subject.
     ctaSubject: 'Mentoring session',
+    // Service id preselected as the project type.
+    ctaProjectType: 'mentoring',
     carousel: {
       label: 'Testimonials',
       previous: 'Previous testimonial',
@@ -506,6 +508,62 @@ export const content: Content = {
     formEndpoint: 'TODO: Formspree endpoint',
     availability: 'Open to new projects',
     responseTime: 'I usually reply within 24 to 48 hours',
+    sidePanelHeading: 'Other ways to reach me',
+    emailHeading: 'Email',
+    locationHeading: 'Location',
+    socialsHeading: 'Elsewhere',
+    // Used when the visitor leaves the subject empty.
+    defaultSubject: 'New project inquiry from saramahran.com',
+    form: {
+      label: 'Contact form',
+      optional: '(optional)',
+      name: { label: 'Name', placeholder: 'Your name' },
+      email: { label: 'Email', placeholder: 'you@company.com' },
+      subject: { label: 'Subject', placeholder: 'What is this about?' },
+      projectType: {
+        label: 'Project type',
+        placeholder: 'Select a project type',
+        // The service titles are added automatically; this is appended at the end.
+        other: 'Something else',
+      },
+      budget: {
+        label: 'Budget range',
+        placeholder: 'Select a range',
+        options: [
+          'Under $1,000',
+          '$1,000 to $5,000',
+          '$5,000 to $15,000',
+          '$15,000+',
+          'Not sure yet',
+        ],
+      },
+      message: {
+        label: 'Message',
+        placeholder: 'Tell me about your project, goals and timeline.',
+      },
+      errors: {
+        nameRequired: 'Please enter your name.',
+        emailRequired: 'Please enter your email address.',
+        emailInvalid: 'Please enter a valid email address, like name@example.com.',
+        messageRequired: 'Please write a short message.',
+        // {min} is replaced at runtime.
+        messageTooShort: 'Please add a little more detail (at least {min} characters).',
+      },
+      submit: 'Send message',
+      submitting: 'Sending…',
+      successTitle: 'Message sent',
+      successText: "Thanks for reaching out. I'll get back to you soon.",
+      errorTitle: "Your message couldn't be sent",
+      // {email} is replaced at runtime.
+      errorText: 'Please try again, or email me directly at {email}.',
+      mailtoNotice: 'Opening your email app with your message filled in.',
+      mailtoFields: {
+        name: 'Name',
+        email: 'Email',
+        projectType: 'Project type',
+        budget: 'Budget',
+      },
+    },
   },
 
   ui: {
@@ -536,5 +594,9 @@ export const content: Content = {
     deliverablesHeading: "What you'll get",
     stackHeading: 'Tech stack',
     closeDialog: 'Close',
+    notificationsLabel: 'Notifications',
+    dismissNotification: 'Dismiss notification',
+    // {email} is replaced at runtime.
+    copyFailed: "Couldn't copy automatically. My email is {email}",
   },
 };

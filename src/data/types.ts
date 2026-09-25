@@ -174,6 +174,7 @@ export interface Mentoring {
   testimonialsHeading: string;
   cta: string;
   ctaSubject: string;
+  ctaProjectType: string;
   carousel: {
     label: string;
     previous: string;
@@ -210,6 +211,43 @@ export interface Contact {
   formEndpoint: string | Todo;
   availability: string;
   responseTime: string;
+  sidePanelHeading: string;
+  emailHeading: string;
+  locationHeading: string;
+  socialsHeading: string;
+  defaultSubject: string;
+  form: ContactForm;
+}
+
+interface FieldText {
+  label: string;
+  placeholder: string;
+}
+
+export interface ContactForm {
+  label: string;
+  optional: string;
+  name: FieldText;
+  email: FieldText;
+  subject: FieldText;
+  projectType: FieldText & { other: string };
+  budget: FieldText & { options: string[] };
+  message: FieldText;
+  errors: {
+    nameRequired: string;
+    emailRequired: string;
+    emailInvalid: string;
+    messageRequired: string;
+    messageTooShort: string;
+  };
+  submit: string;
+  submitting: string;
+  successTitle: string;
+  successText: string;
+  errorTitle: string;
+  errorText: string;
+  mailtoNotice: string;
+  mailtoFields: { name: string; email: string; projectType: string; budget: string };
 }
 
 /** Small UI strings that are not tied to one section. */
@@ -240,6 +278,9 @@ export interface Ui {
   deliverablesHeading: string;
   stackHeading: string;
   closeDialog: string;
+  notificationsLabel: string;
+  dismissNotification: string;
+  copyFailed: string;
 }
 
 export interface Content {

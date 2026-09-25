@@ -1,16 +1,17 @@
 import { useRef, type MouseEvent } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Download, X } from 'lucide-react';
+import { X } from 'lucide-react';
 import { content } from '@/data/content';
 import type { SectionId } from '@/data/types';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { buttonClasses, iconButtonClasses } from '@/lib/button';
 import { scrollToId } from '@/lib/scroll';
 import { navSections } from '@/lib/sections';
+import { DownloadCvLink } from './DownloadCvLink';
 import { ThemeToggle } from './ThemeToggle';
 import { Wordmark } from './Wordmark';
 
-const { brand, ui } = content;
+const { ui } = content;
 
 interface MobileMenuProps {
   id: string;
@@ -105,10 +106,7 @@ export function MobileMenu({ id, open, activeId, onClose }: MobileMenuProps) {
             >
               {ui.hireMe}
             </a>
-            <a href={brand.cvPath} download className={buttonClasses('outline', 'lg')}>
-              <Download size={18} aria-hidden />
-              {ui.downloadCv}
-            </a>
+            <DownloadCvLink size="lg" />
             <ThemeToggle className="ml-auto h-12 w-12" />
           </div>
         </motion.div>

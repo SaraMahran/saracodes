@@ -6,10 +6,12 @@ import { CursorGlow } from '@/components/CursorGlow';
 import { Footer } from '@/components/Footer';
 import { Navbar } from '@/components/Navbar';
 import { ScrollProgress } from '@/components/ScrollProgress';
+import { Toaster } from '@/components/Toast';
 import { content } from '@/data/content';
 import type { SectionId } from '@/data/types';
 import { About } from '@/sections/About';
 import { Certifications } from '@/sections/Certifications';
+import { Contact } from '@/sections/Contact';
 import { Experience } from '@/sections/Experience';
 import { Hero } from '@/sections/Hero';
 import { Mentoring } from '@/sections/Mentoring';
@@ -28,6 +30,7 @@ const sectionComponents: Partial<Record<SectionId, ComponentType>> = {
   experience: Experience,
   mentoring: Mentoring,
   certifications: Certifications,
+  contact: Contact,
 };
 
 export default function App() {
@@ -60,6 +63,7 @@ export default function App() {
 
         <Footer />
         <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
+        <Toaster />
       </div>
     </ContactFormProvider>
   );

@@ -29,7 +29,7 @@ export function Services() {
 
   const requestService = () => {
     if (!selected) return;
-    setSubject(selected.title);
+    setSubject(selected.title, selected.id);
     goToContact.current = true;
     setOpen(false);
   };
