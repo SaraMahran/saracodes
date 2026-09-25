@@ -1,13 +1,13 @@
-import { ArrowLeft, ArrowRight, ExternalLink, Lock } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Lock } from 'lucide-react';
 import { content } from '@/data/content';
 import type { Project } from '@/data/types';
-import { buttonClasses, iconButtonClasses } from '@/lib/button';
+import { iconButtonClasses } from '@/lib/button';
 import { fillTemplate } from '@/lib/template';
 import { isFilled } from '@/lib/todo';
-import { GitHubIcon } from './BrandIcons';
 import { ChipList } from './Chip';
 import { ConfidentialBadge } from './ConfidentialBadge';
 import { ProjectImage } from './ProjectImage';
+import { ProjectLinkButtons } from './ProjectLinkButtons';
 
 const { projectsUi } = content;
 
@@ -23,10 +23,6 @@ export function ProjectCaseStudy({ project, titleId }: ProjectCaseStudyProps) {
     { heading: projectsUi.solutionHeading, text: project.solution },
     { heading: projectsUi.outcomeHeading, text: project.outcome },
   ].filter((detail) => isFilled(detail.text));
-
-  const live = project.confidential ? undefined : project.links?.live;
-  const repo = project.confidential ? undefined : project.links?.repo;
-  const hasLinks = isFilled(live) || isFilled(repo);
 
   return (
     <div className="flex flex-col gap-6">
@@ -64,32 +60,7 @@ export function ProjectCaseStudy({ project, titleId }: ProjectCaseStudyProps) {
         <ChipList items={project.stack} />
       </div>
 
-      {hasLinks && (
-        <div className="flex flex-col gap-3 sm:flex-row">
-          {isFilled(live) && (
-            <a
-              href={live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={buttonClasses('secondary', 'md')}
-            >
-              <ExternalLink size={16} aria-hidden />
-              {projectsUi.liveLink}
-            </a>
-          )}
-          {isFilled(repo) && (
-            <a
-              href={repo}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={buttonClasses('outlinePrimary', 'md')}
-            >
-              <GitHubIcon size={16} />
-              {projectsUi.repoLink}
-            </a>
-          )}
-        </div>
-      )}
+      <ProjectLinkButtons project={project} />
     </div>
   );
 }
