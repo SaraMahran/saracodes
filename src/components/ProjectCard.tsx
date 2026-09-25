@@ -1,11 +1,13 @@
 import { ArrowRight } from 'lucide-react';
 import { content } from '@/data/content';
 import type { Project } from '@/data/types';
+import { getProjectLinks } from '@/lib/projectLinks';
 import { projectCardButtonId } from '@/lib/projects';
 import { isFilled } from '@/lib/todo';
 import { ChipList } from './Chip';
 import { ConfidentialBadge } from './ConfidentialBadge';
 import { ProjectImage } from './ProjectImage';
+import { ProjectLinkButtons } from './ProjectLinkButtons';
 
 const { projectsUi } = content;
 
@@ -16,12 +18,7 @@ function PrintedCaseStudy({ project }: { project: Project }) {
     { heading: projectsUi.solutionHeading, text: project.solution },
     { heading: projectsUi.outcomeHeading, text: project.outcome },
   ].filter((detail) => isFilled(detail.text));
-  const links = project.confidential
-    ? []
-    : [
-        { label: projectsUi.liveLink, href: project.links?.live },
-        { label: projectsUi.repoLink, href: project.links?.repo },
-      ].filter((link): link is { label: string; href: string } => isFilled(link.href));
+  const links = getProjectLinks(project);
 
   return (
     <div className="print-only mt-4 space-y-3 text-sm">
@@ -37,8 +34,10 @@ function PrintedCaseStudy({ project }: { project: Project }) {
         <p className="text-text">{project.stack.join(', ')}</p>
       </div>
       {links.map((link) => (
-        <p key={link.href}>
-          <a href={link.href}>{link.label}</a>
+        <p key={link.type}>
+          <a href={link.href} aria-label={link.ariaLabel}>
+            {link.label}
+          </a>
         </p>
       ))}
     </div>
@@ -85,6 +84,8 @@ export function ProjectCard({ project, onOpen }: ProjectCardProps) {
         </h3>
         <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{project.summary}</p>
         <ChipList items={project.stack.slice(0, 4)} className="no-print mt-5" />
+        {/* Above the stretched card button so the links stay clickable. */}
+        <ProjectLinkButtons project={project} size="sm" className="no-print relative z-10 mt-5" />
         <PrintedCaseStudy project={project} />
         <span
           aria-hidden="true"

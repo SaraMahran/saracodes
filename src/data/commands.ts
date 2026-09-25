@@ -1,5 +1,7 @@
 import { content } from './content';
 import type { IconName, SectionId } from './types';
+import { getProjectLinks, type ProjectLinkType } from '@/lib/projectLinks';
+import { fillTemplate } from '@/lib/template';
 import { isFilled } from '@/lib/todo';
 
 /**
@@ -119,14 +121,40 @@ const linkCommands: Command[] = socialLinks
     action: { type: 'open', href: link.href },
   }));
 
-const projectCommands: Command[] = projects.map((project) => ({
-  id: `project-${project.id}`,
-  group: commandGroups.projects,
-  label: project.title,
-  icon: project.confidential ? 'Lock' : 'FolderOpen',
-  keywords: ['case study', project.category, ...project.tags, ...project.stack],
-  action: { type: 'open-project', projectId: project.id },
-}));
+// "Open <project> <link type>", e.g. "Open Baed Connect site". {project} and {type} are filled in.
+const projectLinkCommandText = {
+  label: 'Open {project} {type}',
+  types: { live: 'site', repo: 'code', release: 'release' },
+  icons: { live: 'ExternalLink', repo: 'Code', release: 'Download' },
+} satisfies {
+  label: string;
+  types: Record<ProjectLinkType, string>;
+  icons: Record<ProjectLinkType, IconName>;
+};
+
+// Each project opens its case study; projects with real links also get one command per link.
+// getProjectLinks skips confidential projects and anything missing, TODO or not a URL.
+const projectCommands: Command[] = projects.flatMap((project): Command[] => [
+  {
+    id: `project-${project.id}`,
+    group: commandGroups.projects,
+    label: project.title,
+    icon: project.confidential ? 'Lock' : 'FolderOpen',
+    keywords: ['case study', project.category, ...project.tags, ...project.stack],
+    action: { type: 'open-project', projectId: project.id },
+  },
+  ...getProjectLinks(project).map((link): Command => ({
+    id: `project-${project.id}-${link.type}`,
+    group: commandGroups.projects,
+    label: fillTemplate(projectLinkCommandText.label, {
+      project: project.title,
+      type: projectLinkCommandText.types[link.type],
+    }),
+    icon: projectLinkCommandText.icons[link.type],
+    keywords: [project.title, link.type, link.label, 'link', 'open'],
+    action: { type: 'open', href: link.href },
+  })),
+]);
 
 export const commands: Command[] = [
   ...navigateCommands,
