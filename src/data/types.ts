@@ -43,8 +43,6 @@ export interface Brand {
   domain: string;
   url: string;
   tagline: string;
-  logoPath: string;
-  logoMarkPath: string;
   logoAlt: string;
   email: string;
   location: string;

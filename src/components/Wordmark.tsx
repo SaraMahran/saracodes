@@ -1,8 +1,7 @@
 import { content } from '@/data/content';
-import { assetUrl } from '@/lib/assets';
+import { logoMark } from '@/lib/brandAssets';
 
 const { brand } = content;
-const markUrl = assetUrl(brand.logoMarkPath);
 
 /** Text wordmark matching the logo lettering: "Sara" in secondary, "Codes" in primary. */
 export function Wordmark({ className = 'text-lg' }: { className?: string }) {
@@ -14,8 +13,27 @@ export function Wordmark({ className = 'text-lg' }: { className?: string }) {
   );
 }
 
-/** Square logo mark (32px). Decorative: the surrounding link carries the accessible name. */
-export function LogoMark({ size = 32 }: { size?: number }) {
-  if (!markUrl) return null;
-  return <img src={markUrl} alt="" width={size} height={size} className="shrink-0" />;
+interface LogoMarkProps {
+  size?: number;
+  loading?: 'eager' | 'lazy';
+  className?: string;
+}
+
+/**
+ * Square logo mark. Decorative (alt=""): wherever it appears, the surrounding link or text
+ * carries the accessible name. Explicit width/height prevent layout shift.
+ */
+export function LogoMark({ size = 32, loading = 'eager', className = '' }: LogoMarkProps) {
+  return (
+    <img
+      src={logoMark.src}
+      alt=""
+      width={size}
+      height={size}
+      loading={loading}
+      decoding="async"
+      className={`block shrink-0 ${className}`}
+      style={{ width: size, height: size }}
+    />
+  );
 }

@@ -1,13 +1,12 @@
 import { ArrowUp, Mail } from 'lucide-react';
 import { content } from '@/data/content';
-import { assetUrl } from '@/lib/assets';
+import { logo, logoHeightFor } from '@/lib/brandAssets';
 import { buttonClasses } from '@/lib/button';
 import { scrollToId } from '@/lib/scroll';
 import { SocialLinks } from './SocialLinks';
-import { Wordmark } from './Wordmark';
 
 const { brand, ui } = content;
-const logoUrl = assetUrl(brand.logoPath);
+const FOOTER_LOGO_WIDTH = 144;
 
 export function Footer() {
   const copyright = ui.copyright.replace('{year}', String(new Date().getFullYear()));
@@ -16,17 +15,16 @@ export function Footer() {
     <footer className="border-t border-border/60 bg-surface/40">
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-12 sm:px-6 md:flex-row md:items-start md:justify-between lg:px-8">
         <div className="flex max-w-sm flex-col gap-4">
-          {logoUrl ? (
-            <img
-              src={logoUrl}
-              alt={brand.logoAlt}
-              width={96}
-              height={96}
-              className="h-20 w-auto self-start"
-            />
-          ) : (
-            <Wordmark className="text-2xl" />
-          )}
+          <img
+            src={logo.src}
+            alt={brand.logoAlt}
+            width={FOOTER_LOGO_WIDTH}
+            height={logoHeightFor(FOOTER_LOGO_WIDTH)}
+            loading="lazy"
+            decoding="async"
+            className="block h-auto self-start"
+            style={{ width: FOOTER_LOGO_WIDTH }}
+          />
           <p className="text-sm text-muted">{brand.tagline}</p>
           <a
             href={`mailto:${brand.email}`}

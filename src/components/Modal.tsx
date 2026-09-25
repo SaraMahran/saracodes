@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import { content } from '@/data/content';
@@ -40,7 +41,9 @@ export function Modal({
     panelRef.current?.scrollTo({ top: 0 });
   }, [scrollKey]);
 
-  return (
+  // Portaled to <body>: an ancestor with backdrop-filter or transform (e.g. the navbar) would
+  // otherwise become the containing block and clip this fixed, full-screen layer.
+  return createPortal(
     <AnimatePresence onExitComplete={onExitComplete}>
       {open && (
         <motion.div
@@ -76,6 +79,7 @@ export function Modal({
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 }

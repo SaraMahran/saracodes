@@ -7,10 +7,12 @@ import { Reveal, RevealItem } from '@/components/Reveal';
 import { Section } from '@/components/Section';
 import { content } from '@/data/content';
 import { useTypewriter } from '@/hooks/useTypewriter';
+import { logoMark } from '@/lib/brandAssets';
 import { buttonClasses } from '@/lib/button';
 import { handleAnchorClick } from '@/lib/scroll';
 
 const { hero } = content;
+const HERO_ACCENT_SIZE = 480;
 
 function splitName(name: string, highlight: string) {
   const index = name.lastIndexOf(highlight);
@@ -101,6 +103,18 @@ export function Hero() {
           <div
             aria-hidden="true"
             className="absolute -inset-6 rounded-[2rem] bg-brand-gradient opacity-20 blur-3xl"
+          />
+          {/* Faint brand accent behind the card: decorative, out of layout, desktop and screen only. */}
+          <img
+            src={logoMark.src}
+            alt=""
+            aria-hidden="true"
+            width={HERO_ACCENT_SIZE}
+            height={HERO_ACCENT_SIZE}
+            loading="lazy"
+            decoding="async"
+            className="no-print pointer-events-none absolute left-1/2 top-1/2 max-w-none -translate-x-1/2 -translate-y-1/2 select-none opacity-[0.07] blur-[2px]"
+            style={{ width: HERO_ACCENT_SIZE, height: HERO_ACCENT_SIZE }}
           />
           <CodeWindow snippet={hero.code} />
         </Reveal>
