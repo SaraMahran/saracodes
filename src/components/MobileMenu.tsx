@@ -1,4 +1,5 @@
 import { useRef, type MouseEvent } from 'react';
+import { createPortal } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from 'lucide-react';
 import { content } from '@/data/content';
@@ -9,7 +10,7 @@ import { scrollToId } from '@/lib/scroll';
 import { navSections } from '@/lib/sections';
 import { DownloadCvLink } from './DownloadCvLink';
 import { ThemeToggle } from './ThemeToggle';
-import { Wordmark } from './Wordmark';
+import { LogoMark, Wordmark } from './Wordmark';
 
 const { ui } = content;
 
@@ -40,7 +41,9 @@ export function MobileMenu({ id, open, activeId, onClose }: MobileMenuProps) {
     pendingTarget.current = null;
   };
 
-  return (
+  // Portaled to <body>: an ancestor with backdrop-filter or transform (e.g. the navbar) would
+  // otherwise become the containing block and clip this fixed, full-screen layer.
+  return createPortal(
     <AnimatePresence onExitComplete={onExitComplete}>
       {open && (
         <motion.div
@@ -56,7 +59,10 @@ export function MobileMenu({ id, open, activeId, onClose }: MobileMenuProps) {
           transition={{ duration: 0.2 }}
         >
           <div className="flex h-16 shrink-0 items-center justify-between border-b border-border/60 px-4 sm:px-6">
-            <Wordmark />
+            <span className="flex items-center gap-2.5">
+              <LogoMark />
+              <Wordmark />
+            </span>
             <button
               type="button"
               onClick={onClose}
@@ -111,6 +117,7 @@ export function MobileMenu({ id, open, activeId, onClose }: MobileMenuProps) {
           </div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 }

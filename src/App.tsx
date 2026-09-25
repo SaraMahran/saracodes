@@ -68,7 +68,7 @@ export default function App() {
         <ScrollProgress />
         <Background />
         <CursorGlow />
-        <Navbar onOpenPalette={() => setPalette(true)} />
+        <Navbar />
 
         <main id="main" tabIndex={-1} className="focus:outline-none">
           {sections.map((section) => {

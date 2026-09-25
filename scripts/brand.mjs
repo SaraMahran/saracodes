@@ -45,6 +45,7 @@ if (existsSync(mark)) {
   console.log('wrote  public/favicon.svg');
 
   const svg = readFileSync(mark);
+  const { width: markWidth = 512 } = await sharp(svg).metadata();
   const icons = [
     ['public/favicon-32x32.png', 32],
     ['public/apple-touch-icon.png', 180],
@@ -52,7 +53,9 @@ if (existsSync(mark)) {
   ];
 
   for (const [out, size] of icons) {
-    await sharp(svg, { density: Math.max(72, Math.ceil((size / 24) * 72)) })
+    // Rasterize at 2x the target size (relative to the SVG's own width), then downscale.
+    const density = Math.max(72, Math.ceil((72 * size * 2) / markWidth));
+    await sharp(svg, { density })
       .resize(size, size, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
       .png()
       .toFile(p(out));

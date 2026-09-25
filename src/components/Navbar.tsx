@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Command, Menu } from 'lucide-react';
-import { commandPaletteText } from '@/data/commands';
+import { Menu } from 'lucide-react';
 import { content } from '@/data/content';
 import { useActiveSection } from '@/hooks/useActiveSection';
 import { buttonClasses, iconButtonClasses } from '@/lib/button';
-import { isMacLike } from '@/lib/platform';
 import { handleAnchorClick } from '@/lib/scroll';
 import { navSections, sectionIds } from '@/lib/sections';
 import { MobileMenu } from './MobileMenu';
@@ -15,17 +13,10 @@ import { LogoMark, Wordmark } from './Wordmark';
 const { ui } = content;
 const MOBILE_MENU_ID = 'mobile-menu';
 
-interface NavbarProps {
-  onOpenPalette: () => void;
-}
-
-export function Navbar({ onOpenPalette }: NavbarProps) {
+// The command palette opens with Ctrl K / Cmd K (handled in App); the footer shows a tip.
+export function Navbar() {
   const activeId = useActiveSection(sectionIds);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isMac] = useState(isMacLike);
-  const shortcut = isMac
-    ? commandPaletteText.shortcutHint.mac
-    : commandPaletteText.shortcutHint.other;
 
   return (
     <header className="no-print sticky top-0 z-50 h-16 border-b border-border/60 bg-surface/70 backdrop-blur-md">
@@ -36,7 +27,7 @@ export function Navbar({ onOpenPalette }: NavbarProps) {
           aria-label={ui.homeLinkLabel}
           className="flex items-center gap-2.5 rounded-md no-underline"
         >
-          <LogoMark />
+          <LogoMark alt={ui.logoMarkAlt} />
           <Wordmark />
         </a>
 
@@ -71,16 +62,6 @@ export function Navbar({ onOpenPalette }: NavbarProps) {
         </nav>
 
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={onOpenPalette}
-            aria-label={ui.openCommandPalette}
-            aria-keyshortcuts="Control+K Meta+K"
-            className="hidden h-9 items-center gap-1.5 rounded-full border border-border px-3 font-mono text-xs text-muted transition-colors hover:border-tertiary hover:text-tertiary sm:inline-flex"
-          >
-            <Command size={14} aria-hidden />
-            <kbd className="font-mono">{shortcut}</kbd>
-          </button>
           <ThemeToggle />
           <a
             href="#contact"

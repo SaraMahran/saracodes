@@ -13,8 +13,6 @@ export const content: Content = {
     domain: 'saramahran.com',
     url: 'https://saramahran.com',
     tagline: 'Software engineering services & technical mentoring',
-    logoPath: 'src/assets/logo.svg',
-    logoMarkPath: 'src/assets/logo-mark.svg',
     logoAlt: 'SaraCodes logo',
     email: 'sara@saramahran.com',
     location: 'Egypt · working with clients worldwide, remote',
@@ -120,11 +118,9 @@ export const content: Content = {
       fields: [
         { name: 'brand', value: 'SaraCodes' },
         { name: 'role', value: 'Senior Software Engineer' },
-        { name: 'stack', value: ['Python', 'FastAPI', 'PySide6', 'React', 'Flutter'] },
-        {
-          name: 'services',
-          value: ['Desktop apps', 'Backends', 'Web & mobile', 'AI features', 'Mentoring'],
-        },
+        // Keep every line short: the card never wraps lines (they scroll as a last resort).
+        { name: 'stack', value: ['Python', 'FastAPI', 'React'] },
+        { name: 'services', value: ['Apps', 'APIs', 'AI', 'Mentoring'] },
         { name: 'available', value: true },
       ],
     },
@@ -509,30 +505,55 @@ export const content: Content = {
     educationHeading: 'Education',
   },
 
+  // {title} is replaced at runtime.
   certificationsUi: {
     viewCertificate: 'View certificate',
+    viewCertificateLabel: 'View {title} certificate (PDF, opens in a new tab)',
     verifyCredential: 'Verify credential',
+    verifyCredentialLabel: 'Verify {title} credential (opens in a new tab)',
     enlarge: 'Enlarge {title} certificate',
-    // {title} is replaced at runtime.
     imageAlt: '{title} certificate',
+    skillsLabel: 'Skills',
+    // Printed next to the verification link.
+    verifyPrintLabel: 'Verify at',
   },
 
+  // Newest first. Entries with a TODO title are hidden; TODO dates are hidden.
   certifications: [
     {
       title: 'Forward Program',
       issuer: 'McKinsey.org',
       date: 'Nov 2023',
+      type: 'Certificate',
+      skills: ['Structured problem solving', 'Communication', 'Digital toolkit', 'Adaptability'],
       fileUrl: '/certificates/mckinsey-forward.pdf',
+      image: '/certificates/mckinsey-forward.png',
+    },
+    {
+      title: 'UX Research Cross-Skilling',
+      issuer: 'Udacity',
+      date: 'Jan 2022',
+      type: 'Nanodegree',
+      note: "Scholarship sponsored by Egypt's Ministry of Communications and Information Technology",
+      skills: ['User research', 'Usability testing', 'Interviews & surveys', 'Research synthesis'],
+      fileUrl: '/certificates/udacity-ux-research.pdf',
+      image: '/certificates/udacity-ux-research.png',
+      credentialUrl: 'https://confirm.udacity.com/TEZLTPHX',
+    },
+    {
+      title: 'Deploy a Microservices-Based Web Application',
+      issuer: 'IBM',
+      date: 'Oct 2020',
+      type: 'Digital badge',
+      skills: ['Microservices', 'Cloud deployment', 'Web applications'],
+      fileUrl: '/certificates/ibm-microservices.pdf',
+      image: '/certificates/ibm-microservices.png',
+      credentialUrl: 'https://www.credly.com/badges/2ff96385-b8d7-49f7-8df4-c5b554591721',
     },
     {
       title: 'LLM Engineering: RAG & Agentic AI',
       issuer: 'Udemy',
       date: 'TODO: completion date',
-    },
-    {
-      title: 'TODO: certification title',
-      issuer: 'TODO: issuer',
-      date: 'TODO: date',
     },
   ],
 
@@ -610,10 +631,13 @@ export const content: Content = {
     skipToContent: 'Skip to content',
     mainNavLabel: 'Main',
     mobileNavLabel: 'Mobile',
-    homeLinkLabel: 'SaraCodes, back to top',
+    homeLinkLabel: 'SaraCodes home',
+    logoMarkAlt: 'SaraCodes logo',
+    // Footer hint for the command palette. {shortcut} becomes one of the keys below.
+    paletteTip: 'Tip: press {shortcut} to navigate quickly',
+    paletteShortcut: { mac: '⌘ K', other: 'Ctrl K' },
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
-    openCommandPalette: 'Open command palette',
     switchToLight: 'Switch to light theme',
     switchToDark: 'Switch to dark theme',
     backToTop: 'Back to top',

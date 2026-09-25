@@ -24,13 +24,13 @@ export function NotFound() {
     <div className="relative isolate flex min-h-screen flex-col">
       <Background />
       <header className="px-4 py-6 sm:px-6">
-        <a href="/" className="inline-flex items-center gap-2.5 rounded-md no-underline">
-          <LogoMark />
+        <a href="/" className="inline-flex items-center rounded-md no-underline">
           <Wordmark />
         </a>
       </header>
 
-      <main className="flex flex-1 items-center justify-center px-4 pb-16 sm:px-6">
+      <main className="flex flex-1 flex-col items-center justify-center px-4 pb-16 sm:px-6">
+        <LogoMark size={72} className="mb-6" />
         <div className="w-full max-w-xl overflow-hidden rounded-2xl border border-border bg-surface shadow-glow">
           <div
             className="flex items-center gap-2 border-b border-border px-4 py-3"

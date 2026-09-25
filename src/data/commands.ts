@@ -1,8 +1,10 @@
 import { content } from './content';
 import type { IconName, SectionId } from './types';
+import { visibleCertifications } from '@/lib/certifications';
 import { getProjectLinks, type ProjectLinkType } from '@/lib/projectLinks';
 import { fillTemplate } from '@/lib/template';
 import { isFilled } from '@/lib/todo';
+import { isHttpUrl, isUsableHref } from '@/lib/url';
 
 /**
  * Command palette entries, derived from `content` so they stay in sync with the site.
@@ -30,13 +32,13 @@ export const commandGroups = {
   actions: 'Actions',
   links: 'Links',
   projects: 'Projects',
+  certifications: 'Certifications',
 } as const;
 
 export const commandPaletteText = {
   placeholder: 'Type a command or search…',
   empty: 'No results found.',
   label: 'Command palette',
-  shortcutHint: { mac: '⌘K', other: 'Ctrl K' },
   closeHint: 'Esc',
   // Keyboard hints shown in the palette footer.
   footer: [
@@ -156,9 +158,53 @@ const projectCommands: Command[] = projects.flatMap((project): Command[] => [
   })),
 ]);
 
+// "View <title> certificate" (PDF) and, where there is a credential URL, "Verify <title>".
+// Hidden certifications (any TODO title, issuer or date) and actions without a usable URL are
+// left out.
+const certificationCommandText = {
+  view: 'View {title} certificate',
+  verify: 'Verify {title}',
+};
+
+const certificationCommands: Command[] = visibleCertifications.flatMap(
+  (certification): Command[] => {
+    const slug = certification.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const keywords = [
+      'certificate',
+      'certification',
+      certification.issuer,
+      ...(certification.type ? [certification.type] : []),
+      ...(certification.skills ?? []),
+    ];
+    const items: Command[] = [];
+    if (isUsableHref(certification.fileUrl)) {
+      items.push({
+        id: `cert-${slug}-view`,
+        group: commandGroups.certifications,
+        label: fillTemplate(certificationCommandText.view, { title: certification.title }),
+        icon: 'FileText',
+        keywords: [...keywords, 'pdf', 'view'],
+        action: { type: 'open', href: certification.fileUrl },
+      });
+    }
+    if (isHttpUrl(certification.credentialUrl)) {
+      items.push({
+        id: `cert-${slug}-verify`,
+        group: commandGroups.certifications,
+        label: fillTemplate(certificationCommandText.verify, { title: certification.title }),
+        icon: 'ShieldCheck',
+        keywords: [...keywords, 'verify', 'credential'],
+        action: { type: 'open', href: certification.credentialUrl },
+      });
+    }
+    return items;
+  },
+);
+
 export const commands: Command[] = [
   ...navigateCommands,
   ...actionCommands,
   ...linkCommands,
   ...projectCommands,
+  ...certificationCommands,
 ];

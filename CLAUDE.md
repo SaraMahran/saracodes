@@ -69,7 +69,10 @@ Tokens are CSS variables (RGB channels) in `src/styles/globals.css`, mapped in `
   sections, `src/pages/NotFound.tsx` the 404 page, `src/data` all copy and content, `src/hooks`,
   `src/lib` helpers, `src/styles/globals.css` base styles, tokens and print styles.
 - Dialogs and the command palette are lazy-loaded through `src/lib/lazy.ts`, mounted on first
-  open and prefetched when the browser is idle.
+  open and prefetched when the browser is idle. Full-screen layers (mobile menu, `Modal`) render
+  through a portal to `<body>`, because the navbar's `backdrop-filter` would clip fixed children.
+- Logos are imported as URLs in `src/lib/brandAssets.ts` (a missing file fails the build) and
+  always rendered with `<img>` and explicit width/height, never inlined (they are ~200 KB each).
 - SEO: `<title>`, meta, Open Graph, Twitter and JSON-LD tags are generated from `content.seo` by
   the plugins in `vite.config.ts`, which also copies `index.html` to `404.html` and warns about
   missing public files. `public/robots.txt` and `public/sitemap.xml` are static.

@@ -119,11 +119,12 @@ export function CodeWindow({ snippet }: { snippet: CodeSnippet }) {
         <span className="ml-3 font-mono text-xs text-muted">{snippet.fileName}</span>
       </div>
 
-      <pre className="overflow-hidden p-5 font-mono text-[13px] leading-relaxed xl:text-sm">
+      {/* Lines never wrap; the area scrolls horizontally only as a fallback. */}
+      <pre className="overflow-x-auto p-5 font-mono text-[12px] leading-relaxed xl:text-[14px]">
         {typedLines.map((line, lineIndex) => (
           <div key={lineIndex} className="flex gap-4">
             <span className="w-5 shrink-0 select-none text-right text-muted">{lineIndex + 1}</span>
-            <code className="min-w-0 whitespace-pre-wrap break-words">
+            <code className="whitespace-pre">
               {line.map((token, tokenIndex) => (
                 <Fragment key={tokenIndex}>
                   <span className={tokenClasses[token.kind]}>{token.visible}</span>
