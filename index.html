@@ -4,27 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Title, description, canonical, Open Graph, Twitter and JSON-LD tags are generated from
-         src/data/content.ts by the seo-tags plugin in vite.config.ts. -->
+         src/data/content.ts (brand.siteUrl, seo) by the seo-tags plugin in vite.config.ts. -->
     <title>SaraCodes</title>
     <meta name="theme-color" content="#0B0F14" />
-    <script>
-      // Apply the theme before first paint: a saved choice wins, a first visit follows
-      // prefers-color-scheme, otherwise dark. Keep the key in sync with src/lib/theme.ts.
-      (function () {
-        var theme = 'dark';
-        try {
-          var saved = localStorage.getItem('saracodes-theme');
-          if (saved === 'light' || saved === 'dark') theme = saved;
-          else if (window.matchMedia('(prefers-color-scheme: light)').matches) theme = 'light';
-        } catch (e) {
-          // Storage blocked: keep the default.
-        }
-        document.documentElement.setAttribute('data-theme', theme);
-        if (theme === 'light') {
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#FFFFFF');
-        }
-      })();
-    </script>
+    <!-- Sets the theme before first paint (see public/theme-init.js). -->
+    <script src="/theme-init.js"></script>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />

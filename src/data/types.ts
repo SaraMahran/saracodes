@@ -40,11 +40,14 @@ export interface Brand {
   /** The wordmark split into its two colored halves, e.g. Sara (secondary) + Codes (primary). */
   wordmark: { first: string; second: string };
   owner: string;
+  /** Planned custom domain, for reference only; use siteUrl for links. */
   domain: string;
-  url: string;
+  /** Public site address without a trailing slash, e.g. "https://saracodes.vercel.app". */
+  siteUrl: string;
+  /** Public contact email. */
+  email: string;
   tagline: string;
   logoAlt: string;
-  email: string;
   location: string;
   socials: Socials;
   cvPath: string;
@@ -325,8 +328,7 @@ export interface Ui {
 export interface Seo {
   title: string;
   description: string;
-  /** Canonical site URL without a trailing slash. */
-  url: string;
+  /** Path of the Open Graph image, resolved against brand.siteUrl. */
   ogImage: string;
   ogImageAlt: string;
   jobTitle: string;
