@@ -42,7 +42,7 @@ export function AnimatedStat({ value, className = '', duration = 1.6 }: Animated
 
   return (
     <span ref={ref} className={className}>
-      <span aria-hidden="true" className="tabular-nums">
+      <span aria-hidden="true" className="no-print tabular-nums">
         {parsed.prefix}
         {first}
         {second !== undefined && (
@@ -55,7 +55,7 @@ export function AnimatedStat({ value, className = '', duration = 1.6 }: Animated
           {parsed.suffix}
         </span>
       </span>
-      <span className="sr-only">{value}</span>
+      <span className="print-reveal sr-only">{value}</span>
     </span>
   );
 }

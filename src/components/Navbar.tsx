@@ -28,7 +28,7 @@ export function Navbar({ onOpenPalette }: NavbarProps) {
     : commandPaletteText.shortcutHint.other;
 
   return (
-    <header className="sticky top-0 z-50 h-16 border-b border-border/60 bg-surface/70 backdrop-blur-md">
+    <header className="no-print sticky top-0 z-50 h-16 border-b border-border/60 bg-surface/70 backdrop-blur-md">
       <div className="mx-auto flex h-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <a
           href="#hero"

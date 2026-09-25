@@ -219,3 +219,129 @@
     scroll-behavior: auto !important;
   }
 }
+
+/*
+ * Print / "Save as PDF": a light, readable document. Kept outside Tailwind layers so these rules
+ * win over utilities. Hooks used in components:
+ *   .no-print      screen-only UI (nav, glow, patterns, palette, buttons, form)
+ *   .print-only    content that only exists in print (service deliverables, case studies)
+ *   .print-reveal  visually hidden text that should print (final stat values, roles, labels)
+ */
+.print-only {
+  display: none !important;
+}
+
+@media print {
+  @page {
+    margin: 14mm 12mm;
+  }
+
+  /* Always print with the light theme tokens. */
+  html,
+  html[data-theme='dark'],
+  html[data-theme='light'] {
+    color-scheme: light;
+    --color-bg: 255 255 255;
+    --color-surface: 244 246 249;
+    --color-border: 216 222 230;
+    --color-text: 11 15 20;
+    --color-muted: 75 88 102;
+    --color-primary: 31 95 194;
+    --color-secondary: 184 38 111;
+    --color-tertiary: 109 63 196;
+    --color-on-accent: 255 255 255;
+    /* Keep brand colors, badges and gradient text instead of letting the browser strip them. */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    scroll-padding-top: 0;
+  }
+
+  body {
+    background: rgb(var(--color-bg));
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .print-reveal {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+  }
+
+  /* No motion, and anything that animates in on screen prints in its final state. */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  [style*='opacity'] {
+    opacity: 1 !important;
+  }
+
+  [style*='transform'] {
+    transform: none !important;
+  }
+
+  .spotlight::before {
+    display: none;
+  }
+
+  /* Compact flow with sensible page breaks. */
+  section[id] {
+    min-height: 0 !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  article,
+  figure,
+  blockquote,
+  dl > div,
+  li {
+    break-inside: avoid;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
+  }
+
+  [class*='shadow'] {
+    box-shadow: none !important;
+  }
+
+  [class*='backdrop-blur'] {
+    backdrop-filter: none !important;
+  }
+
+  /* Show where external links go. */
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.85em;
+    color: rgb(var(--color-muted));
+    word-break: break-all;
+  }
+
+  .social-link {
+    width: auto !important;
+    height: auto !important;
+    gap: 0.5rem;
+    border: 0 !important;
+    padding: 0 !important;
+  }
+}

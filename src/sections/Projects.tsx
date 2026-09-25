@@ -1,13 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Modal } from '@/components/Modal';
 import { ProjectCard } from '@/components/ProjectCard';
-import { ProjectCaseStudy, ProjectPager } from '@/components/ProjectCaseStudy';
 import { Reveal } from '@/components/Reveal';
 import { Section } from '@/components/Section';
 import { content } from '@/data/content';
 import type { Project } from '@/data/types';
+import { usePrefetchOnIdle } from '@/hooks/usePrefetchOnIdle';
 import { useQueryParam } from '@/hooks/useQueryParam';
+import { LazyProjectDialog, loadProjectDialog } from '@/lib/lazy';
 import {
   ALL_FILTER,
   findProjectFilter,
@@ -19,7 +20,6 @@ import { onOpenProjectRequest } from '@/lib/projectEvents';
 import { fillTemplate } from '@/lib/template';
 
 const { projects, projectsUi } = content;
-const MODAL_TITLE_ID = 'project-modal-title';
 
 export function Projects() {
   const [filterId, setFilterId] = useQueryParam('filter', isProjectFilter, ALL_FILTER);
@@ -29,6 +29,7 @@ export function Projects() {
   // Keep the selected project while the modal animates out.
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
+  const [hasOpened, setHasOpened] = useState(false);
   const selectedIndex = Math.max(
     0,
     visible.findIndex((project) => project.id === selectedId),
@@ -36,10 +37,20 @@ export function Projects() {
   const selected = visible[selectedIndex] as Project | undefined;
   const lastShownId = useRef<string | null>(null);
 
+  usePrefetchOnIdle(loadProjectDialog);
+
   const openProject = (project: Project) => {
     setSelectedId(project.id);
+    setHasOpened(true);
     setOpen(true);
   };
+
+  // Printing shows every project (with its case study inline), whatever the filter.
+  useEffect(() => {
+    const onBeforePrint = () => flushSync(() => setFilterId(ALL_FILTER));
+    window.addEventListener('beforeprint', onBeforePrint);
+    return () => window.removeEventListener('beforeprint', onBeforePrint);
+  }, [setFilterId]);
 
   const step = (delta: number) => {
     if (visible.length === 0) return;
@@ -64,6 +75,7 @@ export function Projects() {
           setFilterId(ALL_FILTER);
         }
         setSelectedId(projectId);
+        setHasOpened(true);
         setOpen(true);
         requestAnimationFrame(() =>
           document.getElementById(`project-${projectId}`)?.scrollIntoView({ block: 'center' }),
@@ -105,7 +117,11 @@ export function Projects() {
   return (
     <Section id="projects">
       <Reveal>
-        <div role="group" aria-label={projectsUi.filterLabel} className="mb-4 flex flex-wrap gap-2">
+        <div
+          role="group"
+          aria-label={projectsUi.filterLabel}
+          className="no-print mb-4 flex flex-wrap gap-2"
+        >
           {projectFilters.map((option) => {
             const active = option.id === filter.id;
             return (
@@ -136,7 +152,7 @@ export function Projects() {
           })}
         </div>
 
-        <p className="mb-8 font-mono text-xs text-muted" aria-live="polite">
+        <p className="no-print mb-8 font-mono text-xs text-muted" aria-live="polite">
           {fillTemplate(projectsUi.resultsCount, {
             count: visible.length,
             total: projects.length,
@@ -168,36 +184,21 @@ export function Projects() {
         )}
       </Reveal>
 
-      <Modal
-        open={open && Boolean(selected)}
-        onClose={close}
-        labelledBy={MODAL_TITLE_ID}
-        onExitComplete={onExitComplete}
-        size="lg"
-        scrollKey={selected?.id}
-      >
-        {selected && (
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={selected.id}
-              initial={{ opacity: 0, x: 12 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -12 }}
-              transition={{ duration: 0.18 }}
-            >
-              <ProjectCaseStudy project={selected} titleId={MODAL_TITLE_ID} />
-            </motion.div>
-          </AnimatePresence>
-        )}
-        <div className="mt-6">
-          <ProjectPager
+      {/* Mounted on first open so the dialog code loads lazily. */}
+      {selected && hasOpened && (
+        <Suspense fallback={null}>
+          <LazyProjectDialog
+            open={open}
+            project={selected}
             index={selectedIndex}
             total={visible.length}
+            onClose={close}
+            onExitComplete={onExitComplete}
             onPrevious={() => step(-1)}
             onNext={() => step(1)}
           />
-        </div>
-      </Modal>
+        </Suspense>
+      )}
     </Section>
   );
 }

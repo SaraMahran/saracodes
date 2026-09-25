@@ -28,10 +28,11 @@ export function SocialLinks({ className = '' }: { className?: string }) {
             href={brand.socials[key]}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={ui.social[key]}
-            className={`${iconButtonClasses} h-10 w-10`}
+            className={`${iconButtonClasses} social-link h-10 w-10`}
           >
             {icons[key]}
+            {/* Accessible name on screen; printed as visible text (with its URL). */}
+            <span className="print-reveal sr-only">{ui.social[key]}</span>
           </a>
         </li>
       ))}

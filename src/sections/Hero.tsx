@@ -49,19 +49,22 @@ export function Hero() {
             <BlinkingCursor className="ml-1 h-[1.1em]" />
           </RevealItem>
 
-          <RevealItem>
-            <h1 className="text-6xl font-bold leading-[1.02]">
-              {name.before}
-              <span className="text-brand-gradient">{name.highlight}</span>
-              {name.after}
-            </h1>
-          </RevealItem>
+          {/* Not animated: the name is the LCP element, so it paints immediately. */}
+          <h1 className="text-6xl font-bold leading-[1.02]">
+            {name.before}
+            <span className="text-brand-gradient">{name.highlight}</span>
+            {name.after}
+          </h1>
 
-          <RevealItem as="p" className="min-h-[1.6em] font-mono text-lg text-text sm:text-xl">
-            <span className="sr-only">
+          {/* Single line with reserved height, so typing never shifts the layout. */}
+          <RevealItem
+            as="p"
+            className="min-h-[1.6em] whitespace-nowrap font-mono text-base text-text sm:text-xl"
+          >
+            <span className="print-reveal sr-only">
               {hero.rolesLabel}: {hero.roles.join(', ')}
             </span>
-            <span aria-hidden="true">
+            <span aria-hidden="true" className="no-print">
               {role}
               <BlinkingCursor className="ml-0.5 h-[1.05em]" />
             </span>
@@ -71,7 +74,7 @@ export function Hero() {
             {hero.intro}
           </RevealItem>
 
-          <RevealItem className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
+          <RevealItem className="no-print flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
             <a
               href="#contact"
               onClick={(event) => handleAnchorClick(event, 'contact')}
@@ -94,7 +97,7 @@ export function Hero() {
           </RevealItem>
         </Reveal>
 
-        <Reveal delay={0.3} className="relative hidden min-w-0 lg:block">
+        <Reveal delay={0.3} className="no-print relative hidden min-w-0 lg:block">
           <div
             aria-hidden="true"
             className="absolute -inset-6 rounded-[2rem] bg-brand-gradient opacity-20 blur-3xl"
@@ -107,7 +110,7 @@ export function Hero() {
         href="#about"
         onClick={(event) => handleAnchorClick(event, 'about')}
         aria-label={hero.scrollHintLabel}
-        className="absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 rounded-md font-mono text-xs text-muted no-underline hover:text-tertiary"
+        className="no-print absolute bottom-6 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1 rounded-md font-mono text-xs text-muted no-underline hover:text-tertiary"
       >
         <span aria-hidden="true">{hero.scrollHint}</span>
         <ChevronDown size={18} aria-hidden className="motion-safe:animate-bounce" />

@@ -1,16 +1,15 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Award, ExternalLink, Maximize2, ShieldCheck } from 'lucide-react';
-import { Modal } from '@/components/Modal';
 import { Reveal, RevealItem } from '@/components/Reveal';
 import { Section } from '@/components/Section';
 import { content } from '@/data/content';
 import type { Certification } from '@/data/types';
+import { LazyCertificateLightbox } from '@/lib/lazy';
 import { fillTemplate } from '@/lib/template';
 import { isFilled } from '@/lib/todo';
 
 const { certifications, certificationsUi } = content;
 const certificates = certifications.filter((certification) => isFilled(certification.title));
-const LIGHTBOX_TITLE_ID = 'certificate-lightbox-title';
 
 const linkClasses =
   'inline-flex items-center gap-1.5 rounded-md text-sm font-medium text-primary no-underline hover:text-tertiary';
@@ -111,27 +110,16 @@ export function Certifications() {
         ))}
       </Reveal>
 
-      <Modal open={open} onClose={() => setOpen(false)} labelledBy={LIGHTBOX_TITLE_ID} size="lg">
-        {selected && isFilled(selected.image) && (
-          <figure className="flex flex-col gap-4">
-            <img
-              src={selected.image}
-              alt={fillTemplate(certificationsUi.imageAlt, { title: selected.title })}
-              width={1600}
-              height={1200}
-              className="h-auto w-full rounded-xl border border-border"
-            />
-            <figcaption id={LIGHTBOX_TITLE_ID} className="pr-12">
-              <span className="block font-heading text-lg font-semibold text-text">
-                {selected.title}
-              </span>
-              {isFilled(selected.issuer) && (
-                <span className="font-mono text-xs text-muted">{selected.issuer}</span>
-              )}
-            </figcaption>
-          </figure>
-        )}
-      </Modal>
+      {/* Mounted on first open so the lightbox code loads lazily. */}
+      {selected && (
+        <Suspense fallback={null}>
+          <LazyCertificateLightbox
+            open={open}
+            certification={selected}
+            onClose={() => setOpen(false)}
+          />
+        </Suspense>
+      )}
     </Section>
   );
 }

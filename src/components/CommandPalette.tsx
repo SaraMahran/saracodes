@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Command } from 'cmdk';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Search } from 'lucide-react';
@@ -25,9 +25,10 @@ interface CommandPaletteProps {
 }
 
 /**
- * Ctrl K / Cmd K command palette built on cmdk (fuzzy search, arrow keys, Enter). Commands come
- * from src/data/commands.ts. Traps focus, closes on Escape, backdrop click or selection, and
- * returns focus to where it was opened from.
+ * Command palette built on cmdk (fuzzy search, arrow keys, Enter), lazy-loaded and opened with
+ * Ctrl K / Cmd K (handled in App) or the navbar hint. Commands come from src/data/commands.ts.
+ * Traps focus, closes on Escape, backdrop click or selection, and returns focus to where it was
+ * opened from.
  */
 export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
   const panelRef = useRef<HTMLDivElement>(null);
@@ -36,17 +37,6 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
 
   const close = () => onOpenChange(false);
   useFocusTrap(panelRef, open, close);
-
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey)) {
-        event.preventDefault();
-        onOpenChange(!open);
-      }
-    };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
-  }, [open, onOpenChange]);
 
   const run = (action: CommandAction) => {
     switch (action.type) {
@@ -103,7 +93,7 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
             transition={{ duration: 0.15 }}
           >
             <Command label={commandPaletteText.label} loop>
-              <div className="flex items-center gap-3 border-b border-border px-4">
+              <div className="flex items-center gap-3 border-b border-border px-4 focus-within:border-primary">
                 <Search size={16} aria-hidden className="shrink-0 text-muted" />
                 <Command.Input
                   data-autofocus

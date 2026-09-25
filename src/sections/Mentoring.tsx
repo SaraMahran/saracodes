@@ -72,7 +72,7 @@ export function Mentoring() {
               setSubject(mentoring.ctaSubject, mentoring.ctaProjectType);
               handleAnchorClick(event, 'contact');
             }}
-            className={buttonClasses('secondary', 'lg', 'mt-8 w-full sm:w-auto')}
+            className={buttonClasses('secondary', 'lg', 'no-print mt-8 w-full sm:w-auto')}
           >
             {mentoring.cta}
           </a>

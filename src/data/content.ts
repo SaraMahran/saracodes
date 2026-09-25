@@ -26,6 +26,29 @@ export const content: Content = {
     cvPath: '/Sara_Ali_Mahran_CV.pdf',
   },
 
+  // Used for <head> tags, Open Graph / Twitter cards and JSON-LD (see vite.config.ts).
+  seo: {
+    title: 'Sara Ali Mahran · SaraCodes | Software Engineering Services & Technical Mentoring',
+    description:
+      'SaraCodes is the independent software business of Sara Ali Mahran: custom desktop apps, backend and API development, web and mobile apps, AI features, deployment and technical mentoring for clients worldwide.',
+    url: 'https://saramahran.com',
+    ogImage: '/og-image.png',
+    ogImageAlt:
+      'SaraCodes logo with Sara Ali Mahran, software engineering services and technical mentoring',
+    jobTitle: 'Senior Software Engineer',
+    areaServed: 'Worldwide',
+    locale: 'en_US',
+  },
+
+  notFound: {
+    title: 'Page not found | SaraCodes',
+    prompt: 'visitor@saracodes:~$',
+    command: 'cd',
+    error: '404: route not found',
+    hint: "The page you're looking for doesn't exist or has moved.",
+    homeLink: 'Back to home',
+  },
+
   // eyebrow renders as a numbered mono label, e.g. "// 02. services". inNav controls the navbar links.
   sections: [
     { id: 'hero', label: 'Home', eyebrow: 'hello', heading: 'Sara Ali Mahran', inNav: false },
@@ -248,7 +271,7 @@ export const content: Content = {
       outcome: 'TODO: add measurable outcome',
       stack: ['Python', 'PySide6', 'Qt', 'PostgreSQL'],
       tags: ['Desktop', 'Data visualization', 'Integrations'],
-      image: '/projects/planning-desktop-suite.png',
+      image: '/projects/planning-desktop-suite.webp',
       confidential: true,
     },
     {
@@ -264,7 +287,7 @@ export const content: Content = {
       outcome: '99.4%+ uptime in production',
       stack: ['FastAPI', 'PostgreSQL', 'PgBouncer', 'Redis', 'Docker', 'nginx', 'DigitalOcean'],
       tags: ['Multi-tenant', 'Security', 'Real-time'],
-      image: '/projects/multi-tenant-saas-backend.png',
+      image: '/projects/multi-tenant-saas-backend.webp',
       confidential: true,
     },
     {
@@ -280,7 +303,7 @@ export const content: Content = {
       outcome: 'TODO: add measurable outcome',
       stack: ['Python', 'PySide6', 'FastAPI'],
       tags: ['Desktop', 'Admin tools', 'Access control'],
-      image: '/projects/admin-console.png',
+      image: '/projects/admin-console.webp',
       confidential: true,
     },
     {
@@ -296,7 +319,7 @@ export const content: Content = {
       outcome: 'TODO: add measurable outcome',
       stack: ['Django', 'PostgreSQL', 'pgvector', 'React', 'Vercel', 'Railway'],
       tags: ['Bilingual', 'Semantic search', 'Accessibility'],
-      image: '/projects/wanas.png',
+      image: '/projects/wanas.webp',
       links: { live: 'TODO: Wanas live URL', repo: 'TODO: Wanas repo URL' },
       confidential: false,
     },
@@ -312,7 +335,7 @@ export const content: Content = {
       outcome: 'TODO: add measurable outcome',
       stack: ['React 18', 'TypeScript', 'Vite', 'Tailwind', 'Vercel serverless', 'LLM APIs'],
       tags: ['AI', 'Careers', 'Serverless'],
-      image: '/projects/baed-connect.png',
+      image: '/projects/baed-connect.webp',
       links: { live: 'TODO: Baed Connect live URL' },
       confidential: false,
     },
@@ -328,7 +351,7 @@ export const content: Content = {
       outcome: 'TODO: add measurable outcome',
       stack: ['Flutter', 'Supabase'],
       tags: ['Mobile', 'Productivity'],
-      image: '/projects/rouya.png',
+      image: '/projects/rouya.webp',
       links: { live: 'TODO: Rouya live URL', repo: 'TODO: Rouya repo URL' },
       confidential: false,
     },
@@ -345,7 +368,7 @@ export const content: Content = {
       outcome: 'TODO: add measurable outcome',
       stack: ['React', 'TypeScript'],
       tags: ['Marketplace', 'Dashboards', 'Prototype'],
-      image: '/projects/upnow.png',
+      image: '/projects/upnow.webp',
       links: { live: 'TODO: UpNow live URL', repo: 'TODO: UpNow repo URL' },
       confidential: false,
     },
@@ -567,8 +590,6 @@ export const content: Content = {
   },
 
   ui: {
-    comingSoon: 'Coming soon',
-    sectionPlaceholder: 'This section is being built. Check back soon.',
     confidentialBadge: 'Confidential client work',
     hireMe: 'Hire me',
     downloadCv: 'Download CV',

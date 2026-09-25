@@ -9,7 +9,7 @@ export function ScrollProgress() {
   return (
     <motion.div
       aria-hidden="true"
-      className="fixed inset-x-0 top-0 z-[70] h-[3px] origin-left bg-brand-gradient"
+      className="no-print fixed inset-x-0 top-0 z-[70] h-[3px] origin-left bg-brand-gradient"
       style={{ scaleX: reduced ? scrollYProgress : smoothed }}
     />
   );

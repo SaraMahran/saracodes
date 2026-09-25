@@ -63,7 +63,7 @@ export function CursorGlow() {
     <div
       ref={ref}
       aria-hidden="true"
-      className="cursor-glow pointer-events-none fixed left-0 top-0 -z-10 h-[640px] w-[640px] rounded-full opacity-0 transition-opacity duration-500 will-change-transform"
+      className="no-print cursor-glow pointer-events-none fixed left-0 top-0 -z-10 h-[640px] w-[640px] rounded-full opacity-0 transition-opacity duration-500 will-change-transform"
     />
   );
 }

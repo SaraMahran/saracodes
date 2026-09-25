@@ -43,7 +43,7 @@ export function Footer() {
           <button
             type="button"
             onClick={() => scrollToId('hero')}
-            className={buttonClasses('outline', 'sm')}
+            className={buttonClasses('outline', 'sm', 'no-print')}
           >
             <ArrowUp size={16} aria-hidden />
             {ui.backToTop}

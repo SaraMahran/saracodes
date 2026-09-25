@@ -54,17 +54,30 @@ Tokens are CSS variables (RGB channels) in `src/styles/globals.css`, mapped in `
 - All text tokens pass WCAG AA against `bg` and `surface` in both themes. Recheck if you change one.
 - Themes switch via `data-theme="dark" | "light"` on `<html>`.
 - Fonts: Poppins 600/700 (`font-heading`), Inter 400/500/600 (`font-sans`), JetBrains Mono
-  (`font-mono`, section labels, tags, command palette). Font sizes are fluid via `clamp()`.
+  (`font-mono`, section labels, tags, command palette), self-hosted via `@fontsource` (imported in
+  `src/main.tsx`). The build preloads Poppins 600/700 and Inter 400 (latin). Font sizes are fluid
+  via `clamp()`.
 - Framer Motion is wrapped in `<MotionConfig reducedMotion="user">`; `globals.css` also disables
   CSS animation under `prefers-reduced-motion: reduce`.
+- Print: `globals.css` prints a light, static document. Mark screen-only UI with `no-print`,
+  print-only content with `print-only`, and visually hidden text that should print with
+  `print-reveal`.
 
 ## Structure
 
-- `src/components` reusable UI, `src/sections` page sections, `src/data` all copy and content,
-  `src/hooks`, `src/lib` helpers, `src/styles/globals.css` base styles and tokens.
-- `brand/` holds source brand files. `npm run brand` moves them into `src/assets` and `public/` and
-  regenerates `favicon.svg`, `favicon-32x32.png`, `apple-touch-icon.png` and `icon-512.png`.
+- `src/components` reusable UI, `src/components/dialogs` code-split dialogs, `src/sections` page
+  sections, `src/pages/NotFound.tsx` the 404 page, `src/data` all copy and content, `src/hooks`,
+  `src/lib` helpers, `src/styles/globals.css` base styles, tokens and print styles.
+- Dialogs and the command palette are lazy-loaded through `src/lib/lazy.ts`, mounted on first
+  open and prefetched when the browser is idle.
+- SEO: `<title>`, meta, Open Graph, Twitter and JSON-LD tags are generated from `content.seo` by
+  the plugins in `vite.config.ts`, which also copies `index.html` to `404.html` and warns about
+  missing public files. `public/robots.txt` and `public/sitemap.xml` are static.
+- `brand/` holds source brand files. `npm run brand` moves them into `src/assets` and `public/`,
+  regenerates `favicon.svg`, `favicon-32x32.png`, `apple-touch-icon.png` and `icon-512.png`,
+  converts screenshots in `brand/projects/<project-id>.png|jpg` to `public/projects/*.webp`, and
+  then runs `npm run og` to regenerate `public/og-image.png`.
 
 ## Commands
 
-- `npm run dev`, `npm run build`, `npm run lint`, `npm run format`, `npm run brand`
+- `npm run dev`, `npm run build`, `npm run lint`, `npm run format`, `npm run brand`, `npm run og`

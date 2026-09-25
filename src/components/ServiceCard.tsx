@@ -56,9 +56,19 @@ export function ServiceCard({ service, onOpen }: ServiceCardProps) {
 
       <ChipList items={service.stack} className="mt-5" />
 
+      {/* Printed copies show the deliverables inline instead of behind the dialog. */}
+      <div className="print-only mt-5">
+        <h4 className="section-label mb-2">{content.ui.deliverablesHeading}</h4>
+        <ul className="list-disc pl-5 text-sm text-text">
+          {service.deliverables.map((deliverable) => (
+            <li key={deliverable}>{deliverable}</li>
+          ))}
+        </ul>
+      </div>
+
       <span
         aria-hidden="true"
-        className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors group-hover:text-tertiary"
+        className="no-print mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-primary transition-colors group-hover:text-tertiary"
       >
         {content.ui.viewDetails}
         <ArrowRight

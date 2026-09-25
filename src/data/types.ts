@@ -252,8 +252,6 @@ export interface ContactForm {
 
 /** Small UI strings that are not tied to one section. */
 export interface Ui {
-  comingSoon: string;
-  sectionPlaceholder: string;
   confidentialBadge: string;
   hireMe: string;
   downloadCv: string;
@@ -283,8 +281,31 @@ export interface Ui {
   copyFailed: string;
 }
 
+export interface Seo {
+  title: string;
+  description: string;
+  /** Canonical site URL without a trailing slash. */
+  url: string;
+  ogImage: string;
+  ogImageAlt: string;
+  jobTitle: string;
+  areaServed: string;
+  locale: string;
+}
+
+export interface NotFound {
+  title: string;
+  prompt: string;
+  command: string;
+  error: string;
+  hint: string;
+  homeLink: string;
+}
+
 export interface Content {
   brand: Brand;
+  seo: Seo;
+  notFound: NotFound;
   sections: Section[];
   hero: Hero;
   about: About;

@@ -28,7 +28,7 @@ export function Contact() {
       }
     >
       <div className="grid gap-8 lg:grid-cols-[1.6fr_1fr] lg:gap-10">
-        <Reveal>
+        <Reveal className="no-print">
           <ContactForm />
         </Reveal>
 
@@ -56,7 +56,7 @@ export function Contact() {
                   onClick={() => void copyEmail()}
                   aria-label={ui.copyEmail}
                   title={ui.copyEmail}
-                  className={iconButtonClasses}
+                  className={`no-print ${iconButtonClasses}`}
                 >
                   <Copy size={15} aria-hidden />
                 </button>

@@ -17,7 +17,11 @@ export function DownloadCvLink({
   className = '',
 }: DownloadCvLinkProps) {
   return (
-    <a href={content.brand.cvPath} download className={buttonClasses(variant, size, className)}>
+    <a
+      href={content.brand.cvPath}
+      download
+      className={buttonClasses(variant, size, `no-print ${className}`)}
+    >
       <Download size={16} aria-hidden />
       {content.ui.downloadCv}
     </a>

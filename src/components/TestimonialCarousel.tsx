@@ -102,7 +102,7 @@ export function TestimonialCarousel({ items, labels }: TestimonialCarouselProps)
       </div>
 
       {count > 1 && (
-        <div className="mt-8 flex items-center justify-between gap-4">
+        <div className="no-print mt-8 flex items-center justify-between gap-4">
           <div className="flex items-center gap-1">
             {items.map((testimonial, dotIndex) => (
               <button
