@@ -1,7 +1,7 @@
 import { content } from '@/data/content';
 import type { Project, ProjectLinks } from '@/data/types';
 import { fillTemplate } from './template';
-import { isFilled } from './todo';
+import { isHttpUrl } from './url';
 
 export type ProjectLinkType = keyof ProjectLinks;
 
@@ -15,13 +15,6 @@ export interface ResolvedProjectLink {
 }
 
 const LINK_ORDER: ProjectLinkType[] = ['live', 'repo', 'release'];
-
-/**
- * Only real http(s) URLs count. This hides missing values, "TODO: ..." values and unfilled
- * placeholders like "WANAS_REPO_URL", so a broken button can never render.
- */
-export const isHttpUrl = (value: string | undefined): value is string =>
-  isFilled(value) && /^https?:\/\/[^\s]+$/i.test(value.trim());
 
 /** Version from a release URL tag, e.g. ".../releases/tag/v1.0.0" -> "v1.0.0". */
 export function releaseVersion(href: string) {

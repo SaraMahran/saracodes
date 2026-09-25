@@ -15,19 +15,25 @@ export function Wordmark({ className = 'text-lg' }: { className?: string }) {
 
 interface LogoMarkProps {
   size?: number;
+  /** Empty by default (decorative); the surrounding link usually carries the name. */
+  alt?: string;
   loading?: 'eager' | 'lazy';
   className?: string;
 }
 
 /**
- * Square logo mark. Decorative (alt=""): wherever it appears, the surrounding link or text
- * carries the accessible name. Explicit width/height prevent layout shift.
+ * Square logo mark (logo-mark.svg as an <img>). Explicit width/height prevent layout shift.
  */
-export function LogoMark({ size = 32, loading = 'eager', className = '' }: LogoMarkProps) {
+export function LogoMark({
+  size = 32,
+  alt = '',
+  loading = 'eager',
+  className = '',
+}: LogoMarkProps) {
   return (
     <img
       src={logoMark.src}
-      alt=""
+      alt={alt}
       width={size}
       height={size}
       loading={loading}

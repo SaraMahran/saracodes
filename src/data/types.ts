@@ -199,16 +199,27 @@ export interface ExperienceUi {
 
 export interface CertificationsUi {
   viewCertificate: string;
+  viewCertificateLabel: string;
   verifyCredential: string;
+  verifyCredentialLabel: string;
   enlarge: string;
   imageAlt: string;
+  skillsLabel: string;
+  verifyPrintLabel: string;
 }
 
 export interface Certification {
   title: string | Todo;
   issuer: string | Todo;
   date: string | Todo;
+  /** Kind of credential, e.g. "Nanodegree", "Certificate", "Digital badge". */
+  type?: string;
+  skills?: string[];
+  /** Short extra line, e.g. a sponsorship. */
+  note?: string;
+  /** PDF of the certificate. */
   fileUrl?: string;
+  /** Thumbnail image (about 4:3). */
   image?: string;
   credentialUrl?: string;
 }
@@ -269,9 +280,11 @@ export interface Ui {
   mainNavLabel: string;
   mobileNavLabel: string;
   homeLinkLabel: string;
+  logoMarkAlt: string;
+  paletteTip: string;
+  paletteShortcut: { mac: string; other: string };
   openMenu: string;
   closeMenu: string;
-  openCommandPalette: string;
   switchToLight: string;
   switchToDark: string;
   backToTop: string;

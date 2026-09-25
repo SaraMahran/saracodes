@@ -12,9 +12,18 @@ export function Chip({ children, className = '' }: { children: ReactNode; classN
 }
 
 /** A wrapping list of chips. */
-export function ChipList({ items, className = '' }: { items: string[]; className?: string }) {
+export function ChipList({
+  items,
+  className = '',
+  label,
+}: {
+  items: string[];
+  className?: string;
+  /** Optional accessible name for the list, e.g. "Skills". */
+  label?: string;
+}) {
   return (
-    <ul className={`flex flex-wrap gap-2 ${className}`}>
+    <ul aria-label={label} className={`flex flex-wrap gap-2 ${className}`}>
       {items.map((item) => (
         <li key={item}>
           <Chip>{item}</Chip>
