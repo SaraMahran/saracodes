@@ -47,6 +47,16 @@ export default {
       backgroundImage: {
         'brand-gradient': 'var(--brand-gradient)',
       },
+      keyframes: {
+        // Ends visible, so the reduced-motion rule (which stops animations) leaves the cursor shown.
+        blink: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
+        },
+      },
+      animation: {
+        blink: 'blink 1.1s steps(1, end) infinite',
+      },
       boxShadow: {
         glow: '0 0 48px -8px rgb(var(--color-tertiary) / 0.45)',
       },

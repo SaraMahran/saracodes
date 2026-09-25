@@ -144,6 +144,31 @@
     mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, #000 25%, transparent 100%);
   }
 
+  /*
+   * Card spotlight: a tertiary radial gradient at --spot-x/--spot-y (set from pointer position).
+   * The card needs `relative isolate` so the z-index -1 layer sits above its background but
+   * below its content.
+   */
+  .spotlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: radial-gradient(
+      340px circle at var(--spot-x, 50%) var(--spot-y, 0%),
+      rgb(var(--color-tertiary) / 0.14),
+      transparent 65%
+    );
+    opacity: 0;
+    transition: opacity 300ms ease;
+    pointer-events: none;
+  }
+
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+
   /* Pointer-following glow: tertiary fading into primary at low opacity. */
   .cursor-glow {
     background: radial-gradient(

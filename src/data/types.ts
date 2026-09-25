@@ -23,6 +23,8 @@ export interface Section {
   /** Short lowercase name rendered as a numbered mono label, e.g. "// 02. services". */
   eyebrow: string;
   heading: string;
+  /** Optional line under the heading. */
+  subheading?: string;
   /** Whether the section gets a link in the navbar. */
   inNav: boolean;
 }
@@ -50,6 +52,17 @@ export interface Brand {
   cvPath: string;
 }
 
+export type CodeValue = string | string[] | boolean;
+
+/** A tiny Python class rendered as a syntax-highlighted editor card in the hero. */
+export interface CodeSnippet {
+  fileName: string;
+  /** Accessible description of the decorative editor card. */
+  label: string;
+  className: string;
+  fields: { name: string; value: CodeValue }[];
+}
+
 export interface Hero {
   name: string;
   roles: string[];
@@ -57,6 +70,12 @@ export interface Hero {
   primaryCta: string;
   secondaryCta: string;
   availability: string;
+  greeting: string;
+  nameHighlight: string;
+  rolesLabel: string;
+  scrollHint: string;
+  scrollHintLabel: string;
+  code: CodeSnippet;
 }
 
 export interface Stat {
@@ -68,6 +87,9 @@ export interface About {
   paragraphs: string[];
   stats: Stat[];
   beyondCode?: string;
+  statsLabel: string;
+  techStackHeading: string;
+  techStack: string[];
 }
 
 export interface Service {
@@ -167,6 +189,11 @@ export interface Ui {
   socialsLabel: string;
   copyright: string;
   social: Record<keyof Socials, string>;
+  viewDetails: string;
+  requestService: string;
+  deliverablesHeading: string;
+  stackHeading: string;
+  closeDialog: string;
 }
 
 export interface Content {

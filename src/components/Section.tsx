@@ -9,13 +9,21 @@ interface SectionProps {
   className?: string;
   /** Skip the numbered label and heading (e.g. for the hero, which has its own h1). */
   hideHeader?: boolean;
+  /** Vertical padding classes; override for sections with custom spacing such as the hero. */
+  spacing?: string;
 }
 
 /**
  * Page section with consistent padding and max width, an anchor id, and a numbered mono label
  * (e.g. "// 02. services") above its heading. Label and heading come from content.sections.
  */
-export function Section({ id, children, className = '', hideHeader = false }: SectionProps) {
+export function Section({
+  id,
+  children,
+  className = '',
+  hideHeader = false,
+  spacing = 'py-20 md:py-28',
+}: SectionProps) {
   const section = getSection(id);
   const headingId = `${id}-heading`;
 
@@ -24,7 +32,7 @@ export function Section({ id, children, className = '', hideHeader = false }: Se
       id={id}
       tabIndex={-1}
       aria-labelledby={hideHeader ? undefined : headingId}
-      className={`scroll-mt-16 px-4 py-20 focus:outline-none sm:px-6 md:py-28 lg:px-8 ${className}`}
+      className={`scroll-mt-16 px-4 focus:outline-none sm:px-6 lg:px-8 ${spacing} ${className}`}
     >
       <div className="mx-auto w-full max-w-6xl">
         {!hideHeader && (
@@ -33,6 +41,9 @@ export function Section({ id, children, className = '', hideHeader = false }: Se
               {formatSectionLabel(section.index, section.eyebrow)}
             </p>
             <h2 id={headingId}>{section.heading}</h2>
+            {section.subheading && (
+              <p className="mt-4 max-w-2xl text-lg text-muted">{section.subheading}</p>
+            )}
           </Reveal>
         )}
         {children}

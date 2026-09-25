@@ -34,7 +34,9 @@ export const content: Content = {
       id: 'services',
       label: 'Services',
       eyebrow: 'services',
-      heading: 'What I can build for you',
+      heading: 'Services',
+      subheading:
+        'Services I offer to clients, from first prototype to production. Every engagement is scoped, built and delivered directly by me through SaraCodes.',
       inNav: true,
     },
     {
@@ -82,6 +84,27 @@ export const content: Content = {
     primaryCta: 'Start a Project',
     secondaryCta: 'View Services',
     availability: 'Open to new projects',
+    greeting: '> hello, world',
+    // Part of the name rendered in the brand gradient.
+    nameHighlight: 'Mahran',
+    rolesLabel: 'Roles',
+    scrollHint: 'Scroll',
+    scrollHintLabel: 'Scroll to About',
+    code: {
+      fileName: 'sara_mahran.py',
+      label: 'Code snippet describing Sara as a Python class',
+      className: 'SaraMahran',
+      fields: [
+        { name: 'brand', value: 'SaraCodes' },
+        { name: 'role', value: 'Senior Software Engineer' },
+        { name: 'stack', value: ['Python', 'FastAPI', 'PySide6', 'React', 'Flutter'] },
+        {
+          name: 'services',
+          value: ['Desktop apps', 'Backends', 'Web & mobile', 'AI features', 'Mentoring'],
+        },
+        { name: 'available', value: true },
+      ],
+    },
   },
 
   about: {
@@ -99,6 +122,28 @@ export const content: Content = {
     // optional: delete if not wanted
     beyondCode:
       "Beyond code, I'm an avid reader (roughly 900 books over 12 years). I'm building a books podcast in Egyptian dialect and writing my first book.",
+    statsLabel: 'At a glance',
+    techStackHeading: 'Tools I work with',
+    techStack: [
+      'Python',
+      'PySide6',
+      'FastAPI',
+      'Django',
+      'PostgreSQL',
+      'PgBouncer',
+      'Redis',
+      'pgvector',
+      'Docker',
+      'nginx',
+      'DigitalOcean',
+      'React',
+      'TypeScript',
+      'Tailwind',
+      'React Native',
+      'Flutter',
+      'Supabase',
+      'Vercel',
+    ],
   },
 
   services: [
@@ -434,5 +479,10 @@ export const content: Content = {
     // {year} is replaced with the current year.
     copyright: '© {year} SaraCodes · Sara Ali Mahran',
     social: { github: 'GitHub', linkedin: 'LinkedIn', upwork: 'Upwork' },
+    viewDetails: 'View details',
+    requestService: 'Request this service',
+    deliverablesHeading: "What you'll get",
+    stackHeading: 'Tech stack',
+    closeDialog: 'Close',
   },
 };

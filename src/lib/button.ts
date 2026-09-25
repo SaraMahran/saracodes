@@ -1,4 +1,4 @@
-type Variant = 'secondary' | 'primary' | 'outline' | 'ghost';
+type Variant = 'secondary' | 'primary' | 'outline' | 'outlinePrimary' | 'ghost';
 type Size = 'sm' | 'md' | 'lg';
 
 const base =
@@ -9,6 +9,8 @@ const variants: Record<Variant, string> = {
   secondary: 'bg-secondary text-on-accent hover:bg-tertiary hover:text-on-accent',
   primary: 'bg-primary text-on-accent hover:bg-tertiary hover:text-on-accent',
   outline: 'border border-border text-text hover:border-tertiary hover:text-tertiary',
+  outlinePrimary:
+    'border border-primary text-primary hover:border-tertiary hover:bg-tertiary/10 hover:text-tertiary',
   ghost: 'text-muted hover:bg-surface hover:text-tertiary',
 };
 
