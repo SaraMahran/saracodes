@@ -3,35 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SaraCodes | Sara Ali Mahran, Independent Software Engineer</title>
-    <meta
-      name="description"
-      content="SaraCodes is the independent software business of Sara Ali Mahran, offering freelance software development and mentoring."
-    />
-    <meta name="author" content="Sara Ali Mahran" />
+    <!-- Title, description, canonical, Open Graph, Twitter and JSON-LD tags are generated from
+         src/data/content.ts by the seo-tags plugin in vite.config.ts. -->
+    <title>SaraCodes</title>
     <meta name="theme-color" content="#0B0F14" />
-    <link rel="canonical" href="https://saramahran.com/" />
-
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="SaraCodes" />
-    <meta property="og:title" content="SaraCodes | Sara Ali Mahran" />
-    <meta
-      property="og:description"
-      content="Independent software development and mentoring by Sara Ali Mahran."
-    />
-    <meta property="og:url" content="https://saramahran.com/" />
-    <meta property="og:image" content="https://saramahran.com/icon-512.png" />
+    <script>
+      // Apply the theme before first paint: a saved choice wins, a first visit follows
+      // prefers-color-scheme, otherwise dark. Keep the key in sync with src/lib/theme.ts.
+      (function () {
+        var theme = 'dark';
+        try {
+          var saved = localStorage.getItem('saracodes-theme');
+          if (saved === 'light' || saved === 'dark') theme = saved;
+          else if (window.matchMedia('(prefers-color-scheme: light)').matches) theme = 'light';
+        } catch (e) {
+          // Storage blocked: keep the default.
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+        if (theme === 'light') {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#FFFFFF');
+        }
+      })();
+    </script>
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@600;700&display=swap"
-    />
   </head>
   <body>
     <div id="root"></div>

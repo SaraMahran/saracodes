@@ -8,6 +8,11 @@
  * WCAG AA verified: every text and accent token is >= 4.5:1 against both bg and surface.
  */
 @layer base {
+  :root {
+    /* Sticky navbar height; keep in sync with NAV_HEIGHT in src/lib/scroll.ts. */
+    --nav-height: 4rem;
+  }
+
   :root,
   [data-theme='dark'] {
     color-scheme: dark;
@@ -24,6 +29,13 @@
 
     --brand-gradient: linear-gradient(
       90deg,
+      rgb(var(--color-secondary)),
+      rgb(var(--color-tertiary)),
+      rgb(var(--color-primary))
+    );
+    /* Same brand gradient running top to bottom, for vertical lines such as the timeline. */
+    --brand-gradient-vertical: linear-gradient(
+      180deg,
       rgb(var(--color-secondary)),
       rgb(var(--color-tertiary)),
       rgb(var(--color-primary))
@@ -49,6 +61,8 @@
     @apply bg-bg font-sans text-text antialiased;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
+    /* Offsets native anchor jumps for the sticky navbar. */
+    scroll-padding-top: var(--nav-height);
     scrollbar-color: rgb(var(--color-border)) rgb(var(--color-bg));
     scrollbar-width: thin;
   }
@@ -128,6 +142,66 @@
   .section-label {
     @apply font-mono text-xs uppercase tracking-[0.2em] text-muted;
   }
+
+  /* Page background: subtle dot grid that fades out toward the edges. */
+  .dot-grid {
+    background-image: radial-gradient(rgb(var(--color-muted) / 0.16) 1px, transparent 1px);
+    background-size: 24px 24px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, #000 25%, transparent 100%);
+    mask-image: radial-gradient(ellipse 80% 70% at 50% 35%, #000 25%, transparent 100%);
+  }
+
+  /*
+   * Card spotlight: a tertiary radial gradient at --spot-x/--spot-y (set from pointer position).
+   * The card needs `relative isolate` so the z-index -1 layer sits above its background but
+   * below its content.
+   */
+  .spotlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: radial-gradient(
+      340px circle at var(--spot-x, 50%) var(--spot-y, 0%),
+      rgb(var(--color-tertiary) / 0.14),
+      transparent 65%
+    );
+    opacity: 0;
+    transition: opacity 300ms ease;
+    pointer-events: none;
+  }
+
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+
+  /* Generated project image placeholder: soft brand-gradient mesh. Positions vary per project. */
+  .mesh-placeholder {
+    background:
+      radial-gradient(
+        circle at var(--mesh-x1, 20%) var(--mesh-y1, 25%),
+        rgb(var(--color-secondary) / 0.28),
+        transparent 55%
+      ),
+      radial-gradient(
+        circle at var(--mesh-x2, 75%) var(--mesh-y2, 70%),
+        rgb(var(--color-primary) / 0.28),
+        transparent 55%
+      ),
+      radial-gradient(circle at 50% 50%, rgb(var(--color-tertiary) / 0.22), transparent 70%),
+      rgb(var(--color-surface));
+  }
+
+  /* Pointer-following glow: tertiary fading into primary at low opacity. */
+  .cursor-glow {
+    background: radial-gradient(
+      circle,
+      rgb(var(--color-tertiary) / 0.1) 0%,
+      rgb(var(--color-primary) / 0.05) 35%,
+      transparent 70%
+    );
+  }
 }
 
 /* Disable non-essential motion for users who ask for it. */
@@ -143,5 +217,131 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * Print / "Save as PDF": a light, readable document. Kept outside Tailwind layers so these rules
+ * win over utilities. Hooks used in components:
+ *   .no-print      screen-only UI (nav, glow, patterns, palette, buttons, form)
+ *   .print-only    content that only exists in print (service deliverables, case studies)
+ *   .print-reveal  visually hidden text that should print (final stat values, roles, labels)
+ */
+.print-only {
+  display: none !important;
+}
+
+@media print {
+  @page {
+    margin: 14mm 12mm;
+  }
+
+  /* Always print with the light theme tokens. */
+  html,
+  html[data-theme='dark'],
+  html[data-theme='light'] {
+    color-scheme: light;
+    --color-bg: 255 255 255;
+    --color-surface: 244 246 249;
+    --color-border: 216 222 230;
+    --color-text: 11 15 20;
+    --color-muted: 75 88 102;
+    --color-primary: 31 95 194;
+    --color-secondary: 184 38 111;
+    --color-tertiary: 109 63 196;
+    --color-on-accent: 255 255 255;
+    /* Keep brand colors, badges and gradient text instead of letting the browser strip them. */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    scroll-padding-top: 0;
+  }
+
+  body {
+    background: rgb(var(--color-bg));
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .print-reveal {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+  }
+
+  /* No motion, and anything that animates in on screen prints in its final state. */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  [style*='opacity'] {
+    opacity: 1 !important;
+  }
+
+  [style*='transform'] {
+    transform: none !important;
+  }
+
+  .spotlight::before {
+    display: none;
+  }
+
+  /* Compact flow with sensible page breaks. */
+  section[id] {
+    min-height: 0 !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+  }
+
+  article,
+  figure,
+  blockquote,
+  dl > div,
+  li {
+    break-inside: avoid;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    break-after: avoid;
+  }
+
+  [class*='shadow'] {
+    box-shadow: none !important;
+  }
+
+  [class*='backdrop-blur'] {
+    backdrop-filter: none !important;
+  }
+
+  /* Show where external links go. */
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.85em;
+    color: rgb(var(--color-muted));
+    word-break: break-all;
+  }
+
+  .social-link {
+    width: auto !important;
+    height: auto !important;
+    gap: 0.5rem;
+    border: 0 !important;
+    padding: 0 !important;
   }
 }

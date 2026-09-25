@@ -1,0 +1,56 @@
+import {
+  AppWindow,
+  Award,
+  Briefcase,
+  BriefcaseBusiness,
+  Building,
+  Code,
+  Copy,
+  FileText,
+  FolderGit2,
+  FolderOpen,
+  GraduationCap,
+  Handshake,
+  House,
+  Lock,
+  Mail,
+  Rocket,
+  Server,
+  Smartphone,
+  Sparkles,
+  SunMoon,
+  User,
+  Users,
+  type LucideIcon,
+} from 'lucide-react';
+
+/**
+ * Icons that data files may reference by name. Registering them explicitly keeps the bundle
+ * small (importing lucide's full `icons` map would ship every icon). Add new names here first.
+ */
+export const iconRegistry = {
+  AppWindow,
+  Award,
+  Briefcase,
+  BriefcaseBusiness,
+  Building,
+  Code,
+  Copy,
+  FileText,
+  FolderGit2,
+  FolderOpen,
+  GraduationCap,
+  Handshake,
+  House,
+  Lock,
+  Mail,
+  Rocket,
+  Server,
+  Smartphone,
+  Sparkles,
+  SunMoon,
+  User,
+  Users,
+} satisfies Record<string, LucideIcon>;
+
+export type IconName = keyof typeof iconRegistry;

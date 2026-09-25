@@ -1,34 +1,90 @@
-import { motion } from 'framer-motion';
-import { site } from '@/data/site';
+import { Suspense, useCallback, useEffect, useState, type ComponentType } from 'react';
+import { Background } from '@/components/Background';
+import { ContactFormProvider } from '@/components/ContactFormProvider';
+import { CursorGlow } from '@/components/CursorGlow';
+import { Footer } from '@/components/Footer';
+import { Navbar } from '@/components/Navbar';
+import { ScrollProgress } from '@/components/ScrollProgress';
+import { Toaster } from '@/components/Toast';
+import { content } from '@/data/content';
+import type { SectionId } from '@/data/types';
+import { usePrefetchOnIdle } from '@/hooks/usePrefetchOnIdle';
+import { LazyCommandPalette, loadCommandPalette } from '@/lib/lazy';
+import { About } from '@/sections/About';
+import { Certifications } from '@/sections/Certifications';
+import { Contact } from '@/sections/Contact';
+import { Experience } from '@/sections/Experience';
+import { Hero } from '@/sections/Hero';
+import { Mentoring } from '@/sections/Mentoring';
+import { Projects } from '@/sections/Projects';
+import { Services } from '@/sections/Services';
 
-// Resolves to the logo URL once src/assets/logo.svg is in place (see `npm run brand`).
-const logoUrl = Object.values(
-  import.meta.glob<string>('./assets/logo.svg', { eager: true, query: '?url', import: 'default' }),
-)[0];
+const { sections, ui } = content;
+
+const sectionComponents: Record<SectionId, ComponentType> = {
+  hero: Hero,
+  about: About,
+  services: Services,
+  projects: Projects,
+  experience: Experience,
+  mentoring: Mentoring,
+  certifications: Certifications,
+  contact: Contact,
+};
 
 export default function App() {
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  // The palette is code-split: it mounts on first open and then stays mounted for animations.
+  const [paletteLoaded, setPaletteLoaded] = useState(false);
+  usePrefetchOnIdle(loadCommandPalette);
+
+  const setPalette = useCallback((open: boolean) => {
+    if (open) setPaletteLoaded(true);
+    setPaletteOpen(open);
+  }, []);
+
+  // Ctrl K / Cmd K toggles the palette. Lives here so it works before the palette has loaded.
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() === 'k' && (event.metaKey || event.ctrlKey)) {
+        event.preventDefault();
+        setPaletteLoaded(true);
+        setPaletteOpen((open) => !open);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-8 bg-bg px-6 text-center">
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="flex flex-col items-center gap-8"
-      >
-        {logoUrl ? (
-          <img
-            src={logoUrl}
-            alt={site.logoAlt}
-            width={240}
-            height={240}
-            className="h-auto w-48 drop-shadow-[0_0_32px_rgb(var(--color-tertiary)/0.35)] sm:w-60"
-          />
-        ) : (
-          <span className="font-heading text-5xl font-bold text-text">{site.brand}</span>
+    <ContactFormProvider>
+      <div className="relative isolate min-h-screen overflow-x-clip">
+        <a
+          href="#main"
+          className="no-print sr-only no-underline focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-secondary focus:px-4 focus:py-2 focus:text-on-accent"
+        >
+          {ui.skipToContent}
+        </a>
+        <ScrollProgress />
+        <Background />
+        <CursorGlow />
+        <Navbar onOpenPalette={() => setPalette(true)} />
+
+        <main id="main" tabIndex={-1} className="focus:outline-none">
+          {sections.map((section) => {
+            const Component = sectionComponents[section.id];
+            return <Component key={section.id} />;
+          })}
+        </main>
+
+        <Footer />
+        {paletteLoaded && (
+          <Suspense fallback={null}>
+            <LazyCommandPalette open={paletteOpen} onOpenChange={setPalette} />
+          </Suspense>
         )}
-        <h1 className="text-brand-gradient">{site.comingSoon}</h1>
-        <p className="section-label">{site.domain}</p>
-      </motion.div>
-    </main>
+        <Toaster />
+      </div>
+    </ContactFormProvider>
   );
 }

@@ -8,10 +8,14 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "brand": "node scripts/brand.mjs"
+    "brand": "node scripts/brand.mjs && npm run og",
+    "og": "node --experimental-strip-types --no-warnings scripts/og-image.ts"
   },
   "description": "SaraCodes: independent software business and freelance portfolio of Sara Ali Mahran",
   "dependencies": {
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/poppins": "^5.3.0",
     "cmdk": "^1.1.1",
     "framer-motion": "^13.4.4",
     "lucide-react": "^1.48.0",
