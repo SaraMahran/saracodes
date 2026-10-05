@@ -13,7 +13,7 @@ import { LogoMark, Wordmark } from './Wordmark';
 const { ui } = content;
 const MOBILE_MENU_ID = 'mobile-menu';
 
-// The command palette opens with Ctrl K / Cmd K (handled in App); the footer shows a tip.
+// The command palette keyboard shortcut is handled in App.
 export function Navbar() {
   const activeId = useActiveSection(sectionIds);
   const [menuOpen, setMenuOpen] = useState(false);

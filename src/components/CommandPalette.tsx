@@ -26,7 +26,7 @@ interface CommandPaletteProps {
 
 /**
  * Command palette built on cmdk (fuzzy search, arrow keys, Enter), lazy-loaded and opened with
- * Ctrl K / Cmd K (handled in App) or the navbar hint. Commands come from src/data/commands.ts.
+ * Keyboard shortcuts are handled in App. Commands come from src/data/commands.ts.
  * Traps focus, closes on Escape, backdrop click or selection, and returns focus to where it was
  * opened from.
  */
