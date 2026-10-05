@@ -19,7 +19,8 @@ import { fillTemplate } from '@/lib/template';
 import { showToast } from '@/lib/toast';
 import { isFilled } from '@/lib/todo';
 
-const { brand, contact } = content;
+const { brand } = content;
+const contact = content.contact!;
 const { form } = contact;
 
 type Status = 'idle' | 'submitting' | 'success' | 'error';

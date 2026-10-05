@@ -1,6 +1,6 @@
 import { Suspense, useCallback, useEffect, useState, type ComponentType } from 'react';
 import { Background } from '@/components/Background';
-import { ContactFormProvider } from '@/components/ContactFormProvider';
+import { ContactFormProvider, Contact } from '@/lib/contactVariant';
 import { CursorGlow } from '@/components/CursorGlow';
 import { Footer } from '@/components/Footer';
 import { Navbar } from '@/components/Navbar';
@@ -13,7 +13,7 @@ import { LazyCommandPalette, loadCommandPalette } from '@/lib/lazy';
 import { handleAnchorClick, scrollToInitialHash } from '@/lib/scroll';
 import { About } from '@/sections/About';
 import { Certifications } from '@/sections/Certifications';
-import { Contact } from '@/sections/Contact';
+import { isUpwork } from '@/lib/variant';
 import { Experience } from '@/sections/Experience';
 import { Hero } from '@/sections/Hero';
 import { Mentoring } from '@/sections/Mentoring';
@@ -30,7 +30,7 @@ const sectionComponents: Record<SectionId, ComponentType> = {
   experience: Experience,
   mentoring: Mentoring,
   certifications: Certifications,
-  contact: Contact,
+  contact: isUpwork ? () => null : Contact,
 };
 
 export default function App() {

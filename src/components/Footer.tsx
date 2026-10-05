@@ -3,6 +3,7 @@ import { content } from '@/data/content';
 import { logo, logoHeightFor } from '@/lib/brandAssets';
 import { buttonClasses } from '@/lib/button';
 import { scrollToId } from '@/lib/scroll';
+import { isUpwork } from '@/lib/variant';
 import { SocialLinks } from './SocialLinks';
 
 const { brand, ui } = content;
@@ -26,14 +27,16 @@ export function Footer() {
             style={{ width: FOOTER_LOGO_WIDTH }}
           />
           <p className="text-sm text-muted">{brand.tagline}</p>
-          <a
-            href={`mailto:${brand.email}`}
-            className="inline-flex items-center gap-2 self-start text-sm"
-          >
-            <Mail size={16} aria-hidden />
-            <span className="sr-only">{ui.emailLabel}: </span>
-            {brand.email}
-          </a>
+          {!isUpwork && (
+            <a
+              href={`mailto:${brand.email}`}
+              className="inline-flex items-center gap-2 self-start text-sm"
+            >
+              <Mail size={16} aria-hidden />
+              <span className="sr-only">{ui.emailLabel}: </span>
+              {brand.email}
+            </a>
+          )}
         </div>
 
         <div className="flex flex-col items-start gap-4 md:items-end">

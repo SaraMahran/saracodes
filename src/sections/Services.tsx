@@ -4,10 +4,11 @@ import { Section } from '@/components/Section';
 import { ServiceCard } from '@/components/ServiceCard';
 import { content } from '@/data/content';
 import type { Service } from '@/data/types';
-import { useContactForm } from '@/hooks/useContactForm';
+import { useContactForm } from '@/lib/contactVariant';
 import { usePrefetchOnIdle } from '@/hooks/usePrefetchOnIdle';
 import { LazyServiceDialog, loadServiceDialog } from '@/lib/lazy';
 import { scrollToId } from '@/lib/scroll';
+import { isUpwork } from '@/lib/variant';
 
 const { services } = content;
 
@@ -55,8 +56,8 @@ export function Services() {
             open={open}
             service={selected}
             onClose={() => setOpen(false)}
-            onRequest={requestService}
-            onExitComplete={onExitComplete}
+            onRequest={isUpwork ? undefined : requestService}
+            onExitComplete={isUpwork ? undefined : onExitComplete}
           />
         </Suspense>
       )}

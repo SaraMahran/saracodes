@@ -3,7 +3,9 @@ import { ChevronDown } from 'lucide-react';
 import { AnimatedStat } from '@/components/AnimatedStat';
 import { AvailabilityBadge } from '@/components/AvailabilityBadge';
 import { CodeWindow } from '@/components/CodeWindow';
-import { DownloadCvLink } from '@/components/DownloadCvLink';
+import { DownloadCvLink } from '@/lib/contactVariant';
+import { ContactCta } from '@/components/ContactCta';
+import { isUpwork } from '@/lib/variant';
 import { Reveal, RevealItem } from '@/components/Reveal';
 import { Section } from '@/components/Section';
 import { content } from '@/data/content';
@@ -94,13 +96,12 @@ export function Hero() {
           </RevealItem>
 
           <RevealItem className="no-print flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
-            <a
-              href="#contact"
-              onClick={(event) => handleAnchorClick(event, 'contact')}
+            <ContactCta
+              onClick={isUpwork ? undefined : (event) => handleAnchorClick(event, 'contact')}
               className={buttonClasses('secondary', 'lg')}
             >
               {hero.primaryCta}
-            </a>
+            </ContactCta>
             <a
               href="#services"
               onClick={(event) => handleAnchorClick(event, 'services')}
@@ -132,7 +133,7 @@ export function Hero() {
 
           <RevealItem className="flex flex-wrap items-center gap-x-4 gap-y-3">
             <AvailabilityBadge label={hero.availability} />
-            <DownloadCvLink variant="ghost" size="sm" className="-ml-1" />
+            {!isUpwork && <DownloadCvLink variant="ghost" size="sm" className="-ml-1" />}
           </RevealItem>
         </Reveal>
 

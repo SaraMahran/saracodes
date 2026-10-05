@@ -9,7 +9,8 @@ import { content } from '@/data/content';
 import { iconButtonClasses } from '@/lib/button';
 import { copyEmail } from '@/lib/clipboard';
 
-const { brand, contact, ui } = content;
+const { brand, ui } = content;
+const contact = content.contact!;
 
 export function Contact() {
   return (

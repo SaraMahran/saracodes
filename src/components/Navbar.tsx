@@ -7,6 +7,8 @@ import { buttonClasses, iconButtonClasses } from '@/lib/button';
 import { handleAnchorClick } from '@/lib/scroll';
 import { navSections, sectionIds } from '@/lib/sections';
 import { MobileMenu } from './MobileMenu';
+import { ContactCta } from './ContactCta';
+import { isUpwork } from '@/lib/variant';
 import { ThemeToggle } from './ThemeToggle';
 import { LogoMark, Wordmark } from './Wordmark';
 
@@ -63,13 +65,12 @@ export function Navbar() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <a
-            href="#contact"
-            onClick={(event) => handleAnchorClick(event, 'contact')}
+          <ContactCta
+            onClick={isUpwork ? undefined : (event) => handleAnchorClick(event, 'contact')}
             className={buttonClasses('secondary', 'sm', 'hidden sm:inline-flex')}
           >
             {ui.hireMe}
-          </a>
+          </ContactCta>
           <button
             type="button"
             onClick={() => setMenuOpen(true)}
