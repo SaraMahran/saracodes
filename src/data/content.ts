@@ -10,11 +10,16 @@ export const content: Content = {
     name: 'SaraCodes',
     wordmark: { first: 'Sara', second: 'Codes' },
     owner: 'Sara Ali Mahran',
-    domain: 'saramahran.com',
-    url: 'https://saramahran.com',
+    // The planned custom domain (not live yet). Links and SEO always use siteUrl below.
+    domain: 'saracodes.net',
+    // The ONE place for the public site address and contact email. Canonical/Open Graph/Twitter
+    // tags, JSON-LD, robots.txt, sitemap.xml, the OG image, mailto links and the contact form all
+    // read these two values.
+    // Switch to https://saracodes.net and sara@saracodes.net once the domain and Zoho Mail are live.
+    siteUrl: 'https://saracodes.vercel.app',
+    email: 'saramahran20@gmail.com',
     tagline: 'Software engineering services & technical mentoring',
     logoAlt: 'SaraCodes logo',
-    email: 'sara@saramahran.com',
     location: 'Egypt · working with clients worldwide, remote',
     socials: {
       github: 'https://github.com/SaraMahran',
@@ -25,11 +30,11 @@ export const content: Content = {
   },
 
   // Used for <head> tags, Open Graph / Twitter cards and JSON-LD (see vite.config.ts).
+  // URLs are built from brand.siteUrl.
   seo: {
     title: 'Sara Ali Mahran · SaraCodes | Software Engineering Services & Technical Mentoring',
     description:
       'SaraCodes is the independent software business of Sara Ali Mahran: custom desktop apps, backend and API development, web and mobile apps, AI features, deployment and technical mentoring for clients worldwide.',
-    url: 'https://saramahran.com',
     ogImage: '/og-image.png',
     ogImageAlt:
       'SaraCodes logo with Sara Ali Mahran, software engineering services and technical mentoring',
@@ -595,7 +600,8 @@ export const content: Content = {
     locationHeading: 'Location',
     socialsHeading: 'Elsewhere',
     // Used when the visitor leaves the subject empty.
-    defaultSubject: 'New project inquiry from saramahran.com',
+    // {site} is replaced with the site's host name (from brand.siteUrl).
+    defaultSubject: 'New project inquiry from {site}',
     form: {
       label: 'Contact form',
       optional: '(optional)',

@@ -1,6 +1,6 @@
 export type Theme = 'dark' | 'light';
 
-/** Keep in sync with the inline theme script in index.html. */
+/** Keep in sync with public/theme-init.js (runs before first paint). */
 export const THEME_STORAGE_KEY = 'saracodes-theme';
 
 const listeners = new Set<() => void>();

@@ -1,7 +1,8 @@
 # CLAUDE.md
 
-SaraCodes is the business portfolio of Sara Ali Mahran (saramahran.com, sara@saramahran.com).
-It is proof of an independent software business for contractor onboarding review and Sara's public
+SaraCodes is the business portfolio of Sara Ali Mahran. The public site address and contact email
+live in ONE place, `content.brand.siteUrl` and `content.brand.email` in `src/data/content.ts`;
+never hardcode a domain or email anywhere else. It is proof of an independent software business for contractor onboarding review and Sara's public
 freelance and mentoring presence. Every design decision should present her as an independent
 professional offering services to the public: Services section, "Hire me" call to action, contact
 details, and consistent branding.
@@ -73,9 +74,13 @@ Tokens are CSS variables (RGB channels) in `src/styles/globals.css`, mapped in `
   through a portal to `<body>`, because the navbar's `backdrop-filter` would clip fixed children.
 - Logos are imported as URLs in `src/lib/brandAssets.ts` (a missing file fails the build) and
   always rendered with `<img>` and explicit width/height, never inlined (they are ~200 KB each).
-- SEO: `<title>`, meta, Open Graph, Twitter and JSON-LD tags are generated from `content.seo` by
-  the plugins in `vite.config.ts`, which also copies `index.html` to `404.html` and warns about
-  missing public files. `public/robots.txt` and `public/sitemap.xml` are static.
+- SEO: `<title>`, meta, Open Graph, Twitter and JSON-LD tags are generated from `content.seo` and
+  `content.brand.siteUrl` by the plugins in `vite.config.ts`, which also generate `robots.txt`
+  and `sitemap.xml`, copy `index.html` to `404.html` and warn about missing public files.
+- The pre-paint theme script lives in `public/theme-init.js` (not inline) so the CSP in
+  `vercel.json` can use `script-src 'self'`. Keep new scripts out of inline `<script>` tags.
+- Deployment: Vercel (`vercel.json`). `main` is production; work on feature branches merged via
+  pull requests. See README.md.
 - `brand/` holds source brand files. `npm run brand` moves them into `src/assets` and `public/`,
   regenerates `favicon.svg`, `favicon-32x32.png`, `apple-touch-icon.png` and `icon-512.png`,
   converts screenshots in `brand/projects/<project-id>.png|jpg` to `public/projects/*.webp`, and

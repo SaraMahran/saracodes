@@ -4,8 +4,9 @@ import { Background } from '@/components/Background';
 import { LogoMark, Wordmark } from '@/components/Wordmark';
 import { content } from '@/data/content';
 import { buttonClasses } from '@/lib/button';
+import { siteHost } from '@/lib/site';
 
-const { brand, notFound } = content;
+const { notFound } = content;
 
 /** Terminal-style 404 page with the logo mark and a link home. Not indexed by search engines. */
 export function NotFound() {
@@ -39,7 +40,7 @@ export function NotFound() {
             <span className="h-3 w-3 rounded-full bg-secondary" />
             <span className="h-3 w-3 rounded-full bg-tertiary" />
             <span className="h-3 w-3 rounded-full bg-primary" />
-            <span className="ml-3 font-mono text-xs text-muted">{brand.domain}</span>
+            <span className="ml-3 font-mono text-xs text-muted">{siteHost}</span>
           </div>
 
           <div className="p-6 font-mono text-sm leading-relaxed sm:p-8">

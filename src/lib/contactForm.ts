@@ -1,4 +1,5 @@
 import { content } from '@/data/content';
+import { siteHost } from './site';
 import { fillTemplate } from './template';
 
 export const MESSAGE_MIN_LENGTH = 20;
@@ -69,7 +70,8 @@ export function validateContact(values: ContactValues): ContactErrors {
   return errors;
 }
 
-const subjectFor = (values: ContactValues) => values.subject.trim() || contact.defaultSubject;
+const subjectFor = (values: ContactValues) =>
+  values.subject.trim() || fillTemplate(contact.defaultSubject, { site: siteHost });
 
 /** Formspree-compatible JSON body (_replyto and _subject are Formspree conventions). */
 export function toFormspreePayload(values: ContactValues) {

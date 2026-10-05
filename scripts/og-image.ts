@@ -48,6 +48,8 @@ function wrap(text: string, maxChars: number) {
 }
 
 const { brand } = content;
+// Host shown on the card comes from the one configurable site address.
+const siteHost = new URL(brand.siteUrl).host;
 const logoPath = resolve(root, 'src/assets/logo.svg');
 const hasLogo = existsSync(logoPath);
 
@@ -92,7 +94,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${
         `<text x="${textX}" y="${346 + index * 42}" font-family="${heading}" font-size="30" font-weight="500" fill="${color.muted}">${escapeXml(line)}</text>`,
     )
     .join('\n  ')}
-  <text x="${textX}" y="${346 + taglineLines.length * 42 + 44}" font-family="${mono}" font-size="24" fill="${color.primary}">${escapeXml(brand.domain)}</text>
+  <text x="${textX}" y="${346 + taglineLines.length * 42 + 44}" font-family="${mono}" font-size="24" fill="${color.primary}">${escapeXml(siteHost)}</text>
 </svg>`;
 
 const layers: sharp.OverlayOptions[] = [];

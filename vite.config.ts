@@ -8,6 +8,9 @@ import { isFilled } from './src/lib/todo';
 
 const publicDir = fileURLToPath(new URL('./public/', import.meta.url));
 
+/** The one configurable site address (content.brand.siteUrl), without a trailing slash. */
+const siteUrl = content.brand.siteUrl.replace(/\/+$/, '');
+
 const escapeHtml = (value: string) =>
   value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
@@ -17,7 +20,6 @@ const escapeHtml = (value: string) =>
  */
 function seoTags(): Plugin {
   const { brand, seo, services } = content;
-  const siteUrl = seo.url.replace(/\/$/, '');
   const ogImage = `${siteUrl}${seo.ogImage}`;
   const sameAs = Object.values(brand.socials).filter(isFilled);
 
@@ -73,13 +75,13 @@ function seoTags(): Plugin {
       const tags: HtmlTagDescriptor[] = [
         meta({ name: 'description', content: seo.description }),
         meta({ name: 'author', content: brand.owner }),
-        { tag: 'link', attrs: { rel: 'canonical', href: siteUrl }, injectTo: 'head' },
+        { tag: 'link', attrs: { rel: 'canonical', href: `${siteUrl}/` }, injectTo: 'head' },
         meta({ property: 'og:type', content: 'website' }),
         meta({ property: 'og:site_name', content: brand.name }),
         meta({ property: 'og:locale', content: seo.locale }),
         meta({ property: 'og:title', content: seo.title }),
         meta({ property: 'og:description', content: seo.description }),
-        meta({ property: 'og:url', content: siteUrl }),
+        meta({ property: 'og:url', content: `${siteUrl}/` }),
         meta({ property: 'og:image', content: ogImage }),
         meta({ property: 'og:image:width', content: '1200' }),
         meta({ property: 'og:image:height', content: '630' }),
@@ -101,6 +103,52 @@ function seoTags(): Plugin {
         html: html.replace(/<title>.*?<\/title>/, `<title>${escapeHtml(seo.title)}</title>`),
         tags,
       };
+    },
+  };
+}
+
+/**
+ * robots.txt and sitemap.xml, generated from content.brand.siteUrl so changing the site address
+ * updates them too. Served by the dev server and emitted into the build output.
+ */
+function siteFiles(): Plugin {
+  const today = new Date().toISOString().slice(0, 10);
+  const files: Record<string, { type: string; body: string }> = {
+    'robots.txt': {
+      type: 'text/plain; charset=utf-8',
+      body: `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`,
+    },
+    'sitemap.xml': {
+      type: 'application/xml; charset=utf-8',
+      body: [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        '  <url>',
+        `    <loc>${siteUrl}/</loc>`,
+        `    <lastmod>${today}</lastmod>`,
+        '    <changefreq>monthly</changefreq>',
+        '    <priority>1.0</priority>',
+        '  </url>',
+        '</urlset>',
+        '',
+      ].join('\n'),
+    },
+  };
+
+  return {
+    name: 'saracodes:site-files',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const file = files[(req.url ?? '').split('?')[0].replace(/^\//, '')];
+        if (!file) return next();
+        res.setHeader('Content-Type', file.type);
+        res.end(file.body);
+      });
+    },
+    generateBundle() {
+      for (const [fileName, file] of Object.entries(files)) {
+        this.emitFile({ type: 'asset', fileName, source: file.body });
+      }
     },
   };
 }
@@ -191,7 +239,7 @@ function checkPublicFiles(): Plugin {
 }
 
 export default defineConfig({
-  plugins: [react(), seoTags(), preloadFonts(), notFoundPage(), checkPublicFiles()],
+  plugins: [react(), seoTags(), siteFiles(), preloadFonts(), notFoundPage(), checkPublicFiles()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
