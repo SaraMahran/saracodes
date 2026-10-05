@@ -143,18 +143,33 @@ export const content: Content = {
   },
 
   about: {
-    paragraphs: [
-      "I'm a senior software engineer with 3+ years of experience building production Python systems: cross-platform desktop software in PySide6, backed by a multi-service FastAPI and PostgreSQL platform that I deploy with Docker on DigitalOcean.",
-      'I specialize in the parts of a system that are easy to get wrong: multi-tenant architecture, session and token security, and real-time delivery. Through SaraCodes, I build software for clients and ship my own products.',
-      "Teaching is the other half of my work. I've guided learners from their first lines of code to finished, real-world projects, and I'm now deepening my work in LLM engineering, with a focus on RAG and agentic AI.",
+    // Lead sentence as structured parts; "tone" highlights a segment with a color token.
+    lead: [
+      { text: 'I build ' },
+      { text: 'production software that businesses rely on', tone: 'primary' },
+      { text: ', and I ' },
+      { text: 'teach developers', tone: 'secondary' },
+      { text: ' to do the same.' },
     ],
-    focusAreasHeading: 'Focus areas',
-    focusAreas: [
-      { icon: 'Layers', text: 'Multi-tenant SaaS architecture' },
-      { icon: 'ShieldCheck', text: 'Session and token security' },
-      { icon: 'Radio', text: 'Real-time systems (SSE)' },
-      { icon: 'Monitor', text: 'Desktop apps with PySide6' },
-      { icon: 'GraduationCap', text: 'Teaching and mentoring' },
+    body: "For 3+ years I've built production Python systems: cross-platform desktop apps in PySide6, backed by a multi-service FastAPI and PostgreSQL platform on DigitalOcean. Through SaraCodes, I build for clients and ship my own products, and I'm now deepening my work in LLM engineering, with a focus on RAG and agentic AI.",
+    pillarsLabel: 'What I do',
+    pillars: [
+      {
+        icon: 'Code2',
+        title: 'Build',
+        text: 'Desktop, web and mobile apps and multi-service backends, from architecture to deployment.',
+      },
+      {
+        icon: 'ShieldCheck',
+        title: 'Secure and scale',
+        text: 'Multi-tenant architecture, session and token security, and real-time delivery over SSE.',
+      },
+      {
+        icon: 'GraduationCap',
+        title: 'Teach',
+        // The dash in 86–96% is wrapped in invisible U+2060 word joiners so the range never splits.
+        text: '130+ learners mentored, with 86⁠–⁠96% graduation rates across 5 cohorts.',
+      },
     ],
     beyondCode: {
       heading: 'Beyond code',
@@ -187,27 +202,6 @@ export const content: Content = {
         },
       ],
     },
-    techStackHeading: 'Tech stack',
-    techStack: [
-      'Python',
-      'PySide6',
-      'FastAPI',
-      'Django',
-      'PostgreSQL',
-      'PgBouncer',
-      'Redis',
-      'pgvector',
-      'Docker',
-      'nginx',
-      'DigitalOcean',
-      'React',
-      'TypeScript',
-      'Tailwind',
-      'React Native',
-      'Flutter',
-      'Supabase',
-      'Vercel',
-    ],
   },
 
   services: [
@@ -665,9 +659,6 @@ export const content: Content = {
     mobileNavLabel: 'Mobile',
     homeLinkLabel: 'SaraCodes home',
     logoMarkAlt: 'SaraCodes logo',
-    // Footer hint for the command palette. {shortcut} becomes one of the keys below.
-    paletteTip: 'Tip: press {shortcut} to navigate quickly',
-    paletteShortcut: { mac: '⌘ K', other: 'Ctrl K' },
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
     switchToLight: 'Switch to light theme',

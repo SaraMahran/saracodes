@@ -352,4 +352,14 @@
     border: 0 !important;
     padding: 0 !important;
   }
+
+  /* Short card rows (e.g. the About pillars) stay side by side instead of stacking at print width. */
+  .print-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 0.75rem !important;
+  }
+
+  .print-cols-3 article {
+    padding: 1rem !important;
+  }
 }
