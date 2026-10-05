@@ -5,8 +5,10 @@ mentoring practice of Sara Ali Mahran.
 
 Built with Vite, React 18, TypeScript, Tailwind CSS v3, Framer Motion, lucide-react and cmdk.
 There is no backend and no database: it is a static site deployed on Vercel.
+There are no client-side routes or rewrites. Unknown URLs use the generated `404.html` with
+a real 404 status; the home page, section anchors and static files keep their normal URLs.
 
-- Production: https://saracodes.vercel.app (planned custom domain: https://saracodes.net)
+- Production: https://saracodes.vercel.app (custom domain undecided: saramahran.com or saracodes.net)
 - Repository: https://github.com/SaraMahran/saracodes
 
 ---
@@ -49,9 +51,9 @@ Other scripts:
 - Section order (and the numbered section labels, navbar, command palette and print order) comes
   from `content.sections`.
 
-### Replacing the CV
+### Replacing the resume
 
-Put the PDF at `public/Sara_Ali_Mahran_CV.pdf` (the path in `content.brand.cvPath`), or change
+Put the PDF at `public/Sara_Ali_Mahran_Resume.pdf` (the path in `content.brand.cvPath`), or change
 `cvPath` to match the file you add. `npm run build` warns if the file is missing.
 
 ### Certificates
@@ -74,7 +76,8 @@ npm run brand
 ```
 
 It converts screenshots to optimized WebP in `public/projects/`. Until an image exists, the card
-shows a generated brand-gradient placeholder.
+shows a generated brand-gradient placeholder. Confidential projects omit `image` and always
+use the gradient initials placeholder; the build checks screenshots only for projects with an image path.
 
 ### Logo, favicons and OG image
 
@@ -142,12 +145,14 @@ disable it in **Settings → General → Vercel Toolbar**, or allow `https://ver
 
 ---
 
-## 6. Phase 2: connect the custom domain (later)
+## 6. Phase 2: connect your custom domain (saramahran.com or saracodes.net) later
 
-1. **Buy `saracodes.net` on GoDaddy.**
-2. In Vercel, open the project → **Settings → Domains** and add **both** `saracodes.net` and
-   `www.saracodes.net`.
-3. For `www.saracodes.net`, choose **Redirect to `saracodes.net`** (permanent, 308), so the root
+Choose your custom domain (saramahran.com or saracodes.net); `<domain>` below means that choice.
+
+1. **Buy your custom domain on GoDaddy.**
+2. In Vercel, open the project → **Settings → Domains** and add **both** `<domain>` and
+   `www.<domain>`.
+3. For `www.<domain>`, choose **Redirect to `<domain>`** (permanent, 308), so the root
    domain is the one real address.
 4. Vercel then shows the DNS records to create. In GoDaddy, go to **My Products → saracodes.net →
    DNS → DNS Records** and add exactly the values Vercel shows. They typically look like this:
@@ -164,17 +169,18 @@ disable it in **Settings → General → Vercel Toolbar**, or allow `https://ver
 
 5. Wait for Vercel to show both domains as **Valid Configuration** (minutes, sometimes up to a few
    hours). HTTPS certificates are issued automatically.
-6. Open a small pull request that changes `content.brand.siteUrl` to `https://saracodes.net`, runs
+6. Open a small pull request that changes `content.brand.siteUrl` to `https://<domain>` and
+   `content.brand.domain` to your chosen domain, runs
    `npm run og`, and commits the regenerated `public/og-image.png`. Merge it into `main`.
 
 ---
 
-## 7. Phase 3: email with Zoho Mail (later)
+## 7. Phase 3: email for your custom domain (saramahran.com or saracodes.net) with Zoho Mail
 
-1. Set up Zoho Mail for `saracodes.net` and create the mailbox `sara@saracodes.net`. Zoho will ask
+1. Set up Zoho Mail for `<domain>` and create the mailbox `sara@<domain>`. Zoho will ask
    you to add **MX**, **SPF (TXT)**, **DKIM (TXT)** and a **verification (TXT)** record in GoDaddy.
 2. Once mail works, open a small pull request that changes `content.brand.email` to
-   `sara@saracodes.net`, and merge it into `main`.
+   `sara@<domain>`, and merge it into `main`.
 
 > **Warning: do NOT delete or change the MX, SPF, DKIM or any other TXT records in GoDaddy.**
 > They are used by Zoho Mail. Removing or editing them will stop email from being delivered or
@@ -195,7 +201,7 @@ public/        static files (certificates, icons, OG image, theme-init.js)
 brand/         source brand files processed by `npm run brand`
 scripts/       brand pipeline and OG image generator
 vite.config.ts SEO tags, robots.txt, sitemap.xml, 404 page, missing-file warnings
-vercel.json    rewrites, cache and security headers
+vercel.json    cache and security headers
 ```
 
 See `CLAUDE.md` for the standing rules and design system.
