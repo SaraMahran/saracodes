@@ -10,6 +10,7 @@ import { content } from '@/data/content';
 import type { SectionId } from '@/data/types';
 import { usePrefetchOnIdle } from '@/hooks/usePrefetchOnIdle';
 import { LazyCommandPalette, loadCommandPalette } from '@/lib/lazy';
+import { handleAnchorClick, scrollToInitialHash } from '@/lib/scroll';
 import { About } from '@/sections/About';
 import { Certifications } from '@/sections/Certifications';
 import { Contact } from '@/sections/Contact';
@@ -38,6 +39,11 @@ export default function App() {
   const [paletteLoaded, setPaletteLoaded] = useState(false);
   usePrefetchOnIdle(loadCommandPalette);
 
+  useEffect(() => {
+    const frame = requestAnimationFrame(scrollToInitialHash);
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
   const setPalette = useCallback((open: boolean) => {
     if (open) setPaletteLoaded(true);
     setPaletteOpen(open);
@@ -61,6 +67,7 @@ export default function App() {
       <div className="relative isolate min-h-screen overflow-x-clip">
         <a
           href="#main"
+          onClick={(event) => handleAnchorClick(event, 'main')}
           className="no-print sr-only no-underline focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-secondary focus:px-4 focus:py-2 focus:text-on-accent"
         >
           {ui.skipToContent}
