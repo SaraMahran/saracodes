@@ -5,6 +5,7 @@ import { getProjectLinks, type ProjectLinkType } from '@/lib/projectLinks';
 import { fillTemplate } from '@/lib/template';
 import { isFilled } from '@/lib/todo';
 import { isHttpUrl, isUsableHref } from '@/lib/url';
+import { isUpwork } from '@/lib/variant';
 
 /**
  * Command palette entries, derived from `content` so they stay in sync with the site.
@@ -74,27 +75,33 @@ const actionCommands: Command[] = [
   {
     id: 'start-project',
     group: commandGroups.actions,
-    label: hero.primaryCta,
+    label: isUpwork ? ui.messageOnUpwork : hero.primaryCta,
     icon: 'Handshake',
     keywords: ['hire', 'hire me', 'project', 'contact', 'freelance', 'quote'],
-    action: { type: 'navigate', sectionId: 'contact' },
+    action: isUpwork
+      ? { type: 'open', href: brand.upworkUrl }
+      : { type: 'navigate', sectionId: 'contact' },
   },
-  {
-    id: 'download-cv',
-    group: commandGroups.actions,
-    label: ui.downloadCv,
-    icon: 'FileText',
-    keywords: ['cv', 'resume', 'pdf'],
-    action: { type: 'download', href: brand.cvPath },
-  },
-  {
-    id: 'copy-email',
-    group: commandGroups.actions,
-    label: `${ui.copyEmail} (${brand.email})`,
-    icon: 'Copy',
-    keywords: ['email', 'mail', 'contact'],
-    action: { type: 'copy-email' },
-  },
+  ...(isUpwork
+    ? []
+    : ([
+        {
+          id: 'download-cv',
+          group: commandGroups.actions,
+          label: ui.downloadCv,
+          icon: 'FileText',
+          keywords: ['cv', 'resume', 'pdf'],
+          action: { type: 'download', href: brand.cvPath },
+        },
+        {
+          id: 'copy-email',
+          group: commandGroups.actions,
+          label: `${ui.copyEmail} (${brand.email})`,
+          icon: 'Copy',
+          keywords: ['email', 'mail', 'contact'],
+          action: { type: 'copy-email' },
+        },
+      ] satisfies Command[])),
   {
     id: 'toggle-theme',
     group: commandGroups.actions,
@@ -106,8 +113,12 @@ const actionCommands: Command[] = [
 ];
 
 const socialLinks = [
-  { id: 'github', label: 'Open GitHub', href: brand.socials.github, icon: 'Code' },
-  { id: 'linkedin', label: 'Open LinkedIn', href: brand.socials.linkedin, icon: 'Users' },
+  ...(isUpwork
+    ? []
+    : ([
+        { id: 'github', label: 'Open GitHub', href: brand.socials.github, icon: 'Code' },
+        { id: 'linkedin', label: 'Open LinkedIn', href: brand.socials.linkedin, icon: 'Users' },
+      ] satisfies { id: string; label: string; href: string; icon: IconName }[])),
   { id: 'upwork', label: 'Open Upwork', href: brand.socials.upwork, icon: 'BriefcaseBusiness' },
 ] satisfies { id: string; label: string; href: string; icon: IconName }[];
 

@@ -1,4 +1,9 @@
-import type { Content } from './types';
+import type { Content, Section } from './types';
+import { isUpwork } from '../lib/variant.ts';
+
+const upworkUrl = 'https://www.upwork.com/freelancers/saramahran';
+const messageOnUpwork = 'Message me on Upwork';
+export const resumePath = '/Sara_Ali_Mahran_Resume.pdf';
 
 /**
  * Single source of truth for all site copy.
@@ -17,16 +22,17 @@ export const content: Content = {
     // read these two values.
     // Once the custom domain and Zoho Mail are live, switch siteUrl to https://<domain> and email to sara@<domain>.
     siteUrl: 'https://saracodes.vercel.app',
-    email: 'saramahran20@gmail.com',
+    upworkUrl,
+    email: isUpwork ? '' : 'saramahran20@gmail.com',
     tagline: 'Software engineering services & technical mentoring',
     logoAlt: 'SaraCodes logo',
     location: 'Egypt · working with clients worldwide, remote',
     socials: {
-      github: 'https://github.com/SaraMahran',
-      linkedin: 'https://www.linkedin.com/in/sara-ali-mahran/',
-      upwork: 'TODO: Upwork profile URL',
+      github: isUpwork ? '' : 'https://github.com/SaraMahran',
+      linkedin: isUpwork ? '' : 'https://www.linkedin.com/in/sara-ali-mahran/',
+      upwork: upworkUrl,
     },
-    cvPath: '/Sara_Ali_Mahran_Resume.pdf',
+    cvPath: isUpwork ? '' : resumePath,
   },
 
   // Used for <head> tags, Open Graph / Twitter cards and JSON-LD (see vite.config.ts).
@@ -45,7 +51,7 @@ export const content: Content = {
 
   notFound: {
     title: 'Page not found | SaraCodes',
-    prompt: 'visitor@saracodes:~$',
+    prompt: isUpwork ? 'visitor:saracodes:~$' : 'visitor@saracodes:~$',
     command: 'cd',
     error: '404: route not found',
     hint: "The page you're looking for doesn't exist or has moved.",
@@ -95,13 +101,17 @@ export const content: Content = {
       heading: 'Certifications',
       inNav: true,
     },
-    {
-      id: 'contact',
-      label: 'Contact',
-      eyebrow: 'contact',
-      heading: "Let's work together",
-      inNav: false,
-    },
+    ...(isUpwork
+      ? []
+      : [
+          {
+            id: 'contact',
+            label: 'Contact',
+            eyebrow: 'contact',
+            heading: "Let's work together",
+            inNav: false,
+          } satisfies Section,
+        ]),
   ],
 
   hero: {
@@ -118,7 +128,7 @@ export const content: Content = {
       { value: '99.4%+', label: 'uptime in production' },
       { value: '130+', label: 'developers mentored' },
     ],
-    primaryCta: 'Start a Project',
+    primaryCta: isUpwork ? messageOnUpwork : 'Start a Project',
     secondaryCta: 'View Services',
     availability: 'Open to new projects',
     greeting: '> hello, world',
@@ -512,7 +522,7 @@ export const content: Content = {
     topicsHeading: 'What I teach',
     formatsHeading: 'Ways to work together',
     testimonialsHeading: 'What learners say',
-    cta: 'Book a mentoring session',
+    cta: isUpwork ? messageOnUpwork : 'Book a mentoring session',
     // Prefilled into the contact form subject.
     ctaSubject: 'Mentoring session',
     // Service id preselected as the project type.
@@ -579,78 +589,81 @@ export const content: Content = {
     },
   ],
 
-  contact: {
-    heading: "Let's build something together",
-    subheading:
-      'Tell me about your project, timeline and goals. Whether you need a new product, a feature, a fix or a mentor, I will get back to you with clear next steps.',
-    formEndpoint: 'TODO: Formspree endpoint',
-    availability: 'Open to new projects',
-    responseTime: 'I usually reply within 24 to 48 hours',
-    sidePanelHeading: 'Other ways to reach me',
-    emailHeading: 'Email',
-    locationHeading: 'Location',
-    socialsHeading: 'Elsewhere',
-    // Used when the visitor leaves the subject empty.
-    // {site} is replaced with the site's host name (from brand.siteUrl).
-    defaultSubject: 'New project inquiry from {site}',
-    form: {
-      label: 'Contact form',
-      optional: '(optional)',
-      name: { label: 'Name', placeholder: 'Your name' },
-      email: { label: 'Email', placeholder: 'you@company.com' },
-      subject: { label: 'Subject', placeholder: 'What is this about?' },
-      projectType: {
-        label: 'Project type',
-        placeholder: 'Select a project type',
-        // The service titles are added automatically; this is appended at the end.
-        other: 'Something else',
+  contact: isUpwork
+    ? undefined
+    : {
+        heading: "Let's build something together",
+        subheading:
+          'Tell me about your project, timeline and goals. Whether you need a new product, a feature, a fix or a mentor, I will get back to you with clear next steps.',
+        formEndpoint: 'TODO: Formspree endpoint',
+        availability: 'Open to new projects',
+        responseTime: 'I usually reply within 24 to 48 hours',
+        sidePanelHeading: 'Other ways to reach me',
+        emailHeading: 'Email',
+        locationHeading: 'Location',
+        socialsHeading: 'Elsewhere',
+        // Used when the visitor leaves the subject empty.
+        // {site} is replaced with the site's host name (from brand.siteUrl).
+        defaultSubject: 'New project inquiry from {site}',
+        form: {
+          label: 'Contact form',
+          optional: '(optional)',
+          name: { label: 'Name', placeholder: 'Your name' },
+          email: { label: 'Email', placeholder: 'you@company.com' },
+          subject: { label: 'Subject', placeholder: 'What is this about?' },
+          projectType: {
+            label: 'Project type',
+            placeholder: 'Select a project type',
+            // The service titles are added automatically; this is appended at the end.
+            other: 'Something else',
+          },
+          budget: {
+            label: 'Budget range',
+            placeholder: 'Select a range',
+            options: [
+              'Under $1,000',
+              '$1,000 to $5,000',
+              '$5,000 to $15,000',
+              '$15,000+',
+              'Not sure yet',
+            ],
+          },
+          message: {
+            label: 'Message',
+            placeholder: 'Tell me about your project, goals and timeline.',
+          },
+          errors: {
+            nameRequired: 'Please enter your name.',
+            emailRequired: 'Please enter your email address.',
+            emailInvalid: 'Please enter a valid email address, like name@example.com.',
+            messageRequired: 'Please write a short message.',
+            // {min} is replaced at runtime.
+            messageTooShort: 'Please add a little more detail (at least {min} characters).',
+          },
+          submit: 'Send message',
+          submitting: 'Sending…',
+          successTitle: 'Message sent',
+          successText: "Thanks for reaching out. I'll get back to you soon.",
+          errorTitle: "Your message couldn't be sent",
+          // {email} is replaced at runtime.
+          errorText: 'Please try again, or email me directly at {email}.',
+          mailtoNotice: 'Opening your email app with your message filled in.',
+          mailtoFields: {
+            name: 'Name',
+            email: 'Email',
+            projectType: 'Project type',
+            budget: 'Budget',
+          },
+        },
       },
-      budget: {
-        label: 'Budget range',
-        placeholder: 'Select a range',
-        options: [
-          'Under $1,000',
-          '$1,000 to $5,000',
-          '$5,000 to $15,000',
-          '$15,000+',
-          'Not sure yet',
-        ],
-      },
-      message: {
-        label: 'Message',
-        placeholder: 'Tell me about your project, goals and timeline.',
-      },
-      errors: {
-        nameRequired: 'Please enter your name.',
-        emailRequired: 'Please enter your email address.',
-        emailInvalid: 'Please enter a valid email address, like name@example.com.',
-        messageRequired: 'Please write a short message.',
-        // {min} is replaced at runtime.
-        messageTooShort: 'Please add a little more detail (at least {min} characters).',
-      },
-      submit: 'Send message',
-      submitting: 'Sending…',
-      successTitle: 'Message sent',
-      successText: "Thanks for reaching out. I'll get back to you soon.",
-      errorTitle: "Your message couldn't be sent",
-      // {email} is replaced at runtime.
-      errorText: 'Please try again, or email me directly at {email}.',
-      mailtoNotice: 'Opening your email app with your message filled in.',
-      mailtoFields: {
-        name: 'Name',
-        email: 'Email',
-        projectType: 'Project type',
-        budget: 'Budget',
-      },
-    },
-  },
 
   ui: {
+    messageOnUpwork,
     confidentialBadge: 'Confidential client work',
-    hireMe: 'Hire me',
-    downloadCv: 'Download CV',
-    copyEmail: 'Copy email',
-    emailCopied: 'Email copied',
+    hireMe: isUpwork ? messageOnUpwork : 'Hire me',
+    downloadCv: isUpwork ? '' : 'Download CV',
+    copyEmail: isUpwork ? '' : 'Copy email',
+    emailCopied: isUpwork ? '' : 'Email copied',
     skipToContent: 'Skip to content',
     mainNavLabel: 'Main',
     mobileNavLabel: 'Mobile',
@@ -661,19 +674,23 @@ export const content: Content = {
     switchToLight: 'Switch to light theme',
     switchToDark: 'Switch to dark theme',
     backToTop: 'Back to top',
-    emailLabel: 'Email',
+    emailLabel: isUpwork ? '' : 'Email',
     socialsLabel: 'Social profiles',
     // {year} is replaced with the current year.
     copyright: '© {year} SaraCodes · Sara Ali Mahran',
-    social: { github: 'GitHub', linkedin: 'LinkedIn', upwork: 'Upwork' },
+    social: {
+      github: isUpwork ? '' : 'GitHub',
+      linkedin: isUpwork ? '' : 'LinkedIn',
+      upwork: 'Upwork',
+    },
     viewDetails: 'View details',
-    requestService: 'Request this service',
+    requestService: isUpwork ? messageOnUpwork : 'Request this service',
     deliverablesHeading: "What you'll get",
     stackHeading: 'Tech stack',
     closeDialog: 'Close',
     notificationsLabel: 'Notifications',
     dismissNotification: 'Dismiss notification',
     // {email} is replaced at runtime.
-    copyFailed: "Couldn't copy automatically. My email is {email}",
+    copyFailed: isUpwork ? '' : "Couldn't copy automatically. My email is {email}",
   },
 };

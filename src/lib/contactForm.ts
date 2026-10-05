@@ -26,7 +26,8 @@ export const emptyContactValues: ContactValues = {
   message: '',
 };
 
-const { brand, contact, services } = content;
+const { brand, services } = content;
+const contact = content.contact!;
 const { form } = contact;
 
 export const OTHER_PROJECT_TYPE = 'other';

@@ -5,10 +5,12 @@ import { Reveal, RevealItem } from '@/components/Reveal';
 import { Section } from '@/components/Section';
 import { TestimonialCarousel } from '@/components/TestimonialCarousel';
 import { content } from '@/data/content';
-import { useContactForm } from '@/hooks/useContactForm';
+import { useContactForm } from '@/lib/contactVariant';
+import { ContactCta } from '@/components/ContactCta';
 import { buttonClasses } from '@/lib/button';
 import { handleAnchorClick } from '@/lib/scroll';
 import { isFilled } from '@/lib/todo';
+import { isUpwork } from '@/lib/variant';
 
 const { mentoring } = content;
 const stats = mentoring.stats.filter((stat) => isFilled(stat.value));
@@ -66,16 +68,19 @@ export function Mentoring() {
         <Reveal className="flex flex-col items-start">
           <h3 className="section-label mb-5">{mentoring.formatsHeading}</h3>
           <ChipList items={mentoring.formats} />
-          <a
-            href="#contact"
-            onClick={(event) => {
-              setSubject(mentoring.ctaSubject, mentoring.ctaProjectType);
-              handleAnchorClick(event, 'contact');
-            }}
+          <ContactCta
+            onClick={
+              isUpwork
+                ? undefined
+                : (event) => {
+                    setSubject(mentoring.ctaSubject, mentoring.ctaProjectType);
+                    handleAnchorClick(event, 'contact');
+                  }
+            }
             className={buttonClasses('secondary', 'lg', 'no-print mt-8 w-full sm:w-auto')}
           >
             {mentoring.cta}
-          </a>
+          </ContactCta>
         </Reveal>
       </div>
 

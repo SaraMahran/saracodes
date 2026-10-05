@@ -44,6 +44,7 @@ export interface Brand {
   domain: string;
   /** Public site address without a trailing slash, e.g. "https://saracodes.vercel.app". */
   siteUrl: string;
+  upworkUrl: string;
   /** Public contact email. */
   email: string;
   tagline: string;
@@ -301,6 +302,7 @@ export interface ContactForm {
 
 /** Small UI strings that are not tied to one section. */
 export interface Ui {
+  messageOnUpwork: string;
   confidentialBadge: string;
   hireMe: string;
   downloadCv: string;
@@ -366,6 +368,6 @@ export interface Content {
   experienceUi: ExperienceUi;
   certificationsUi: CertificationsUi;
   certifications: Certification[];
-  contact: Contact;
+  contact?: Contact;
   ui: Ui;
 }

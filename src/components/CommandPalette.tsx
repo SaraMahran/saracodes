@@ -4,7 +4,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Search } from 'lucide-react';
 import { commandGroups, commandPaletteText, commands, type CommandAction } from '@/data/commands';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
-import { copyEmail } from '@/lib/clipboard';
+import { copyEmail } from '@/lib/contactVariant';
+import { isUpwork } from '@/lib/variant';
 import { downloadFile } from '@/lib/download';
 import { requestOpenProject } from '@/lib/projectEvents';
 import { scrollToId } from '@/lib/scroll';
@@ -39,6 +40,8 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
   useFocusTrap(panelRef, open, close);
 
   const run = (action: CommandAction) => {
+    if (!isUpwork && action.type === 'download') downloadFile(action.href);
+    if (!isUpwork && action.type === 'copy-email') void copyEmail();
     switch (action.type) {
       case 'navigate':
       case 'open-project':
@@ -47,12 +50,6 @@ export function CommandPalette({ open, onOpenChange }: CommandPaletteProps) {
       case 'open':
         // Must run inside the user gesture or popup blockers step in.
         window.open(action.href, '_blank', 'noopener,noreferrer');
-        break;
-      case 'download':
-        downloadFile(action.href);
-        break;
-      case 'copy-email':
-        void copyEmail();
         break;
       case 'toggle-theme':
         toggleTheme();

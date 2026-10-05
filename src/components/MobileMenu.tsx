@@ -8,7 +8,9 @@ import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { buttonClasses, iconButtonClasses } from '@/lib/button';
 import { scrollToId } from '@/lib/scroll';
 import { navSections } from '@/lib/sections';
-import { DownloadCvLink } from './DownloadCvLink';
+import { DownloadCvLink } from '@/lib/contactVariant';
+import { isUpwork } from '@/lib/variant';
+import { ContactCta } from './ContactCta';
 import { ThemeToggle } from './ThemeToggle';
 import { LogoMark, Wordmark } from './Wordmark';
 
@@ -105,14 +107,13 @@ export function MobileMenu({ id, open, activeId, onClose }: MobileMenuProps) {
           </nav>
 
           <div className="flex flex-wrap items-center gap-3 border-t border-border/60 px-4 py-6 sm:px-6">
-            <a
-              href="#contact"
-              onClick={(event) => navigate(event, 'contact')}
+            <ContactCta
+              onClick={isUpwork ? undefined : (event) => navigate(event, 'contact')}
               className={buttonClasses('secondary', 'lg')}
             >
               {ui.hireMe}
-            </a>
-            <DownloadCvLink size="lg" />
+            </ContactCta>
+            {!isUpwork && <DownloadCvLink size="lg" />}
             <ThemeToggle className="ml-auto h-12 w-12" />
           </div>
         </motion.div>

@@ -5,6 +5,8 @@ import { Modal } from '@/components/Modal';
 import { content } from '@/data/content';
 import type { Service } from '@/data/types';
 import { buttonClasses } from '@/lib/button';
+import { isUpwork } from '@/lib/variant';
+import { ContactCta } from '@/components/ContactCta';
 
 const { ui } = content;
 const TITLE_ID = 'service-modal-title';
@@ -13,8 +15,8 @@ interface ServiceDialogProps {
   open: boolean;
   service: Service;
   onClose: () => void;
-  onRequest: () => void;
-  onExitComplete: () => void;
+  onRequest?: () => void;
+  onExitComplete?: () => void;
 }
 
 /** Service details dialog (lazy-loaded). */
@@ -56,13 +58,21 @@ export function ServiceDialog({
           <ChipList items={service.stack} />
         </div>
 
-        <button
-          type="button"
-          onClick={onRequest}
-          className={buttonClasses('secondary', 'lg', 'w-full sm:w-auto sm:self-start')}
-        >
-          {ui.requestService}
-        </button>
+        {isUpwork ? (
+          <ContactCta
+            className={buttonClasses('secondary', 'lg', 'w-full sm:w-auto sm:self-start')}
+          >
+            {ui.requestService}
+          </ContactCta>
+        ) : (
+          <button
+            type="button"
+            onClick={onRequest}
+            className={buttonClasses('secondary', 'lg', 'w-full sm:w-auto sm:self-start')}
+          >
+            {ui.requestService}
+          </button>
+        )}
       </div>
     </Modal>
   );

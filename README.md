@@ -38,6 +38,30 @@ Other scripts:
 
 ---
 
+## Upwork version
+
+The default build uses `VITE_SITE_VARIANT=main` (also the default when unset). The Upwork
+variant removes the contact section, email, LinkedIn and GitHub profile links, resume, and
+contact form code and data from the build. Project repository and release links remain as
+work samples. Contact buttons open `content.brand.upworkUrl` in a new tab.
+
+```bash
+npm run dev:upwork       # Run the Upwork version locally
+npm run build:upwork     # Build the Upwork version into dist/
+```
+
+To deploy a second Vercel project from the same repository:
+
+1. Import **SaraMahran/saracodes** again and name the project **saracodes-upwork**.
+2. Keep the Vite preset, `npm run build` build command, and `dist` output directory.
+3. Add **VITE_SITE_VARIANT=upwork** for both **Production** and **Preview** environments.
+4. Set the production branch to **main** and deploy.
+
+Both projects deploy automatically on every merge to `main`. Keep the custom domain connected
+only to the main **saracodes** project. The Upwork project uses its separate Vercel address,
+sets `noindex, nofollow`, disallows all crawlers in `robots.txt`, and emits no sitemap. Its
+canonical URL points to `content.brand.siteUrl`, the main site.
+
 ## 2. Editing content
 
 **All text lives in `src/data/content.ts`.** Components never contain copy. Types are in
