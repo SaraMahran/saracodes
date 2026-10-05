@@ -99,18 +99,25 @@ export interface BeyondCode {
   items: BeyondCodeItem[];
 }
 
-export interface FocusArea {
+/** A piece of a sentence; tone highlights it with a color token. */
+export interface TextPart {
+  text: string;
+  tone?: 'primary' | 'secondary';
+}
+
+export interface Pillar {
   icon: IconName;
+  title: string;
   text: string;
 }
 
 export interface About {
-  paragraphs: string[];
-  focusAreasHeading: string;
-  focusAreas: FocusArea[];
+  lead: TextPart[];
+  body: string;
+  /** Accessible name for the pillars list. */
+  pillarsLabel: string;
+  pillars: Pillar[];
   beyondCode?: BeyondCode;
-  techStackHeading: string;
-  techStack: string[];
 }
 
 export interface Service {
@@ -304,8 +311,6 @@ export interface Ui {
   mobileNavLabel: string;
   homeLinkLabel: string;
   logoMarkAlt: string;
-  paletteTip: string;
-  paletteShortcut: { mac: string; other: string };
   openMenu: string;
   closeMenu: string;
   switchToLight: string;

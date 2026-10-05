@@ -6,6 +6,7 @@ import {
   BriefcaseBusiness,
   Building,
   Code,
+  CodeXml,
   Copy,
   Download,
   ExternalLink,
@@ -16,13 +17,10 @@ import {
   Handshake,
   HeartHandshake,
   House,
-  Layers,
   Lock,
   Mail,
   Mic,
-  Monitor,
   PenLine,
-  Radio,
   Rocket,
   Server,
   ShieldCheck,
@@ -37,7 +35,8 @@ import {
 
 /**
  * Icons that data files may reference by name. Registering them explicitly keeps the bundle
- * small (importing lucide's full `icons` map would ship every icon). Add new names here first.
+ * small (importing lucide's full `icons` map would ship every icon). Add new names here first,
+ * and remove names that no data file uses any more.
  */
 export const iconRegistry = {
   AppWindow,
@@ -47,6 +46,8 @@ export const iconRegistry = {
   BriefcaseBusiness,
   Building,
   Code,
+  // "Code2" is lucide's older name for CodeXml; content refers to it by that name.
+  Code2: CodeXml,
   Copy,
   Download,
   ExternalLink,
@@ -57,13 +58,10 @@ export const iconRegistry = {
   Handshake,
   HeartHandshake,
   House,
-  Layers,
   Lock,
   Mail,
   Mic,
-  Monitor,
   PenLine,
-  Radio,
   Rocket,
   Server,
   ShieldCheck,
