@@ -15,10 +15,22 @@ export function scrollToId(id: string) {
 
   const top = target.getBoundingClientRect().top + window.scrollY - NAV_HEIGHT;
   window.scrollTo({ top: Math.max(0, top), behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
-  window.history.replaceState(null, '', `#${id}`);
 
   if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
   target.focus({ preventScroll: true });
+}
+
+/** Resolve an incoming fragment once after render, without adding a history entry. */
+export function scrollToInitialHash() {
+  const hash = window.location.hash;
+  if (!hash) return;
+
+  try {
+    scrollToId(decodeURIComponent(hash.slice(1)));
+  } catch {
+    // Malformed fragments have no target, but should still leave a clean address.
+  }
+  window.history.replaceState(null, '', window.location.pathname + window.location.search);
 }
 
 /** Click handler for in-page anchor links: keeps the native href but uses offset scrolling. */
