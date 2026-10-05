@@ -11,11 +11,11 @@ export const content: Content = {
     wordmark: { first: 'Sara', second: 'Codes' },
     owner: 'Sara Ali Mahran',
     // The planned custom domain (not live yet). Links and SEO always use siteUrl below.
-    domain: 'saracodes.net',
+    domain: 'TODO: saramahran.com or saracodes.net',
     // The ONE place for the public site address and contact email. Canonical/Open Graph/Twitter
     // tags, JSON-LD, robots.txt, sitemap.xml, the OG image, mailto links and the contact form all
     // read these two values.
-    // Switch to https://saracodes.net and sara@saracodes.net once the domain and Zoho Mail are live.
+    // Once the custom domain and Zoho Mail are live, switch siteUrl to https://<domain> and email to sara@<domain>.
     siteUrl: 'https://saracodes.vercel.app',
     email: 'saramahran20@gmail.com',
     tagline: 'Software engineering services & technical mentoring',
@@ -26,7 +26,7 @@ export const content: Content = {
       linkedin: 'https://www.linkedin.com/in/sara-ali-mahran/',
       upwork: 'TODO: Upwork profile URL',
     },
-    cvPath: '/Sara_Ali_Mahran_CV.pdf',
+    cvPath: '/Sara_Ali_Mahran_Resume.pdf',
   },
 
   // Used for <head> tags, Open Graph / Twitter cards and JSON-LD (see vite.config.ts).
@@ -312,7 +312,6 @@ export const content: Content = {
       outcome: 'TODO: add measurable outcome',
       stack: ['Python', 'PySide6', 'Qt', 'PostgreSQL'],
       tags: ['Desktop', 'Data visualization', 'Integrations'],
-      image: '/projects/planning-desktop-suite.webp',
       confidential: true,
     },
     {
@@ -328,7 +327,6 @@ export const content: Content = {
       outcome: '99.4%+ uptime in production',
       stack: ['FastAPI', 'PostgreSQL', 'PgBouncer', 'Redis', 'Docker', 'nginx', 'DigitalOcean'],
       tags: ['Multi-tenant', 'Security', 'Real-time'],
-      image: '/projects/multi-tenant-saas-backend.webp',
       confidential: true,
     },
     {
@@ -344,7 +342,6 @@ export const content: Content = {
       outcome: 'TODO: add measurable outcome',
       stack: ['Python', 'PySide6', 'FastAPI'],
       tags: ['Desktop', 'Admin tools', 'Access control'],
-      image: '/projects/admin-console.webp',
       confidential: true,
     },
     {

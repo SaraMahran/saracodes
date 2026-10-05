@@ -138,7 +138,7 @@ export interface Project {
   outcome: string | Todo;
   stack: string[];
   tags: string[];
-  image: string;
+  image?: string;
   links?: ProjectLinks;
   /** Professional work under confidentiality: described generically and never linked. */
   confidential: boolean;

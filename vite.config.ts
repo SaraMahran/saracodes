@@ -222,7 +222,7 @@ function checkPublicFiles(): Plugin {
       certification.fileUrl,
       certification.image,
     ]),
-    ...content.projects.map((project) => project.image),
+    ...content.projects.flatMap((project) => (project.image ? [project.image] : [])),
   ].filter(isPublicPath);
 
   return {
